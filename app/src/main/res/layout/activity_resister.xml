@@ -11,6 +11,7 @@
         android:id="@+id/etPwdCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="396dp"
         android:ems="10"
         android:hint="비밀번호를 한번 더 입력하세요"
         android:inputType="textPassword"
