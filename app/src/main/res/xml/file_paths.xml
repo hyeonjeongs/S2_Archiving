@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-parth name="my_images"
+        path="Android/data/addFriend/files/Pictures"/>
+</paths>
