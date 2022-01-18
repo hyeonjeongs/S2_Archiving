@@ -8,8 +8,8 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
-import java.util.regex.Pattern
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class ResisterActivity : AppCompatActivity() {
 
@@ -19,7 +19,6 @@ class ResisterActivity : AppCompatActivity() {
     private lateinit var mEtNickname:EditText // 닉네임 입력 필드
     private lateinit var mEtPwd: EditText // 회원 가입 입력 필드(비밀번호)
     private lateinit var mEtPwdCheck: EditText // 비밀번호 확인 필드
-    private lateinit var mBtnConfirmID : Button //이메일 중복확인 버튼
     private lateinit var mBtnRegister: Button // 회원 가입 버튼
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,16 +26,13 @@ class ResisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_resister)
 
         mFirebaseAuth = FirebaseAuth.getInstance()
-
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
         mEtEmail = findViewById<EditText>(R.id.etEmail)
-        mBtnConfirmID = findViewById<Button>(R.id.btnConfirmID)
         mEtNickname=findViewById<EditText>(R.id.etNickname)
         mEtPwd = findViewById<EditText>(R.id.etPwd)
         mEtPwdCheck = findViewById<EditText>(R.id.etPwdCheck)
         mBtnRegister = findViewById<Button>(R.id.btnRegister)
 
-        var pattern : Pattern = android.util.Patterns.EMAIL_ADDRESS
 
         mBtnRegister.setOnClickListener(View.OnClickListener {
             // 회원가입 처리 시작
@@ -46,29 +42,6 @@ class ResisterActivity : AppCompatActivity() {
             var strPwd: String = mEtPwd.getText().toString()
             var strPwdCheck: String = mEtPwdCheck.getText().toString()
 
-            //이메일 중복 확인 버튼
-            mBtnConfirmID.setOnClickListener {
-                mDatabaseRef = FirebaseDatabase.getInstance().getReference("CotatoAndroid").child("UserAccount")
-                mDatabaseRef.orderByChild("userEmail").equalTo("${mEtEmail.text.toString()}")
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onCancelled(error: DatabaseError) {
-
-                        }
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            var value = snapshot.getValue()
-                            if(!pattern.matcher(mEtEmail.text.toString()).matches()){
-                                Toast.makeText(this@ResisterActivity,"이메일 형식으로 입력하세요",Toast.LENGTH_SHORT).show()
-                            }else if(value != null){
-                                Toast.makeText(this@ResisterActivity,"이미 가입되어 있는 아이디입니다",Toast.LENGTH_SHORT).show()
-                            }else{
-                                //가입 가능한 아이디이면 이메일 입력 창 비활성화 후 나머지 창 활성화
-                                Toast.makeText(this@ResisterActivity,"사용 가능한 아이디입니다",Toast.LENGTH_SHORT).show()
-
-                            }
-                        }
-                    })
-            }
-
             if(strEmail.equals("")||strNickname.equals("")||strPwd.equals("")||strPwdCheck.equals("")){
                 Toast.makeText(this, "모든 항목을 입력해주세요", Toast.LENGTH_SHORT).show()
             }
@@ -76,7 +49,6 @@ class ResisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
             }
             else {
-
                 mFirebaseAuth?.createUserWithEmailAndPassword(strEmail, strPwd)
                     ?.addOnCompleteListener { task ->
                         if (task.isSuccessful) {

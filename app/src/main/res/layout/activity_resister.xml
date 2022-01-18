@@ -15,7 +15,7 @@
         android:ems="10"
         android:hint="비밀번호를 한번 더 입력하세요"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/btn_register"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,18 +46,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnConfirmID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
-        android:layout_marginEnd="4dp"
-        android:text="중복확인"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/etEmail"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
