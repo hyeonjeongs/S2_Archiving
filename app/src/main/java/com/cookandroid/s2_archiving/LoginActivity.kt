@@ -24,12 +24,12 @@ class LoginActivity : AppCompatActivity() {
 
         mFirebaseAuth = FirebaseAuth.getInstance()
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
-        mEtEmail = findViewById<EditText>(R.id.et_email)
-        mEtPwd = findViewById<EditText>(R.id.et_pwd)
+        mEtEmail = findViewById<EditText>(R.id.etEmail)
+        mEtPwd = findViewById<EditText>(R.id.etPwd)
 
 
 
-        var btn_login = findViewById<Button>(R.id.btn_login)
+        var btn_login = findViewById<Button>(R.id.btnLogin)
         btn_login.setOnClickListener(View.OnClickListener {
             // 로그인 요청
             var strEmail: String = mEtEmail.getText().toString()
