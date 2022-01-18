@@ -29,8 +29,8 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-        var btnLogin = findViewById<Button>(R.id.btnLogin)
-        btnLogin.setOnClickListener(View.OnClickListener {
+        var btn_login = findViewById<Button>(R.id.btnLogin)
+        btn_login.setOnClickListener(View.OnClickListener {
             // 로그인 요청
             var strEmail: String = mEtEmail.getText().toString()
             var strPwd: String = mEtPwd.getText().toString()
@@ -49,8 +49,8 @@ class LoginActivity : AppCompatActivity() {
                 }
         })
 
-        val btnResister = findViewById<Button>(R.id.btnRegister)
-        btnResister.setOnClickListener(View.OnClickListener{
+        val btnRegister = findViewById<Button>(R.id.btnRegister)
+        btnRegister.setOnClickListener(View.OnClickListener{
 
             val intent = Intent(this, ResisterActivity::class.java)
             startActivity(intent)
