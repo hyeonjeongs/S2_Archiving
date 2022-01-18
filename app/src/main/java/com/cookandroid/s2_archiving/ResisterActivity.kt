@@ -38,19 +38,11 @@ class ResisterActivity : AppCompatActivity() {
 
         var pattern : Pattern = android.util.Patterns.EMAIL_ADDRESS
 
-        mBtnRegister.setOnClickListener(View.OnClickListener {
-            // 회원가입 처리 시작
-            var strEmail: String = mEtEmail.getText().toString()
-            var strNickname: String = mEtNickname.getText().toString()
-            var strPhone: String =""
-            var strPwd: String = mEtPwd.getText().toString()
-            var strPwdCheck: String = mEtPwdCheck.getText().toString()
+        //이메일 중복 확인 버튼
 
-            //이메일 중복 확인 버튼
-
-            mBtnConfirmID.setOnClickListener {
-                mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase").child("Firebase")
-                mDatabaseRef.orderByChild("userEmail").equalTo("${mEtEmail.text.toString()}")
+        mBtnConfirmID.setOnClickListener {
+            mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase").child("Firebase")
+            mDatabaseRef.orderByChild("userEmail").equalTo("${mEtEmail.text.toString()}")
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(error: DatabaseError) {
 
@@ -68,7 +60,16 @@ class ResisterActivity : AppCompatActivity() {
                             }
                         }
                     })
-            }
+        }
+        mBtnRegister.setOnClickListener(View.OnClickListener {
+            // 회원가입 처리 시작
+            var strEmail: String = mEtEmail.getText().toString()
+            var strNickname: String = mEtNickname.getText().toString()
+            var strPhone: String =""
+            var strPwd: String = mEtPwd.getText().toString()
+            var strPwdCheck: String = mEtPwdCheck.getText().toString()
+
+
 
             if(strEmail.equals("")||strNickname.equals("")||strPwd.equals("")||strPwdCheck.equals("")){
                 Toast.makeText(this, "모든 항목을 입력해주세요", Toast.LENGTH_SHORT).show()
