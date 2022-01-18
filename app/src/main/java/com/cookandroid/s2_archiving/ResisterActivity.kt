@@ -27,11 +27,11 @@ class ResisterActivity : AppCompatActivity() {
 
         mFirebaseAuth = FirebaseAuth.getInstance()
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
-        mEtEmail = findViewById<EditText>(R.id.et_email)
-        mEtNickname=findViewById<EditText>(R.id.et_nickname)
-        mEtPwd = findViewById<EditText>(R.id.et_pwd)
-        mEtPwdCheck = findViewById<EditText>(R.id.et_pwdcheck)
-        mBtnRegister = findViewById<Button>(R.id.btn_register)
+        mEtEmail = findViewById<EditText>(R.id.etEmail)
+        mEtNickname=findViewById<EditText>(R.id.etNickname)
+        mEtPwd = findViewById<EditText>(R.id.etPwd)
+        mEtPwdCheck = findViewById<EditText>(R.id.etPwdCheck)
+        mBtnRegister = findViewById<Button>(R.id.btnRegister)
 
 
         mBtnRegister.setOnClickListener(View.OnClickListener {
@@ -42,28 +42,36 @@ class ResisterActivity : AppCompatActivity() {
             var strPwd: String = mEtPwd.getText().toString()
             var strPwdCheck: String = mEtPwdCheck.getText().toString()
 
+            if(strEmail.equals("")||strNickname.equals("")||strPwd.equals("")||strPwdCheck.equals("")){
+                Toast.makeText(this, "모든 항목을 입력해주세요", Toast.LENGTH_SHORT).show()
+            }
+            else if(!strPwd.equals(strPwdCheck)){
+                Toast.makeText(this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
+            }
+            else {
 
-            mFirebaseAuth?.createUserWithEmailAndPassword(strEmail, strPwd)
-                ?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        var firebaseUser: FirebaseUser? = mFirebaseAuth.currentUser
-                        var account = UserAccount()
-                        account.userId = firebaseUser?.uid.toString()
-                        account.userEmail = firebaseUser?.email.toString()
-                        account.userNickname = strNickname
-                        account.userPhone = strPhone
-                        account.userPwd = strPwd
+                mFirebaseAuth?.createUserWithEmailAndPassword(strEmail, strPwd)
+                    ?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            var firebaseUser: FirebaseUser? = mFirebaseAuth.currentUser
+                            var account = UserAccount()
+                            account.userId = firebaseUser?.uid.toString()
+                            account.userEmail = firebaseUser?.email.toString()
+                            account.userNickname = strNickname
+                            account.userPhone = strPhone
+                            account.userPwd = strPwd
 
-                        // setValue : database에 insert (삽입) 행위위
-                        mDatabaseRef.child("Firebase").child(firebaseUser?.uid.toString())
-                            .setValue(account)
+                            // setValue : database에 insert (삽입) 행위위
+                            mDatabaseRef.child("Firebase").child(firebaseUser?.uid.toString())
+                                .setValue(account)
 
-                        Toast.makeText(this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show()
 
-                    } else {
-                        Toast.makeText(this, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
+            }
         })
 
     }

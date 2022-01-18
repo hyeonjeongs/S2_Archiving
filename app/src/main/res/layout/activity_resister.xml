@@ -8,7 +8,7 @@
 
 
     <EditText
-        android:id="@+id/et_pwdcheck"
+        android:id="@+id/etPwdCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.811" />
 
     <EditText
-        android:id="@+id/et_nickname"
+        android:id="@+id/etNickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="216dp"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/et_email"
+        android:id="@+id/etEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="136dp"
@@ -48,20 +48,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/et_pwd"
+        android:id="@+id/etPwd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         android:ems="10"
         android:hint="비밀번호를 입력하세요"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/et_pwdcheck"
+        app:layout_constraintBottom_toTopOf="@+id/etPwdCheck"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btn_register"
+        android:id="@+id/btnRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="가입 완료"
