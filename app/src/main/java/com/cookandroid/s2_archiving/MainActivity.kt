@@ -1,9 +1,11 @@
 package com.cookandroid.s2_archiving
 
 import android.Manifest
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -58,6 +60,12 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(baseContext,"친구추가화면", Toast.LENGTH_SHORT).show()
         }
 
+        button.setOnClickListener(View.OnClickListener{
+
+            val intent = Intent(this, ModifyAccount::class.java)
+            startActivity(intent)
+
+        })
 
 
 
