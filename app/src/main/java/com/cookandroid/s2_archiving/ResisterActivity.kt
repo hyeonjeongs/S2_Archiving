@@ -41,7 +41,6 @@ class ResisterActivity : AppCompatActivity() {
         //이메일 중복 확인 버튼
 
         mBtnConfirmID.setOnClickListener {
-            mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase").child("Firebase")
             mDatabaseRef.orderByChild("userEmail").equalTo("${mEtEmail.text.toString()}")
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(error: DatabaseError) {
@@ -90,8 +89,8 @@ class ResisterActivity : AppCompatActivity() {
                             //account.userPhone = strPhone
                             account.userPwd = strPwd
 
-                            // setValue : database에 insert (삽입) 행위위
-                            mDatabaseRef.child("Firebase").child(firebaseUser?.uid.toString())
+                            // setValue : database에 insert (삽입) 행위
+                            mDatabaseRef.child(firebaseUser?.uid.toString())
                                 .setValue(account)
 
                             Toast.makeText(this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show()

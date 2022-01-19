@@ -1,9 +1,11 @@
 package com.cookandroid.s2_archiving
 
 import android.Manifest
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -56,8 +58,15 @@ class MainActivity : AppCompatActivity() {
         rvProfile.adapter = ProfileAdapter(profileList)
         plusButton.setOnClickListener {
             Toast.makeText(baseContext,"친구추가화면", Toast.LENGTH_SHORT).show()
+            friendaddClicked()
         }
 
+        button.setOnClickListener(View.OnClickListener{
+
+            val intent = Intent(this, ModifyAccount::class.java)
+            startActivity(intent)
+
+        })
 
 
 
@@ -101,6 +110,11 @@ class MainActivity : AppCompatActivity() {
 
         storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
+        //친구 추가 버튼 뷰에 클릭 리스너 설정(친구추가버튼 클릭시 발생)
+//        plusButton.setOnClickListener {
+//            friendaddClicked()
+//        }
+
     }
 
     fun setViews(){
@@ -114,5 +128,10 @@ class MainActivity : AppCompatActivity() {
 
     fun openGallery(){
         galleryLauncher.launch("image/*")
+    }
+
+    fun friendaddClicked(){
+        val intent = Intent(this, FriendAdd::class.java)
+        startActivity(intent) //화면 이동시킴
     }
 }
