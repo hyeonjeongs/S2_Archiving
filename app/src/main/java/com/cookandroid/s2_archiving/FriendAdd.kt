@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.add_friend.*
 
-class friendAdd : AppCompatActivity() {
+class FriendAdd : AppCompatActivity() {
 
 
     //
@@ -32,7 +32,7 @@ class friendAdd : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.add_friend)
 
 
 //        mBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -118,8 +118,6 @@ class friendAdd : AppCompatActivity() {
     }
 
 
-
-    //
 
 }
 
