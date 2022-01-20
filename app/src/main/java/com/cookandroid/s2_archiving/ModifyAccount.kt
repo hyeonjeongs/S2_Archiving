@@ -45,7 +45,7 @@ class ModifyAccount : AppCompatActivity() {
             var strAfterPwd: String = mEtAfterPwd.text.toString()
 
             //파이어베이스에 정보 변경 내용 업데이트
-            mDatabaseRef.child("Firebase").child("${mFirebaseAuth?.currentUser!!.uid}")
+            mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}")
                 .addValueEventListener(object : ValueEventListener {
 
                     override fun onCancelled(error: DatabaseError) {
@@ -61,7 +61,7 @@ class ModifyAccount : AppCompatActivity() {
                         hashMap.put("userNickname", strNickName)
                         hashMap.put("userPwd", strAfterPwd)
 
-                        mDatabaseRef.child("Firebase")
+                        mDatabaseRef.child("UserAccount")
                             .child("${mFirebaseAuth?.currentUser!!.uid}").setValue(hashMap)
 
                     }
