@@ -41,6 +41,7 @@ class ResisterActivity : AppCompatActivity() {
         //이메일 중복 확인 버튼
 
         mBtnConfirmID.setOnClickListener {
+            mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase").child("UserAccount")
             mDatabaseRef.orderByChild("userEmail").equalTo("${mEtEmail.text.toString()}")
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(error: DatabaseError) {
