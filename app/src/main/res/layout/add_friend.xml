@@ -29,7 +29,7 @@
 
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/btnAddFriend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="362dp"
@@ -37,6 +37,7 @@
             android:layout_marginTop="39dp"
             android:layout_marginBottom="224dp"
             android:text="완료"
+            android:clickable="true"
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
