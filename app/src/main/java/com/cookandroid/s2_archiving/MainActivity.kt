@@ -56,12 +56,12 @@ class MainActivity : AppCompatActivity() {
         rvProfile.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvProfile.setHasFixedSize(true)
         rvProfile.adapter = ProfileAdapter(profileList)
-        plusButton.setOnClickListener {
+        ivPlus.setOnClickListener {
             Toast.makeText(baseContext,"친구추가화면", Toast.LENGTH_SHORT).show()
             friendaddClicked()
         }
 
-        button.setOnClickListener(View.OnClickListener{
+        btnSearch.setOnClickListener(View.OnClickListener{
 
             val intent = Intent(this, ModifyAccount::class.java)
             startActivity(intent)
@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         galleryLauncher = registerForActivityResult(
             ActivityResultContracts.
         GetContent()){uri->
-            profileImage.setImageURI(uri)
+            ivProfileImage.setImageURI(uri)
         }
 
         storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)

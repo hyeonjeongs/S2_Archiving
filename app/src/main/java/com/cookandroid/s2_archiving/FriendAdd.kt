@@ -12,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -30,7 +29,6 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class FriendAdd : AppCompatActivity() {
-
 
     //
     var photoUri: Uri? = null
@@ -232,14 +230,14 @@ class FriendAdd : AppCompatActivity() {
 
         galleryLauncher = registerForActivityResult(ActivityResultContracts.
         GetContent()){uri->
-            profileImage.setImageURI(uri)
+            ivProfileImage.setImageURI(uri)
         }
 
         storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
     fun setViews(){
-        profileImage.setOnClickListener{
+        ivProfileImage.setOnClickListener{
             openGallery()
         }
         tvGal.setOnClickListener{
