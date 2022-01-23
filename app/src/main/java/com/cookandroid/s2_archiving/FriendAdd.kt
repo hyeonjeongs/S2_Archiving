@@ -32,6 +32,10 @@ import kotlin.collections.HashMap
 class FriendAdd : AppCompatActivity() {
 
 
+    //fork test
+    //변경된거 확인해보기
+
+
     //
     var photoUri: Uri? = null
 
