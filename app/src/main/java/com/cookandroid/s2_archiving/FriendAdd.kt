@@ -34,6 +34,9 @@ class FriendAdd : AppCompatActivity() {
 
     //fork test
     //변경된거 확인해보기
+    //wefwefwefewfwefewfwefwe
+
+    //qfefqrfqewrewrewqrqwerwerqwer
 
 
     //
