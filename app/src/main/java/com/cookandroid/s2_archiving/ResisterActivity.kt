@@ -91,7 +91,7 @@ class ResisterActivity : AppCompatActivity() {
                             account.userPwd = strPwd
 
                             // setValue : database에 insert (삽입) 행위
-                            mDatabaseRef.child("UserAccount").child(firebaseUser?.uid.toString())
+                            mDatabaseRef.child(firebaseUser?.uid.toString())
                                 .setValue(account)
 
                             Toast.makeText(this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show()

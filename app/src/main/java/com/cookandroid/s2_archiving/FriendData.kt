@@ -6,5 +6,6 @@ data class FriendData(
         var f_number : String? = null,
         var f_bday : String? = null,
         var f_relationship : String? = null,
-        var f_imgUrl : String? = null
+        var f_imgUrl : String? = null,
+        var f_star : String? = null
 )
