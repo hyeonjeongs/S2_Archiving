@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var arrayList: ArrayList<FriendData>
     lateinit var ivPlus : ImageView
+    lateinit var ivStar : ImageView
 
     //파이어베이스
     private lateinit var database : FirebaseDatabase
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         //아이디 연결
         rvProfile = findViewById(R.id.rvProfile)
         ivPlus = findViewById(R.id.ivPlus)
+
 
         //파이어베이스 계정, 리얼타임 데이터베이스
         mFirebaseAuth = FirebaseAuth.getInstance()
