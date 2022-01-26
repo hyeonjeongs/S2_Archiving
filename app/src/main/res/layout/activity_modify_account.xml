@@ -8,64 +8,71 @@
 
     <EditText
         android:id="@+id/etModifyNickName"
-        android:layout_width="261dp"
-        android:layout_height="51dp"
+        android:layout_width="262dp"
+        android:layout_height="35dp"
         android:layout_marginStart="74dp"
-        android:layout_marginTop="236dp"
+        android:layout_marginTop="111dp"
         android:layout_marginEnd="75dp"
+        android:layout_marginBottom="37dp"
+        android:text="닉네임을 입력해주세요"
+        app:layout_constraintBottom_toTopOf="@+id/etModifyEmail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/etModifyEmail"
-        android:layout_width="268dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="81dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginEnd="122dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/etModifyBeforePwd"
-        android:layout_width="283dp"
+        android:id="@+id/etModifyEmail"
+        android:layout_width="208dp"
         android:layout_height="49dp"
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="136dp"
-        android:layout_marginEnd="139dp"
-        android:hint="현재 비밀번호를 입력하세요"
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="122dp"
+        android:layout_marginBottom="18dp"
+        android:text="이메일을 입력해주세요"
+        app:layout_constraintBottom_toTopOf="@+id/etModifyBeforePwd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etModifyNickName" />
+
+    <EditText
+        android:id="@+id/etModifyBeforePwd"
+        android:layout_width="198dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="139dp"
+        android:layout_marginBottom="10dp"
+        android:text="현재 비밀번호를 입력해주세요"
+        app:layout_constraintBottom_toTopOf="@+id/etModifyAfterPwd"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etModifyEmail" />
 
     <EditText
         android:id="@+id/etModifyAfterPwd"
-        android:layout_width="297dp"
-        android:layout_height="52dp"
+        android:layout_width="181dp"
+        android:layout_height="29dp"
         android:layout_marginStart="81dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="149dp"
-        android:layout_marginBottom="56dp"
-        android:hint="변경할 비밀번호를 입력하세요"
+        android:layout_marginBottom="23dp"
+        android:text="변경할 비밀번호를 입력해주세요"
         app:layout_constraintBottom_toTopOf="@+id/btnModify"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.146"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etModifyBeforePwd" />
 
     <Button
         android:id="@+id/btnModify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="154dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="164dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginBottom="303dp"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etModifyAfterPwd" />
 </androidx.constraintlayout.widget.ConstraintLayout>
