@@ -2,7 +2,6 @@ package com.cookandroid.s2_archiving
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,20 +40,22 @@ class FriendDataAdapter() : RecyclerView.Adapter<FriendDataAdapter.CustomViewHol
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        if(friendDataList.get(position).f_imgUrl == null){
+        if(friendDataList.get(position).fImgurl == null){
             holder.image.setImageResource(R.drawable.man)
         }else{
             Glide.with(holder.itemView)
-                    .load(friendDataList.get(position).f_imgUrl)
+                    .load(friendDataList.get(position).fImgurl)
                     .into(holder.image)
         }
-        holder.fName.text = friendDataList.get(position).f_name
-        if(friendDataList.get(position).f_star == null){
-            holder.image.setImageResource(R.drawable.star_empty)
+
+        holder.fName.text = friendDataList.get(position).fName
+
+        if(friendDataList.get(position).fStar == null){
+            holder.star.setImageResource(R.drawable.star_empty)
         }else{
             Glide.with(holder.itemView)
-                .load(friendDataList.get(position).f_star)
-                .into(holder.image)
+                .load(friendDataList.get(position).fStar)
+                .into(holder.star)
         }
 
     }
@@ -67,9 +68,9 @@ class FriendDataAdapter() : RecyclerView.Adapter<FriendDataAdapter.CustomViewHol
                 val friendData : FriendData = friendDataList.get(curPos)
                 if(curPos != RecyclerView.NO_POSITION){
                     var intent = Intent(context, FriendActivity::class.java).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
-                    intent.putExtra("IMGURL", friendData.f_imgUrl)
-                    intent.putExtra("FNAME", friendData.f_name)
-                    intent.putExtra("STAR", friendData.f_star)
+                    intent.putExtra("IMGURL", friendData.fImgurl)
+                    intent.putExtra("FNAME", friendData.fName)
+                    intent.putExtra("STAR", friendData.fStar)
                     context.startActivity(intent)
                 }
             }
