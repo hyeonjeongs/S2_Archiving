@@ -15,6 +15,7 @@ class HomeFragment : Fragment() {
             return HomeFragment()
         }
     }
+<<<<<<< HEAD
 
     //메모리에 올라갔을때
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,5 +34,24 @@ class HomeFragment : Fragment() {
 
         return view
     }
+=======
+>>>>>>> 978e629 (navi change)
 
+    //메모리에 올라갔을때
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    //프레그먼트를 안고 있는 엑티비티에 붙었을 때
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+    }
+
+    //뷰가 생성되었을때
+    //프레그먼트와 레이아웃 연결시켜줌
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_home,container,false) //홈프레그먼트 xml파일이랑 연결
+
+        return view
+    }
 }
