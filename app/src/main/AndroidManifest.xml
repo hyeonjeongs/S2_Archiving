@@ -16,11 +16,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.S2_Archiving">
-        <activity android:name=".SecondActivity"></activity>
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <activity android:name=".FriendPage"></activity>
         <activity android:name=".ModifyAccount" />
         <activity android:name=".ResisterActivity" />
-        <activity android:name=".FriendAdd"/>
+        <activity android:name=".FriendAdd" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">

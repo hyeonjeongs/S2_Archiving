@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.cookandroid.s2_archiving"
-        minSdkVersion 24
+        minSdkVersion 23
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -45,7 +45,7 @@ dependencies {
 
     implementation "androidx.activity:activity-ktx:$dependency_version"
     implementation "androidx.fragment:fragment-ktx:$dependency_version"
-
+    implementation "androidx.cardview:cardview:1.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
