@@ -114,24 +114,24 @@ class HomeFragment : Fragment() {
 
         //리사이클러뷰에 담을 데이터 가져오기(selectedItem 태그를 통해서 보여줄 게시글 구분)
         mDatabaseRef.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}")
-            .orderByChild("timestamp").addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    friendDataList.clear()
+                .orderByChild("timestamp").addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        friendDataList.clear()
 
-                    for (data : DataSnapshot in snapshot.getChildren()) {
-                        var friendData : FriendData? = data.getValue(FriendData::class.java)
+                        for (data : DataSnapshot in snapshot.getChildren()) {
+                            var friendData : FriendData? = data.getValue(FriendData::class.java)
 
-                        friendDataList.add(friendData!!) //담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
+                            friendDataList.add(friendData!!) //담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
 
-                        Log.d("태그", "$friendDataList")
+                            Log.d("태그", "$friendDataList")
+                        }
+                        adapter.notifyDataSetChanged() //리스트 저장 및 새로고침
+
                     }
-                    adapter.notifyDataSetChanged() //리스트 저장 및 새로고침
 
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                })
 
         adapter = FriendDataAdapter(friendDataList, this.requireContext())
         rvProfile.setAdapter(adapter)
