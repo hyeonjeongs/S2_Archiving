@@ -12,12 +12,19 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cookandroid.s2_archiving.fragment.HomeFragment
+import com.cookandroid.s2_archiving.fragment.LikeFragment
+import com.cookandroid.s2_archiving.fragment.UserFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.add_friend.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,6 +57,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentview) as NavHostFragment //네비게이션들을 담는 호스트
+        val navController = navHostFragment.navController //네비게이션 컨트롤러
+        NavigationUI.setupWithNavController(bottomNavi, navController) //바텀네비게이션 뷰와 네비게이션을 묶어준다.
 
         //아이디 연결
         rvProfile = findViewById(R.id.rvProfile)
