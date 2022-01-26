@@ -2,6 +2,7 @@ package com.cookandroid.s2_archiving
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.list_item.view.*
 import kotlin.collections.ArrayList
 
 class FriendDataAdapter() : RecyclerView.Adapter<FriendDataAdapter.CustomViewHolder>() {
+
+    private var mFirebaseAuth: FirebaseAuth? = null //파이어베이스 인증
+    private lateinit var mDatabaseRef: DatabaseReference //실시간 데이터베이스
+    private lateinit var fbStorage: FirebaseStorage
 
     private lateinit var friendDataList : ArrayList<FriendData>
     private lateinit var context : Context
@@ -58,11 +67,44 @@ class FriendDataAdapter() : RecyclerView.Adapter<FriendDataAdapter.CustomViewHol
                 .into(holder.star)
         }
 
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return CustomViewHolder(view).apply {
+            itemView.ivStar.setOnClickListener{
+                Log.d("스타눌림","StarClicked")
+                val curPos : Int = adapterPosition
+                val friendData : FriendData = friendDataList.get(curPos)
+                mFirebaseAuth = FirebaseAuth.getInstance()
+                mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
+                mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child("$friendData.uid").addValueEventListener(object :
+                    ValueEventListener {
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        lateinit var star : String
+                        if(friendDataList.get(curPos).fStar == "1"){
+                            star = "0"
+                        }
+                        else{
+                            star ="1"
+                        }
+                        val hashMap: HashMap<String, String> = HashMap()
+                        hashMap.put("fAdd", star)
+
+                        mDatabaseRef.child("UserFriends")
+                            .child("${mFirebaseAuth?.currentUser!!.uid}").child("$friendData.uid").setValue(hashMap)
+
+                    }
+                })
+
+            }
             itemView.setOnClickListener {
                 val curPos : Int = adapterPosition
                 val friendData : FriendData = friendDataList.get(curPos)
