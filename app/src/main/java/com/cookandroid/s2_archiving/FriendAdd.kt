@@ -63,136 +63,112 @@ class FriendAdd : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_friend)
 
-        btnAddFriend = findViewById(R.id.btnAddFriend)
-        etName = findViewById(R.id.etName)
-        etPhone = findViewById(R.id.etPhone)
-        etRel = findViewById(R.id.etRel)
-        etAdd = findViewById(R.id.etAdd)
-
-
-        //파이어베이스 계정, 리얼타임 데이터베이스
-        mFirebaseAuth = FirebaseAuth.getInstance()
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
-        fbStorage = FirebaseStorage.getInstance()
-
-        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth!!.currentUser!!.uid}")
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        //파이어베이스의 데이터를 가져옴
-                        var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-                        Log.d("택", "${user!!.userEmail.toString()}")
-                    }
-                    override fun onCancelled(error: DatabaseError) {
-                        Log.d("Tag", "Failed")
-                    }
-                })
-
-        btnAddFriend.setOnClickListener{
-            try {
-                var storageReference : StorageReference = fbStorage.getReference()
-
-                var file : Uri = Uri.fromFile(File(imgUrl))
-                var riversRef : StorageReference = storageReference.child("images/"+file.lastPathSegment)
-                var uploadTask : UploadTask = riversRef.putFile(file)
-
-                var urlTask : Task<Uri> = uploadTask.continueWithTask(Continuation {
-                    if(!it.isSuccessful){
-                        it.exception
-                    }
-                    riversRef.downloadUrl
-                }).addOnCompleteListener {
-                    if(it.isSuccessful)
-                    {
-                        var downloadUrl : Uri? = it.result
-
-                        val hashMap : HashMap<String, String> = HashMap()
-
-                        var strName: String = etName.text.toString()
-                        var strPhone = etPhone.text.toString()
-                        //var strBday: String = select_spinner!!.getSelectedItem().toString()
-                        var strRelationship: String = etRel.text.toString()
-                        var strAdd: String = etAdd.text.toString()
-
-                        hashMap.put("imgUrl", downloadUrl.toString())
-                        hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
-                        hashMap.put("fName", strName)
-                        hashMap.put("fPhone", strPhone)
-                        //hashMap.put("fBday", strBday)
-                        hashMap.put("fRel", strRelationship)
-                        hashMap.put("fAdd", strAdd)
-                        hashMap.put("timstamp", timestamp)
-
-
-                        mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
-                            .addOnCompleteListener {
-                                if(it.isSuccessful){
-                                    Toast.makeText(this, "업로드", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-
-                        Toast.makeText(this, "친구 추가 완료", Toast.LENGTH_SHORT).show()
-                        var intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                }.addOnFailureListener {
-
-                    val hashMap : HashMap<String, String> = HashMap()
-
-                    var strName: String = etName.text.toString()
-                    var strPhone = etPhone.text.toString()
-                    //var strBday: String = select_spinner!!.getSelectedItem().toString()
-                    var strRelationship: String = etRel.text.toString()
-                    var strAdd: String = etAdd.text.toString()
-
-
-                    hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
-                    hashMap.put("fName", strName)
-                    hashMap.put("fPhone", strPhone)
-                    //hashMap.put("fBday", strBday)
-                    hashMap.put("fRel", strRelationship)
-                    hashMap.put("fAdd", strAdd)
-                    hashMap.put("timstamp", timestamp)
-                    mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
-
-                    Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
-                    var intent = Intent(this, MainActivity::class.java)
-                    //intent.putExtra("SELECTED_ITEM", selectedItem)
-                    startActivity(intent)
-                    finish()
-
-                }
-            }catch (e : NullPointerException){
-                Toast.makeText(this, "이미지 선택 안함", Toast.LENGTH_SHORT).show();
-            }
-        }
+//        btnAddFriend = findViewById(R.id.btnAddFriend)
+//        etName = findViewById(R.id.etName)
+//        etPhone = findViewById(R.id.etPhone)
+//        etRel = findViewById(R.id.etRel)
+//        etAdd = findViewById(R.id.etAdd)
+//
+//
+//        //파이어베이스 계정, 리얼타임 데이터베이스
+//        mFirebaseAuth = FirebaseAuth.getInstance()
+//        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
+//        fbStorage = FirebaseStorage.getInstance()
+//
+//        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth!!.currentUser!!.uid}")
+//                .addListenerForSingleValueEvent(object : ValueEventListener {
+//                    override fun onDataChange(snapshot: DataSnapshot) {
+//                        //파이어베이스의 데이터를 가져옴
+//                        var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
+//                        Log.d("택", "${user!!.userEmail.toString()}")
+//                    }
+//                    override fun onCancelled(error: DatabaseError) {
+//                        Log.d("Tag", "Failed")
+//                    }
+//                })
+//
+//        btnAddFriend.setOnClickListener{
+//            try {
+//                var storageReference : StorageReference = fbStorage.getReference()
+//
+//                var file : Uri = Uri.fromFile(File(imgUrl))
+//                var riversRef : StorageReference = storageReference.child("images/"+file.lastPathSegment)
+//                var uploadTask : UploadTask = riversRef.putFile(file)
+//
+//                var urlTask : Task<Uri> = uploadTask.continueWithTask(Continuation {
+//                    if(!it.isSuccessful){
+//                        it.exception
+//                    }
+//                    riversRef.downloadUrl
+//                }).addOnCompleteListener {
+//                    if(it.isSuccessful)
+//                    {
+//                        var downloadUrl : Uri? = it.result
+//
+//                        val hashMap : HashMap<String, String> = HashMap()
+//
+//                        var strName: String = etName.text.toString()
+//                        var strPhone = etPhone.text.toString()
+//                        //var strBday: String = select_spinner!!.getSelectedItem().toString()
+//                        var strRelationship: String = etRel.text.toString()
+//                        var strAdd: String = etAdd.text.toString()
+//
+//                        hashMap.put("imgUrl", downloadUrl.toString())
+//                        hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
+//                        hashMap.put("fName", strName)
+//                        hashMap.put("fPhone", strPhone)
+//                        //hashMap.put("fBday", strBday)
+//                        hashMap.put("fRel", strRelationship)
+//                        hashMap.put("fAdd", strAdd)
+//                        hashMap.put("timstamp", timestamp)
+//
+//
+//                        mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
+//                            .addOnCompleteListener {
+//                                if(it.isSuccessful){
+//                                    Toast.makeText(this, "업로드", Toast.LENGTH_SHORT).show()
+//                                }
+//                            }
+//
+//                        Toast.makeText(this, "친구 추가 완료", Toast.LENGTH_SHORT).show()
+//                        var intent = Intent(this, MainActivity::class.java)
+//                        startActivity(intent)
+//                        finish()
+//                    }
+//                }.addOnFailureListener {
+//
+//                    val hashMap : HashMap<String, String> = HashMap()
+//
+//                    var strName: String = etName.text.toString()
+//                    var strPhone = etPhone.text.toString()
+//                    //var strBday: String = select_spinner!!.getSelectedItem().toString()
+//                    var strRelationship: String = etRel.text.toString()
+//                    var strAdd: String = etAdd.text.toString()
+//
+//
+//                    hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
+//                    hashMap.put("fName", strName)
+//                    hashMap.put("fPhone", strPhone)
+//                    //hashMap.put("fBday", strBday)
+//                    hashMap.put("fRel", strRelationship)
+//                    hashMap.put("fAdd", strAdd)
+//                    hashMap.put("timstamp", timestamp)
+//                    mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
+//
+//                    Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
+//                    var intent = Intent(this, MainActivity::class.java)
+//                    //intent.putExtra("SELECTED_ITEM", selectedItem)
+//                    startActivity(intent)
+//                    finish()
+//
+//                }
+//            }catch (e : NullPointerException){
+//                Toast.makeText(this, "이미지 선택 안함", Toast.LENGTH_SHORT).show();
+//            }
+//        }
 
 //        mBinding = ActivityMainBinding.inflate(layoutInflater)
 //        setContentView(binding.root)
-
-
-//        //recyclerview 데이터
-//        val profileList = arrayListOf(
-//            Profiles(R.drawable.woman, "조윤진", R.drawable.star_empty),
-//            Profiles(R.drawable.man, "김씨", R.drawable.star_full),
-//            Profiles(R.drawable.woman, "이땡땡", R.drawable.star_full),
-//            Profiles(R.drawable.woman, "최씨", R.drawable.star_empty),
-//            Profiles(R.drawable.man, "박땡땡", R.drawable.star_full),
-//            Profiles(R.drawable.woman, "신땡땡", R.drawable.star_empty),
-//            Profiles(R.drawable.man, "윤씨", R.drawable.star_empty),
-//            Profiles(R.drawable.woman, "권씨", R.drawable.star_empty),
-//            Profiles(R.drawable.woman, "강씨", R.drawable.star_empty),
-//            Profiles(R.drawable.man, "서씨", R.drawable.star_full)
-//
-//        )
-//
-//        rvProfile.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//        rvProfile.setHasFixedSize(true)
-//        rvProfile.adapter = ProfileAdapter(profileList)
-//        plusButton.setOnClickListener {
-//            Toast.makeText(baseContext,"친구추가화면", Toast.LENGTH_SHORT).show()
-//        }
-
 
 
 
