@@ -53,8 +53,8 @@ class FriendDataAdapter() : RecyclerView.Adapter<FriendDataAdapter.CustomViewHol
             holder.image.setImageResource(R.drawable.man)
         }else{
             Glide.with(holder.itemView)
-                    .load(friendDataList.get(position).fImgurl)
-                    .into(holder.image)
+                .load(friendDataList.get(position).fImgurl)
+                .into(holder.image)
         }
 
         holder.fName.text = friendDataList.get(position).fName
@@ -74,37 +74,6 @@ class FriendDataAdapter() : RecyclerView.Adapter<FriendDataAdapter.CustomViewHol
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return CustomViewHolder(view).apply {
-            itemView.ivStar.setOnClickListener{
-                Log.d("스타눌림","StarClicked")
-                val curPos : Int = adapterPosition
-                val friendData : FriendData = friendDataList.get(curPos)
-                mFirebaseAuth = FirebaseAuth.getInstance()
-                mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
-                mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child("$friendData.uid").addValueEventListener(object :
-                    ValueEventListener {
-
-                    override fun onCancelled(error: DatabaseError) {
-
-                    }
-
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        lateinit var star : String
-                        if(friendDataList.get(curPos).fStar == "1"){
-                            star = "0"
-                        }
-                        else{
-                            star ="1"
-                        }
-                        val hashMap: HashMap<String, String> = HashMap()
-                        hashMap.put("fAdd", star)
-
-                        mDatabaseRef.child("UserFriends")
-                            .child("${mFirebaseAuth?.currentUser!!.uid}").child("$friendData.uid").setValue(hashMap)
-
-                    }
-                })
-
-            }
             itemView.setOnClickListener {
                 val curPos : Int = adapterPosition
                 val friendData : FriendData = friendDataList.get(curPos)
