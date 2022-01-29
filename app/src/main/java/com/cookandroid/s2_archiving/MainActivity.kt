@@ -9,12 +9,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-<<<<<<< HEAD
-=======
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.LinearLayoutManager
->>>>>>> 978e629 (navi change)
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.s2_archiving.fragment.HomeFragment
 import com.cookandroid.s2_archiving.fragment.LikeFragment
@@ -24,25 +18,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.add_friend.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class MainActivity : AppCompatActivity() {
 
-<<<<<<< HEAD
-=======
-    //위젯 연결할 변수 선언
-//    lateinit var rvProfile : RecyclerView
-//    lateinit var adapter : RecyclerView.Adapter<FriendDataAdapter.CustomViewHolder>
-//    lateinit var layoutManager: RecyclerView.LayoutManager
-//    lateinit var arrayList: ArrayList<FriendData>
-//    lateinit var ivPlus : ImageView
-//    lateinit var ivStar : ImageView
-
-    //프레그먼트를 위한 변수들
-    private lateinit var homeFragment: HomeFragment
-    private lateinit var likeFragment: LikeFragment
-    private lateinit var userFragment: UserFragment
->>>>>>> 804ec2c (frament revise)
 
     //프레그먼트를 위한 변수들
     private lateinit var homeFragment: HomeFragment
@@ -56,97 +34,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         bottom_navi.setOnNavigationItemSelectedListener(onBottomNaviItemSelectedListner)
         homeFragment = HomeFragment.newInstance()
         supportFragmentManager.beginTransaction().add(R.id.fragment_frame,homeFragment).commit()
-=======
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentview) as NavHostFragment //네비게이션들을 담는 호스트
-        val navController = navHostFragment.navController //네비게이션 컨트롤러
-        NavigationUI.setupWithNavController(bottomNavi, navController) //바텀네비게이션 뷰와 네비게이션을 묶어준다.
-=======
-        bottom_navi.setOnNavigationItemSelectedListener(onBottomNaviItemSelectedListner)
-        homeFragment = HomeFragment.newInstance()
-        supportFragmentManager.beginTransaction().add(R.id.fragment_frame,homeFragment).commit()
->>>>>>> 804ec2c (frament revise)
-
-        //아이디 연결
-//        rvProfile = findViewById(R.id.rvProfile)
-//        ivPlus = findViewById(R.id.ivPlus)
-
-        //파이어베이스 계정, 리얼타임 데이터베이스
-        mFirebaseAuth = FirebaseAuth.getInstance()
-
-//        mBinding = ActivityMainBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-
-
-
-//
-//        arrayList = ArrayList<FriendData>() //FriendData 객체를 담을 ArrayList
-
-        database = FirebaseDatabase.getInstance() //파이어베이스 데이터베이스 연동
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
-
-        //리사이클러뷰에 담을 데이터 가져오기(selectedItem 태그를 통해서 보여줄 게시글 구분)
-<<<<<<< HEAD
-        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}")
-            .orderByChild("timestamp").addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    arrayList.clear()
-
-                    for (data : DataSnapshot in snapshot.getChildren()) {
-                        var friendData : FriendData? = data.getValue(FriendData::class.java)
-
-                        arrayList.add(friendData!!) //담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
-
-                        Log.d("태그", "$arrayList")
-                    }
-                    adapter.notifyDataSetChanged() //리스트 저장 및 새로고침
-
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
-
-        adapter = FriendDataAdapter(arrayList, this)
-        rvProfile.setAdapter(adapter)
-
-        //친구 추가 버튼에 클릭 리스너 연결
-        ivPlus.setOnClickListener {
-            Toast.makeText(baseContext,"친구추가화면", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, FriendAdd::class.java)
-            startActivity(intent) //화면 이동시킴
-        }
-
-        btnSearch.setOnClickListener(View.OnClickListener{
->>>>>>> 978e629 (navi change)
-=======
-//        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}")
-//            .orderByChild("timestamp").addValueEventListener(object : ValueEventListener {
-//                override fun onDataChange(snapshot: DataSnapshot) {
-//                    arrayList.clear()
-//
-//                    for (data : DataSnapshot in snapshot.getChildren()) {
-//                        var friendData : FriendData? = data.getValue(FriendData::class.java)
-//
-//                        arrayList.add(friendData!!) //담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
-//
-//                        Log.d("태그", "$arrayList")
-//                    }
-//                    adapter.notifyDataSetChanged() //리스트 저장 및 새로고침
-//
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {
-//                }
-//            })
-
-//        adapter = FriendDataAdapter(arrayList, this)
-//        rvProfile.setAdapter(adapter)
->>>>>>> 804ec2c (frament revise)
 
 
     }
@@ -168,45 +58,6 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
-<<<<<<< HEAD
         true
-=======
-
-        storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
-        //친구 추가 버튼 뷰에 클릭 리스너 설정(친구추가버튼 클릭시 발생)
-//        plusButton.setOnClickListener {
-//            friendaddClicked()
-//        }
-
-    }
-
-    //바텀네비게이션 아이템 클릭 리스너 설정
-    private val onBottomNaviItemSelectedListner =  BottomNavigationView.OnNavigationItemSelectedListener {
-        when(it.itemId){
-            R.id.home -> {
-                homeFragment = HomeFragment.newInstance()
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_frame,homeFragment).commit()
-            }
-            R.id.like -> {
-                likeFragment = LikeFragment.newInstance()
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_frame,likeFragment).commit()
-            }
-            R.id.user -> {
-                userFragment = UserFragment.newInstance()
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_frame,userFragment).commit()
-
-            }
-        }
-        true
-    }
-    fun setViews(){
-//        profileImage.setOnClickListener{
-//            openGallery()
-//        }
-//        tvGal.setOnClickListener{
-//            openGallery()
-//        }
->>>>>>> 804ec2c (frament revise)
     }
 }
