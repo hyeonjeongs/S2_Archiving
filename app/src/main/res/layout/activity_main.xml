@@ -25,10 +25,10 @@
         android:layout_alignParentBottom="true"
         android:background="#1E8E83"
         android:layout_centerHorizontal="true">
+
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
 
 
 </RelativeLayout>
-
