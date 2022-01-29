@@ -1,137 +1,63 @@
 package com.cookandroid.s2_archiving
 
 import android.Manifest
-import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.cookandroid.s2_archiving.fragment.HomeFragment
+import com.cookandroid.s2_archiving.fragment.LikeFragment
+import com.cookandroid.s2_archiving.fragment.UserFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.add_friend.*
 
 class MainActivity : AppCompatActivity() {
 
-    //
-    var photoUri: Uri? = null
 
-//    private var mBinding: ActivityMainBinding? = null
-//    private val binding get() = mBinding!!
+    //프레그먼트를 위한 변수들
+    private lateinit var homeFragment: HomeFragment
+    private lateinit var likeFragment: LikeFragment
+    private lateinit var userFragment: UserFragment
 
-    lateinit var cameraPermission: ActivityResultLauncher<String>
-    lateinit var storagePermission : ActivityResultLauncher<String>
 
-    lateinit var cameraLauncher: ActivityResultLauncher<Uri>
-    lateinit var galleryLauncher: ActivityResultLauncher<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        bottom_navi.setOnNavigationItemSelectedListener(onBottomNaviItemSelectedListner)
+        homeFragment = HomeFragment.newInstance()
+        supportFragmentManager.beginTransaction().add(R.id.fragment_frame,homeFragment).commit()
 
 
-//        mBinding = ActivityMainBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
+    }
 
+    //바텀네비게이션 아이템 클릭 리스너 설정
+    private val onBottomNaviItemSelectedListner =  BottomNavigationView.OnNavigationItemSelectedListener {
+        when(it.itemId){
+            R.id.home -> {
+                homeFragment = HomeFragment.newInstance()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_frame,homeFragment).commit()
+            }
+            R.id.like -> {
+                likeFragment = LikeFragment.newInstance()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_frame,likeFragment).commit()
+            }
+            R.id.user -> {
+                userFragment = UserFragment.newInstance()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_frame,userFragment).commit()
 
-        //recyclerview 데이터
-        val profileList = arrayListOf(
-            Profiles(R.drawable.woman, "조윤진", R.drawable.star_empty),
-            Profiles(R.drawable.man, "김씨", R.drawable.star_full),
-            Profiles(R.drawable.woman, "이땡땡", R.drawable.star_full),
-            Profiles(R.drawable.woman, "최씨", R.drawable.star_empty),
-            Profiles(R.drawable.man, "박땡땡", R.drawable.star_full),
-            Profiles(R.drawable.woman, "신땡땡", R.drawable.star_empty),
-            Profiles(R.drawable.man, "윤씨", R.drawable.star_empty),
-            Profiles(R.drawable.woman, "권씨", R.drawable.star_empty),
-            Profiles(R.drawable.woman, "강씨", R.drawable.star_empty),
-            Profiles(R.drawable.man, "서씨", R.drawable.star_full)
-
-        )
-
-        rvProfile.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rvProfile.setHasFixedSize(true)
-        rvProfile.adapter = ProfileAdapter(profileList)
-        plusButton.setOnClickListener {
-            Toast.makeText(baseContext,"친구추가화면", Toast.LENGTH_SHORT).show()
-            friendaddClicked()
-        }
-
-        button.setOnClickListener(View.OnClickListener{
-
-            val intent = Intent(this, ModifyAccount::class.java)
-            startActivity(intent)
-
-        })
-
-
-
-        //
-        //생년원일 스피너
-//        year_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.yearItemList, android.R.layout.simple_spinner_item)
-//        month_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.monthItemList, android.R.layout.simple_spinner_item)
-//        day_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.dayItemList, android.R.layout.simple_spinner_item)
-
-
-        storagePermission=registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ){isGranted ->
-            if(isGranted){
-                setViews()
-            } else{
-                Toast.makeText(baseContext, "외부 저장소 권한을 승인해야 앱을 사용할 수 있습니다.", Toast.LENGTH_SHORT).show()
-                finish()
             }
         }
-
-
-        cameraPermission=registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ){isGranted ->
-            if(isGranted){
-                //openCamera()
-            } else{
-                Toast.makeText(baseContext, "카메라 권한을 승인해야 앱을 사용할 수 있습니다.", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        }
-
-
-
-        galleryLauncher = registerForActivityResult(
-            ActivityResultContracts.
-        GetContent()){uri->
-            profileImage.setImageURI(uri)
-        }
-
-        storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
-        //친구 추가 버튼 뷰에 클릭 리스너 설정(친구추가버튼 클릭시 발생)
-//        plusButton.setOnClickListener {
-//            friendaddClicked()
-//        }
-
-    }
-
-    fun setViews(){
-//        profileImage.setOnClickListener{
-//            openGallery()
-//        }
-//        tvGal.setOnClickListener{
-//            openGallery()
-//        }
-    }
-
-    fun openGallery(){
-        galleryLauncher.launch("image/*")
-    }
-
-    fun friendaddClicked(){
-        val intent = Intent(this, FriendAdd::class.java)
-        startActivity(intent) //화면 이동시킴
+        true
     }
 }

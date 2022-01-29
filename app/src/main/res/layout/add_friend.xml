@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/profileImage"
+            android:id="@+id/ivProfileImage"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_marginTop="60dp"
@@ -29,7 +29,7 @@
 
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/btnAddFriend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="362dp"
@@ -37,6 +37,7 @@
             android:layout_marginTop="39dp"
             android:layout_marginBottom="224dp"
             android:text="완료"
+            android:clickable="true"
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +53,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+            app:layout_constraintTop_toBottomOf="@+id/ivProfileImage" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -112,6 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
+                android:hint="특수기호 없이 번호만 입력하세요"
                 android:ems="10"
                 android:inputType="textPersonName" />
         </LinearLayout>
@@ -140,7 +142,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tvBirthYear"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -153,7 +155,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvBirthMonth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -166,7 +168,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tvBirthDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
