@@ -25,10 +25,19 @@
         android:layout_alignParentBottom="true"
         android:background="#1E8E83"
         android:layout_centerHorizontal="true">
+<<<<<<< HEAD
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
+=======
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+>>>>>>> 1702f56b20f64b52a764818f7df9687ffa0958d4
 
 
 
 </RelativeLayout>
 
+<<<<<<< HEAD
+=======
+</RelativeLayout>
+>>>>>>> 1702f56b20f64b52a764818f7df9687ffa0958d4

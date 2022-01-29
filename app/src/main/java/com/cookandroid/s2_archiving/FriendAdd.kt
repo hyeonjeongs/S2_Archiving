@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.cookandroid.s2_archiving.databinding.ActivityMainBinding
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -63,124 +64,40 @@ class FriendAdd : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_friend)
 
-//        btnAddFriend = findViewById(R.id.btnAddFriend)
-//        etName = findViewById(R.id.etName)
-//        etPhone = findViewById(R.id.etPhone)
-//        etRel = findViewById(R.id.etRel)
-//        etAdd = findViewById(R.id.etAdd)
-//
-//
-//        //파이어베이스 계정, 리얼타임 데이터베이스
-//        mFirebaseAuth = FirebaseAuth.getInstance()
-//        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
-//        fbStorage = FirebaseStorage.getInstance()
-//
-//        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth!!.currentUser!!.uid}")
-//                .addListenerForSingleValueEvent(object : ValueEventListener {
-//                    override fun onDataChange(snapshot: DataSnapshot) {
-//                        //파이어베이스의 데이터를 가져옴
-//                        var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-//                        Log.d("택", "${user!!.userEmail.toString()}")
-//                    }
-//                    override fun onCancelled(error: DatabaseError) {
-//                        Log.d("Tag", "Failed")
-//                    }
-//                })
-//
-//        btnAddFriend.setOnClickListener{
-//            try {
-//                var storageReference : StorageReference = fbStorage.getReference()
-//
-//                var file : Uri = Uri.fromFile(File(imgUrl))
-//                var riversRef : StorageReference = storageReference.child("images/"+file.lastPathSegment)
-//                var uploadTask : UploadTask = riversRef.putFile(file)
-//
-//                var urlTask : Task<Uri> = uploadTask.continueWithTask(Continuation {
-//                    if(!it.isSuccessful){
-//                        it.exception
-//                    }
-//                    riversRef.downloadUrl
-//                }).addOnCompleteListener {
-//                    if(it.isSuccessful)
-//                    {
-//                        var downloadUrl : Uri? = it.result
-//
-//                        val hashMap : HashMap<String, String> = HashMap()
-//
-//                        var strName: String = etName.text.toString()
-//                        var strPhone = etPhone.text.toString()
-//                        //var strBday: String = select_spinner!!.getSelectedItem().toString()
-//                        var strRelationship: String = etRel.text.toString()
-//                        var strAdd: String = etAdd.text.toString()
-//
-//                        hashMap.put("imgUrl", downloadUrl.toString())
-//                        hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
-//                        hashMap.put("fName", strName)
-//                        hashMap.put("fPhone", strPhone)
-//                        //hashMap.put("fBday", strBday)
-//                        hashMap.put("fRel", strRelationship)
-//                        hashMap.put("fAdd", strAdd)
-//                        hashMap.put("timstamp", timestamp)
-//
-//
-//                        mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
-//                            .addOnCompleteListener {
-//                                if(it.isSuccessful){
-//                                    Toast.makeText(this, "업로드", Toast.LENGTH_SHORT).show()
-//                                }
-//                            }
-//
-//                        Toast.makeText(this, "친구 추가 완료", Toast.LENGTH_SHORT).show()
-//                        var intent = Intent(this, MainActivity::class.java)
-//                        startActivity(intent)
-//                        finish()
-//                    }
-//                }.addOnFailureListener {
-//
-//                    val hashMap : HashMap<String, String> = HashMap()
-//
-//                    var strName: String = etName.text.toString()
-//                    var strPhone = etPhone.text.toString()
-//                    //var strBday: String = select_spinner!!.getSelectedItem().toString()
-//                    var strRelationship: String = etRel.text.toString()
-//                    var strAdd: String = etAdd.text.toString()
-//
-//
-//                    hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
-//                    hashMap.put("fName", strName)
-//                    hashMap.put("fPhone", strPhone)
-//                    //hashMap.put("fBday", strBday)
-//                    hashMap.put("fRel", strRelationship)
-//                    hashMap.put("fAdd", strAdd)
-//                    hashMap.put("timstamp", timestamp)
-//                    mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
-//
-//                    Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
-//                    var intent = Intent(this, MainActivity::class.java)
-//                    //intent.putExtra("SELECTED_ITEM", selectedItem)
-//                    startActivity(intent)
-//                    finish()
-//
-//                }
-//            }catch (e : NullPointerException){
-//                Toast.makeText(this, "이미지 선택 안함", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-
-//        mBinding = ActivityMainBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
+        btnAddFriend = findViewById(R.id.btnAddFriend)
+        etName = findViewById(R.id.etName)
+        etPhone = findViewById(R.id.etPhone)
+        etRel = findViewById(R.id.etRel)
+        etAdd = findViewById(R.id.etAdd)
 
 
+        //파이어베이스 계정, 리얼타임 데이터베이스
+        mFirebaseAuth = FirebaseAuth.getInstance()
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
+        fbStorage = FirebaseStorage.getInstance()
 
+        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth!!.currentUser!!.uid}")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        //파이어베이스의 데이터를 가져옴
+                        var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
+                        Log.d("택", "${user!!.userEmail.toString()}")
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.d("Tag", "Failed")
+                    }
+                })
 
         //생년원일 스피너
         year_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.yearItemList, android.R.layout.simple_spinner_item)
         month_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.monthItemList, android.R.layout.simple_spinner_item)
         day_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.dayItemList, android.R.layout.simple_spinner_item)
 
+        var birthDay:String = year_spinner.selectedItem.toString()+"년"+month_spinner.selectedItem.toString()+"월"+day_spinner.selectedItem.toString()+"일"
+
 
         storagePermission=registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
+                ActivityResultContracts.RequestPermission()
         ){isGranted ->
             if(isGranted){
                 setViews()
@@ -192,7 +109,7 @@ class FriendAdd : AppCompatActivity() {
 
 
         cameraPermission=registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
+                ActivityResultContracts.RequestPermission()
         ){isGranted ->
             if(isGranted){
                 //openCamera()
@@ -210,6 +127,88 @@ class FriendAdd : AppCompatActivity() {
         }
 
         storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        btnAddFriend.setOnClickListener{
+            try {
+                var storageReference : StorageReference = fbStorage.getReference()
+
+                var file : Uri = Uri.fromFile(File(imgUrl))
+                var riversRef : StorageReference = storageReference.child("images/"+file.lastPathSegment)
+                var uploadTask : UploadTask = riversRef.putFile(file)
+
+                var urlTask : Task<Uri> = uploadTask.continueWithTask(Continuation {
+                    if(!it.isSuccessful){
+                        it.exception
+                    }
+                    riversRef.downloadUrl
+                }).addOnCompleteListener {
+                    if(it.isSuccessful)
+                    {
+                        var downloadUrl : Uri? = it.result
+
+                        val hashMap : HashMap<String, String> = HashMap()
+
+                        var strName: String = etName.text.toString()
+                        var strPhone = etPhone.text.toString()
+                        var strBday: String = birthDay
+                        var strRelationship: String = etRel.text.toString()
+                        var strAdd: String = etAdd.text.toString()
+
+                        hashMap.put("imgUrl", downloadUrl.toString())
+                        hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
+                        hashMap.put("fName", strName)
+                        hashMap.put("fPhone", strPhone)
+                        hashMap.put("fBday", strBday)
+                        hashMap.put("fRel", strRelationship)
+                        hashMap.put("fAdd", strAdd)
+                        hashMap.put("timstamp", timestamp)
+
+
+                        mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
+                                .addOnCompleteListener {
+                                    if(it.isSuccessful){
+                                        Toast.makeText(this, "업로드", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+
+                        Toast.makeText(this, "친구 추가 완료", Toast.LENGTH_SHORT).show()
+                        var intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }.addOnFailureListener {
+
+                    val hashMap : HashMap<String, String> = HashMap()
+
+                    var strName: String = etName.text.toString()
+                    var strPhone = etPhone.text.toString()
+                    var strBday: String = birthDay
+                    var strRelationship: String = etRel.text.toString()
+                    var strAdd: String = etAdd.text.toString()
+
+
+                    hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
+                    hashMap.put("fName", strName)
+                    hashMap.put("fPhone", strPhone)
+                    hashMap.put("fBday", strBday)
+                    hashMap.put("fRel", strRelationship)
+                    hashMap.put("fAdd", strAdd)
+                    hashMap.put("timstamp", timestamp)
+                    mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
+
+                    Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
+                    var intent = Intent(this, MainActivity::class.java)
+                    //intent.putExtra("SELECTED_ITEM", selectedItem)
+                    startActivity(intent)
+                    finish()
+
+                }
+            }catch (e : NullPointerException){
+                Toast.makeText(this, "이미지 선택 안함", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
     }
 
     fun setViews(){
@@ -228,6 +227,5 @@ class FriendAdd : AppCompatActivity() {
 
 
 }
-
 
 
