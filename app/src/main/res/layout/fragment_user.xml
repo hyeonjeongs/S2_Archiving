@@ -21,7 +21,7 @@
 
 
         <ImageView
-            android:id="@+id/iv_Prof"
+            android:id="@+id/ivProf"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
@@ -37,7 +37,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_NickName"
+                android:id="@+id/tvNickName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -45,7 +45,7 @@
                 android:textSize="28dp" />
 
             <TextView
-                android:id="@+id/tv_Dong"
+                android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -61,7 +61,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_ChangeInfo"
+                android:id="@+id/btnChangeInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -69,7 +69,7 @@
                 android:text="회원 정보 수정" />
 
             <Button
-                android:id="@+id/btn_Logout"
+                android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -77,7 +77,7 @@
                 android:text="로그 아웃" />
 
             <Button
-                android:id="@+id/btn_Drop"
+                android:id="@+id/btnDrop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
