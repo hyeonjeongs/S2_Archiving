@@ -97,7 +97,7 @@ class FriendAdd : AppCompatActivity() {
 
 
         storagePermission=registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
+                ActivityResultContracts.RequestPermission()
         ){isGranted ->
             if(isGranted){
                 setViews()
@@ -109,7 +109,7 @@ class FriendAdd : AppCompatActivity() {
 
 
         cameraPermission=registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
+                ActivityResultContracts.RequestPermission()
         ){isGranted ->
             if(isGranted){
                 //openCamera()
@@ -165,11 +165,11 @@ class FriendAdd : AppCompatActivity() {
 
 
                         mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
-                            .addOnCompleteListener {
-                                if(it.isSuccessful){
-                                    Toast.makeText(this, "업로드", Toast.LENGTH_SHORT).show()
+                                .addOnCompleteListener {
+                                    if(it.isSuccessful){
+                                        Toast.makeText(this, "업로드", Toast.LENGTH_SHORT).show()
+                                    }
                                 }
-                            }
 
                         Toast.makeText(this, "친구 추가 완료", Toast.LENGTH_SHORT).show()
                         var intent = Intent(this, MainActivity::class.java)
@@ -227,6 +227,5 @@ class FriendAdd : AppCompatActivity() {
 
 
 }
-
 
 
