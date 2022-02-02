@@ -48,15 +48,14 @@ class ModifyAccount : AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-                mTvEmail.text = "${user!!.userEmail.toString()}"
-                mEtNickName.setText("${user!!.userNickname.toString()}")
+                mTvEmail.text = "${user!!.userEmail}"
+                mEtNickName.setText("${user!!.userNickname}")
 
             }
         })
 
         //정보 수정 버튼
         btnModify.setOnClickListener {
-
 
             var strNickName: String = mEtNickName.text.toString()
             var strAfterPwd: String = mEtAfterPwd.text.toString()
@@ -77,6 +76,7 @@ class ModifyAccount : AppCompatActivity() {
                         if(mEtBeforePwd.text.isNotEmpty()&&mEtAfterPwd.text.isNotEmpty()){ // 비밀번호를 변경하고자 한다면
                             if(comparePassword.equals(mEtBeforePwd.text.toString())) {
                                 changePassword()
+                                strAfterPwd = mEtAfterPwd.text.toString()
                             }
                             else{ // 현재 비밀번호 입력 오류 시
                                 Toast.makeText(this@ModifyAccount, "현재 비밀번호를 확인해주세요", Toast.LENGTH_SHORT)
