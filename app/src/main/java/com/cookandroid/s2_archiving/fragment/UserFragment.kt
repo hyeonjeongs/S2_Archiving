@@ -1,31 +1,130 @@
 package com.cookandroid.s2_archiving.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 
 class UserFragment : Fragment() {
 
-    companion object{
+    lateinit var mDatabaseRef : DatabaseReference
+    lateinit var mFirebaseAuth: FirebaseAuth
+
+    companion object {
+        const val TAG : String = "로그"
+
         fun newInstance() : UserFragment{
             return UserFragment()
         }
+
     }
 
+    // 메모리에 올라갔을때
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "UserFragement - onCreate() called")
+
     }
 
+    // 프레그먼트를 안고 있는 액티비티에 붙었을 때
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        Log.d(TAG, "UserFragement - onAttach() called")
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? { //like_fragment xml파일이랑 연결
-        val view = inflater.inflate(R.layout.fragment_user,container, false)
+    // 뷰가 생성되었을 때
+    // 프레그먼트와 레이아웃을 연결시켜주는 부분이다.
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+
+    ): View? {
+
+        Log.d(TAG, "UserFragement - onCreateView() called")
+
+        //fragment내 findViewById 사용
+        val view = inflater.inflate(R.layout.fragment_user, container, false)
+        var btnChangeinfo : Button = view.findViewById(R.id.btnChangeInfo)
+        var btnLogout : Button = view.findViewById(R.id.btnLogout)
+        var btnDrop : Button = view.findViewById(R.id.btnDrop)
+        var ivInfoimg : ImageView = view.findViewById(R.id.ivProf)
+        //닉네임 받아오기
+        var tvNickname : TextView = view.findViewById(R.id.tvNickName)
+        var tvEmail : TextView = view.findViewById(R.id.tvEmail)
+
+        mFirebaseAuth = FirebaseAuth.getInstance()
+        val mFirebaseUser : FirebaseUser? = mFirebaseAuth?.currentUser
+
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
+                .child("UserAccount").child(mFirebaseUser!!.uid)
+
+        //화면에 사용자 프로필 이미지, 닉네임, 이메일 출력
+        mDatabaseRef.addValueEventListener(object : ValueEventListener {
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
+
+                tvNickname.setText("${user!!.userNickname.toString()}")
+
+                tvEmail.setText("${user!!.userEmail.toString()}")
+
+//                if(user!!.userProfileImage.equals("")){
+//                    ivInfoimg.setImageResource(R.drawable.user)
+//                }else{
+//                    var cropOptions : RequestOptions = RequestOptions()
+//                    Glide.with(this@ProfileFragment)
+//                            .load(user!!.user_profileImage)
+//                            .apply(cropOptions.optionalCircleCrop())
+//                            .into(ivInfoimg)
+//                }
+            }
+        })
+
+
+        var mFirebaseAuth : FirebaseAuth? = null //파이어베이스 인증
+
+        mFirebaseAuth = FirebaseAuth.getInstance()
+
+        //정보 수정 액티비티로 넘어가는 버튼
+        btnChangeinfo.setOnClickListener {
+
+            val intent = Intent(getActivity(), ModifyAccount::class.java)
+            startActivity(intent)
+        }
+
+        //로그아웃 버튼
+        btnLogout.setOnClickListener {
+
+            mFirebaseAuth!!.signOut()
+            val intent = Intent(getActivity(), LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+        //탈퇴 버튼
+        btnDrop.setOnClickListener {
+
+            mFirebaseAuth!!.currentUser!!.delete()
+            val intent = Intent(getActivity(), LoginActivity::class.java)
+            startActivity(intent)
+        }
+
         return view
     }
 
