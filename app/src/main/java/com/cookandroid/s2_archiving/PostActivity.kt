@@ -23,7 +23,7 @@ class PostActivity : AppCompatActivity() {
     private lateinit var mEtDate: EditText // 날짜
     private lateinit var mEtDateName: EditText // 기념일 이름
     private lateinit var mEtPost: EditText // 글 내용
-    private lateinit var mBtnPostRegister: Button // 회원 가입 버튼
+    private lateinit var mBtnPostRegister: Button // 게시글 업로드 버튼
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

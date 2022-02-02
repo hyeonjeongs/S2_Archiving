@@ -6,24 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".PostActivity">
 
-    <TextView
-        android:id="@+id/tvWriteText"
-        android:layout_width="226dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="292dp"
-        android:text="글쓰기"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/ivPostImage"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="73dp"
+        android:layout_marginEnd="141dp"
+        android:layout_marginBottom="113dp"
+        android:background="@drawable/round_image"
+        app:layout_constraintBottom_toTopOf="@+id/tvDate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUpload" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/gallery" />
 
     <TextView
         android:id="@+id/tvUpload"
         android:layout_width="226dp"
         android:layout_height="47dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="52dp"
         android:text="선물,편지 등을 업로드 하세요"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -31,25 +35,40 @@
         app:layout_constraintTop_toBottomOf="@+id/tvDateName" />
 
     <TextView
-        android:id="@+id/tvDateName"
+        android:id="@+id/tvDate"
+        android:layout_width="226dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="316dp"
+        android:text="날짜를 입력하세요"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvWriteText"
         android:layout_width="226dp"
         android:layout_height="47dp"
         android:layout_marginTop="50dp"
+        android:layout_marginBottom="24dp"
+        android:text="글쓰기"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUpload"
+        app:layout_constraintVertical_bias="0.105" />
+
+    <TextView
+        android:id="@+id/tvDateName"
+        android:layout_width="226dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="52dp"
         android:text="기념일 이름을 입력하세요"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
-
-    <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="226dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="102dp"
-        android:text="날짜를 입력하세요"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnPostRegister"
