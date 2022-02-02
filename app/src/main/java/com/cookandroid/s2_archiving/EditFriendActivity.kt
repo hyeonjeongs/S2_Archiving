@@ -12,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.cookandroid.s2_archiving.fragment.HomeFragment
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -20,16 +19,18 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import kotlinx.android.synthetic.main.activity_edit_friend.*
 
 //import com.example.recyclerviewkt.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.add_friend.*
+import kotlinx.android.synthetic.main.add_friend.tvEditGal
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
-class FriendAdd : AppCompatActivity() {
+class EditFriendActivity : AppCompatActivity() {
 
     //
     var photoUri: Uri? = null
@@ -62,13 +63,7 @@ class FriendAdd : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.add_friend)
-
-        btnAddFriend = findViewById(R.id.btnAddFriend)
-        etName = findViewById(R.id.etName)
-        etPhone = findViewById(R.id.etPhone)
-        etRel = findViewById(R.id.etRel)
-        etAdd = findViewById(R.id.etAdd)
+        setContentView(R.layout.activity_edit_friend)
 
 
         //파이어베이스 계정, 리얼타임 데이터베이스
@@ -89,9 +84,9 @@ class FriendAdd : AppCompatActivity() {
                 })
 
         //생년원일 스피너
-        year_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.yearItemList, android.R.layout.simple_spinner_item)
-        month_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.monthItemList, android.R.layout.simple_spinner_item)
-        day_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.dayItemList, android.R.layout.simple_spinner_item)
+        edit_year_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.yearItemList, android.R.layout.simple_spinner_item)
+        edit_month_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.monthItemList, android.R.layout.simple_spinner_item)
+        edit_day_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.dayItemList, android.R.layout.simple_spinner_item)
 
         var birthDay:String = year_spinner.selectedItem.toString()+"년"+month_spinner.selectedItem.toString()+"월"+day_spinner.selectedItem.toString()+"일"
 
@@ -148,11 +143,11 @@ class FriendAdd : AppCompatActivity() {
 
                         val hashMap : HashMap<String, String> = HashMap()
 
-                        var strName: String = etName.text.toString()
-                        var strPhone = etPhone.text.toString()
+                        var strName: String = etEditName.text.toString()
+                        var strPhone = etEditPhone.text.toString()
                         var strBday: String = birthDay
-                        var strRelationship: String = etRel.text.toString()
-                        var strAdd: String = etAdd.text.toString()
+                        var strRelationship: String = etEditRel.text.toString()
+                        var strAdd: String = etEditAdd.text.toString()
 
                         hashMap.put("imgUrl", downloadUrl.toString())
                         hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
@@ -209,15 +204,10 @@ class FriendAdd : AppCompatActivity() {
         }
 
 
-        //뒤로가기 버튼 클릭 시 홈으로 이동
-        btnfriendback.setOnClickListener{
-            val intent=Intent(this, HomeFragment::class.java)
-            startActivity(intent)
-        }
     }
 
     fun setViews(){
-        ivProfileImage.setOnClickListener{
+        ivEditProfileImage.setOnClickListener{
             openGallery()
         }
         tvEditGal.setOnClickListener{

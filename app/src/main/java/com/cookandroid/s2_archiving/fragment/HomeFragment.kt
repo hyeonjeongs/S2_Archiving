@@ -77,7 +77,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        btnSearch.setOnClickListener {
+        etSearch.setOnClickListener {
             activity?.let{
                 val intent = Intent(context, ModifyAccount::class.java)
                 startActivity(intent)

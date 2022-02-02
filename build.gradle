@@ -12,7 +12,8 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-
+        classpath 'com.github.bumptech.glide:glide:4.11.0'
+        classpath 'com.github.bumptech.glide:compiler:4.11.0'
 
     }
 }

@@ -21,12 +21,12 @@
             android:background="#050505"
             android:src="@drawable/ic_launcher_foreground" />
 
-        <Button
-            android:id="@+id/btnSearch"
+        <EditText
+            android:id="@+id/etSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:text="검색" />
+            android:hint="검색하세요" />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView

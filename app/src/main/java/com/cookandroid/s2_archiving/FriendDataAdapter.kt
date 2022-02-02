@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.list_item.view.*
 import kotlin.collections.ArrayList
+import com.bumptech.glide.Glide;
 
 class FriendDataAdapter() : RecyclerView.Adapter<FriendDataAdapter.CustomViewHolder>() {
 
@@ -78,7 +78,7 @@ class FriendDataAdapter() : RecyclerView.Adapter<FriendDataAdapter.CustomViewHol
                 val curPos : Int = adapterPosition
                 val friendData : FriendData = friendDataList.get(curPos)
                 if(curPos != RecyclerView.NO_POSITION){
-                    var intent = Intent(context, FriendActivity::class.java).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                    var intent = Intent(context, FriendActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.putExtra("IMGURL", friendData.fImgurl)
                     intent.putExtra("FNAME", friendData.fName)
                     intent.putExtra("STAR", friendData.fStar)
