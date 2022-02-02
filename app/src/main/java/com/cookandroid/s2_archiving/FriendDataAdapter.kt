@@ -74,7 +74,7 @@ class FriendDataAdapter() : RecyclerView.Adapter<FriendDataAdapter.CustomViewHol
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return CustomViewHolder(view).apply {
-            itemView.setOnClickListener {
+            star.setOnClickListener {
                 val curPos : Int = adapterPosition
                 val friendData : FriendData = friendDataList.get(curPos)
                 if(curPos != RecyclerView.NO_POSITION){
