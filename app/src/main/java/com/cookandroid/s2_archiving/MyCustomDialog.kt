@@ -7,6 +7,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Window
 
+
+//7번 게시글 화면 - 삭제 수정
 class MyCustomDialog(context: Context): Dialog(context) {
 
 
