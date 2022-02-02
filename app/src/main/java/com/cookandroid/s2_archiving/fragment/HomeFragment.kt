@@ -106,7 +106,7 @@ class HomeFragment : Fragment() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-                tvName.text = "${user!!.userNickname.toString()}"
+                //tvName.text = "${user!!.userNickname}"
                 // 사진 url 추가 후 load하는 코드 넣을 자리
             }
         })
