@@ -135,6 +135,7 @@ class FriendAdd : AppCompatActivity() {
                 var file : Uri = Uri.fromFile(File(imgUrl))
                 var riversRef : StorageReference = storageReference.child("images/"+file.lastPathSegment)
                 var uploadTask : UploadTask = riversRef.putFile(file)
+                val fid:String? = mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().key
 
                 var urlTask : Task<Uri> = uploadTask.continueWithTask(Continuation {
                     if(!it.isSuccessful){
@@ -153,18 +154,20 @@ class FriendAdd : AppCompatActivity() {
                         var strBday: String = birthDay
                         var strRelationship: String = etRel.text.toString()
                         var strAdd: String = etAdd.text.toString()
-
-                        hashMap.put("imgUrl", downloadUrl.toString())
-                        hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
+                        
+                        hashMap.put("fId", mFirebaseAuth!!.currentUser!!.uid)
                         hashMap.put("fName", strName)
+                        hashMap.put("fImgurl", downloadUrl.toString())
                         hashMap.put("fPhone", strPhone)
                         hashMap.put("fBday", strBday)
                         hashMap.put("fRel", strRelationship)
                         hashMap.put("fAdd", strAdd)
+                        hashMap.put("fStar", "0")
                         hashMap.put("timstamp", timestamp)
 
 
-                        mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
+
+                        mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").child("${fid}").setValue(hashMap)
                             .addOnCompleteListener {
                                 if(it.isSuccessful){
                                     Toast.makeText(this, "업로드", Toast.LENGTH_SHORT).show()
@@ -185,16 +188,21 @@ class FriendAdd : AppCompatActivity() {
                     var strBday: String = birthDay
                     var strRelationship: String = etRel.text.toString()
                     var strAdd: String = etAdd.text.toString()
+                    var id: String? = fid
 
 
-                    hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
+                    if (id != null) {
+                        hashMap.put("fId", id )
+                    }
                     hashMap.put("fName", strName)
                     hashMap.put("fPhone", strPhone)
                     hashMap.put("fBday", strBday)
+                    hashMap.put("fImgurl", "")
                     hashMap.put("fRel", strRelationship)
                     hashMap.put("fAdd", strAdd)
+                    hashMap.put("fStar", "0")
                     hashMap.put("timstamp", timestamp)
-                    mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
+                    mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").child("${fid}").setValue(hashMap)
 
                     Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
                     var intent = Intent(this, MainActivity::class.java)
