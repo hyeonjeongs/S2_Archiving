@@ -77,16 +77,16 @@ class FriendAdd : AppCompatActivity() {
         fbStorage = FirebaseStorage.getInstance()
 
         mDatabaseRef.child("UserAccount").child("${mFirebaseAuth!!.currentUser!!.uid}")
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        //파이어베이스의 데이터를 가져옴
-                        var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-                        Log.d("택", "${user!!.userEmail.toString()}")
-                    }
-                    override fun onCancelled(error: DatabaseError) {
-                        Log.d("Tag", "Failed")
-                    }
-                })
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    //파이어베이스의 데이터를 가져옴
+                    var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
+                    Log.d("택", "${user!!.userEmail.toString()}")
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d("Tag", "Failed")
+                }
+            })
 
         //생년원일 스피너
         year_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.yearItemList, android.R.layout.simple_spinner_item)
@@ -97,7 +97,7 @@ class FriendAdd : AppCompatActivity() {
 
 
         storagePermission=registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
+            ActivityResultContracts.RequestPermission()
         ){isGranted ->
             if(isGranted){
                 setViews()
@@ -109,7 +109,7 @@ class FriendAdd : AppCompatActivity() {
 
 
         cameraPermission=registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
+            ActivityResultContracts.RequestPermission()
         ){isGranted ->
             if(isGranted){
                 //openCamera()
@@ -165,11 +165,11 @@ class FriendAdd : AppCompatActivity() {
 
 
                         mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
-                                .addOnCompleteListener {
-                                    if(it.isSuccessful){
-                                        Toast.makeText(this, "업로드", Toast.LENGTH_SHORT).show()
-                                    }
+                            .addOnCompleteListener {
+                                if(it.isSuccessful){
+                                    Toast.makeText(this, "업로드", Toast.LENGTH_SHORT).show()
                                 }
+                            }
 
                         Toast.makeText(this, "친구 추가 완료", Toast.LENGTH_SHORT).show()
                         var intent = Intent(this, MainActivity::class.java)
@@ -232,5 +232,3 @@ class FriendAdd : AppCompatActivity() {
 
 
 }
-
-
