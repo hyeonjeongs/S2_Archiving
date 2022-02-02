@@ -16,10 +16,11 @@ import com.cookandroid.s2_archiving.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_user.*
 
 class UserFragment : Fragment() {
+
+    //val activity : MainActivity ??=null
 
     lateinit var mDatabaseRef : DatabaseReference
     lateinit var mFirebaseAuth: FirebaseAuth
@@ -33,6 +34,17 @@ class UserFragment : Fragment() {
 
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        //
+        btnChangeInfo.setOnClickListener {
+            activity?.let{
+                val intent = Intent(context, MydataEdit::class.java)
+                startActivity(intent)
+            }
+        }
+    }
     // 메모리에 올라갔을때
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,20 +52,20 @@ class UserFragment : Fragment() {
 
     }
 
-    // 프레그먼트를 안고 있는 액티비티에 붙었을 때
+    // 프레그먼트를 안고 있는 액티비티에 붙었을 때(프래그먼트가 엑티비티에 올라온 순간)
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d(TAG, "UserFragement - onAttach() called")
+        val d = Log.d(TAG, "UserFragement - onAttach() called")
+        //activity = activity as MainActivity
     }
 
+    override fun onDetach() {
+        super.onDetach()
+
+    }
     // 뷰가 생성되었을 때
     // 프레그먼트와 레이아웃을 연결시켜주는 부분이다.
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         Log.d(TAG, "UserFragement - onCreateView() called")
 
@@ -127,7 +139,13 @@ class UserFragment : Fragment() {
             startActivity(intent)
         }
 
+        //내정보수정 버튼 눌렀을때
+        //btnChangeInfo.setOnClickListener {
+        //    (activity as MainActivity)
+        //}
+
         return view
     }
+
 
 }

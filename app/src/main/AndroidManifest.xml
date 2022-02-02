@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PostActivity"></activity>
+        <activity android:name=".EditMyData"></activity>
+        <activity android:name=".PostActivity" />
         <activity android:name=".FriendPage" />
         <activity android:name=".ModifyAccount" />
         <activity android:name=".ResisterActivity" />
@@ -30,13 +31,12 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
-
         </activity>
         <activity android:name=".MainActivity">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
             <!-- <intent-filter> -->
@@ -45,7 +45,6 @@
 
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
-
 
         </activity>
 

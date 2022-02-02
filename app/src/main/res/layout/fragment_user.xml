@@ -8,7 +8,18 @@
     android:id="@+id/userFragment"
     tools:context="com.cookandroid.s2_archiving.fragment.UserFragment">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOGO"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+
     <LinearLayout
+        android:id="@+id/userimf"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -16,8 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageView
@@ -58,6 +68,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="246dp"
+            android:weightSum="3"
+
             android:orientation="vertical">
 
             <Button
@@ -65,7 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-
+                android:layout_weight="1"
                 android:text="회원 정보 수정" />
 
             <Button
@@ -73,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-
+                android:layout_weight="1"
                 android:text="로그 아웃" />
 
             <Button
@@ -81,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_weight="1"
                 android:text="회원 탈퇴" />
 
 
