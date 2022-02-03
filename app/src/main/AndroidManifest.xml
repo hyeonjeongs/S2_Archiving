@@ -18,7 +18,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditMyData"></activity>
         <activity android:name=".PostActivity" />
         <activity android:name=".FriendPage" />
         <activity android:name=".ModifyAccount" />
