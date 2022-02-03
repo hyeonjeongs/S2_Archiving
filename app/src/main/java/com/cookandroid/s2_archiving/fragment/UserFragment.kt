@@ -1,5 +1,6 @@
 package com.cookandroid.s2_archiving.fragment
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
@@ -21,13 +24,20 @@ import kotlinx.android.synthetic.main.fragment_user.*
 
 class UserFragment : Fragment() {
 
-    lateinit var mDatabaseRef : DatabaseReference
-    lateinit var mFirebaseAuth: FirebaseAuth
+    //파이어베이스에서 인스턴스 가져오기
+    private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance()
+    private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")
 
+    // xml 요소들
     private lateinit var btnChangeinfo : Button
     private lateinit var btnLogout : Button
     private lateinit var btnDrop : Button
+    private lateinit var mTvEmail:TextView
+    private lateinit var mTvNickName:TextView
     private lateinit var ivInfoimg : ImageView
+
+    // context
+    private lateinit var activity: Activity
 
     companion object {
         const val TAG : String = "로그"
@@ -41,12 +51,6 @@ class UserFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-                btnChangeInfo.setOnClickListener {
-            activity?.let{
-                val intent = Intent(context, ModifyAccount::class.java)
-                startActivity(intent)
-            }
-        }
     }
 
     // 메모리에 올라갔을때
@@ -60,6 +64,7 @@ class UserFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val d = Log.d(TAG, "UserFragement - onAttach() called")
+        activity = context as Activity
     }
 
     override fun onDetach() {
@@ -78,12 +83,14 @@ class UserFragment : Fragment() {
         btnChangeinfo  = view.findViewById(R.id.btnChangeInfo)
         btnLogout = view.findViewById(R.id.btnLogout)
         btnDrop = view.findViewById(R.id.btnDrop)
+        mTvEmail = view.findViewById(R.id.tvNickName)
+        mTvNickName = view.findViewById(R.id.tvEmail)
+
         //ivInfoimg : ImageView = view.findViewById(R.id.ivProf)
         //닉네임 받아오기
-        var tvNickname : TextView = view.findViewById(R.id.tvNickName)
-        var tvEmail : TextView = view.findViewById(R.id.tvEmail)
+        mTvNickName = view.findViewById(R.id.tvNickName)
+        mTvEmail = view.findViewById(R.id.tvEmail)
 
-        mFirebaseAuth = FirebaseAuth.getInstance()
         val mFirebaseUser : FirebaseUser? = mFirebaseAuth?.currentUser
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
@@ -99,9 +106,9 @@ class UserFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
 
-                tvNickname.setText("${user!!.userNickname.toString()}")
+                mTvNickName.text=("${user!!.userNickname}")
 
-                tvEmail.setText("${user!!.userEmail.toString()}")
+                mTvEmail.text=("${user!!.userEmail}")
 
 //                if(user!!.userProfileImage.equals("")){
 //                    ivInfoimg.setImageResource(R.drawable.user)
@@ -139,8 +146,11 @@ class UserFragment : Fragment() {
         btnDrop.setOnClickListener {
 
             mFirebaseAuth!!.currentUser!!.delete()
-            val intent = Intent(getActivity(), LoginActivity::class.java)
-            startActivity(intent)
+            mDatabaseRef.removeValue()
+//            val intent = Intent(activity, LoginActivity::class.java)
+//            startActivity(intent)
+
+
         }
 
 

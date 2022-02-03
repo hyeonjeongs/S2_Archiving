@@ -1,20 +1,17 @@
 package com.cookandroid.s2_archiving
 
-import android.app.PendingIntent.getActivity
-import android.content.Intent
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.EmailAuthProvider
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+
 
 class ModifyAccount : AppCompatActivity() {
 
@@ -28,19 +25,21 @@ class ModifyAccount : AppCompatActivity() {
     private lateinit var mEtAfterPwd: EditText
     private lateinit var btnModify: Button
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modify_account)
 
         //위젯 연결
-        mEtNickName = findViewById(R.id.etModifyNickName)
-        mEtBeforePwd = findViewById(R.id.etModifyBeforePwd)
-        mEtAfterPwd = findViewById(R.id.etModifyAfterPwd)
-        mTvEmail = findViewById(R.id.etModifyEmail)
-        btnModify = findViewById(R.id.btnModify)
+        mEtNickName = findViewById(R.id.etEditNameMyData)
+        mEtBeforePwd = findViewById(R.id.etCurrentPwdMyData)
+        mEtAfterPwd = findViewById(R.id.etNewPwdMyData)
+        mTvEmail = findViewById(R.id.etEditEmailMyData)
+        btnModify = findViewById(R.id.btnEditEditMyData)
 
         // 사용자의 닉네임, 이메일 출력(이메일은 수정 불가능)
-        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object : ValueEventListener {
+        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object :
+            ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
 
@@ -58,7 +57,7 @@ class ModifyAccount : AppCompatActivity() {
         btnModify.setOnClickListener {
 
             var strNickName: String = mEtNickName.text.toString()
-            var strAfterPwd: String = mEtAfterPwd.text.toString()
+            var strAfterPwd: String = ""
 
             //파이어베이스에 정보 변경 내용 업데이트
             mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}")
@@ -93,7 +92,6 @@ class ModifyAccount : AppCompatActivity() {
                         hashMap.put("userEmail", strEmail)
                         hashMap.put("userId", user.userId)
                         hashMap.put("userNickname", strNickName)
-                        hashMap.put("userPhone", "")
                         hashMap.put("userPwd", strAfterPwd)
 
                         mDatabaseRef.child("UserAccount")
@@ -103,8 +101,10 @@ class ModifyAccount : AppCompatActivity() {
 
                         finish()
 
+
                     }
                 })
+
 
         }
     }
