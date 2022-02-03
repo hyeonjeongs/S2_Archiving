@@ -74,21 +74,6 @@ class HomeFragment : Fragment() {
         userNickname = view.findViewById(R.id.tvName)
 
 
-        // 사용자의 닉네임, 사진 로드
-        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object : ValueEventListener {
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-                var nickName = "${user!!.userNickname}"
-                userNickname.text = nickName
-                // 사진 url 추가 후 load하는 코드 넣을 자리
-            }
-        })
-
         return view
     }
 
@@ -115,6 +100,21 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) { // <-- 리사이클러뷰 넣어보기
         super.onViewCreated(view, savedInstanceState)
+
+        // 사용자의 닉네임, 사진 로드
+        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object : ValueEventListener {
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
+                var nickName = "${user!!.userNickname}"
+                userNickname.text = nickName
+                // 사진 url 추가 후 load하는 코드 넣을 자리
+            }
+        })
 
         //리사이클러뷰에 담을 데이터 가져오기(selectedItem 태그를 통해서 보여줄 게시글 구분)
         mDatabaseRef.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}")
