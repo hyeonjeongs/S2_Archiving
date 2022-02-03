@@ -22,7 +22,6 @@ import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_edit_friend.*
 
 //import com.example.recyclerviewkt.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.add_friend.*
 import kotlinx.android.synthetic.main.add_friend.tvEditGal
 import java.io.File
@@ -144,7 +143,7 @@ class EditFriendActivity : AppCompatActivity() {
                         val hashMap : HashMap<String, String> = HashMap()
 
                         var strName: String = etEditName.text.toString()
-                        var strPhone = etEditPhone.text.toString()
+                        var strPhone = etEditEmailMyData.text.toString()
                         var strBday: String = birthDay
                         var strRelationship: String = etEditRel.text.toString()
                         var strAdd: String = etEditAdd.text.toString()

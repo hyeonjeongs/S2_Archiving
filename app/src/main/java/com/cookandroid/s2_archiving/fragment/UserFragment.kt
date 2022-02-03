@@ -24,6 +24,11 @@ class UserFragment : Fragment() {
     lateinit var mDatabaseRef : DatabaseReference
     lateinit var mFirebaseAuth: FirebaseAuth
 
+    private lateinit var btnChangeinfo : Button
+    private lateinit var btnLogout : Button
+    private lateinit var btnDrop : Button
+    private lateinit var ivInfoimg : ImageView
+
     companion object {
         const val TAG : String = "로그"
 
@@ -61,6 +66,7 @@ class UserFragment : Fragment() {
         super.onDetach()
 
     }
+
     // 뷰가 생성되었을 때
     // 프레그먼트와 레이아웃을 연결시켜주는 부분이다.
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -69,10 +75,10 @@ class UserFragment : Fragment() {
 
         //fragment내 findViewById 사용
         val view = inflater.inflate(R.layout.fragment_user, container, false)
-        var btnChangeinfo : Button = view.findViewById(R.id.btnChangeInfo)
-        var btnLogout : Button = view.findViewById(R.id.btnLogout)
-        var btnDrop : Button = view.findViewById(R.id.btnDrop)
-        var ivInfoimg : ImageView = view.findViewById(R.id.ivProf)
+        btnChangeinfo  = view.findViewById(R.id.btnChangeInfo)
+        btnLogout = view.findViewById(R.id.btnLogout)
+        btnDrop = view.findViewById(R.id.btnDrop)
+        //ivInfoimg : ImageView = view.findViewById(R.id.ivProf)
         //닉네임 받아오기
         var tvNickname : TextView = view.findViewById(R.id.tvNickName)
         var tvEmail : TextView = view.findViewById(R.id.tvEmail)
@@ -81,7 +87,7 @@ class UserFragment : Fragment() {
         val mFirebaseUser : FirebaseUser? = mFirebaseAuth?.currentUser
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
-                .child("UserAccount").child(mFirebaseUser!!.uid)
+            .child("UserAccount").child(mFirebaseUser!!.uid)
 
         //화면에 사용자 프로필 이미지, 닉네임, 이메일 출력
         mDatabaseRef.addValueEventListener(object : ValueEventListener {
@@ -138,8 +144,8 @@ class UserFragment : Fragment() {
         }
 
 
-            return view
-        }
+        return view
+    }
 
 
 
