@@ -4,12 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.cookandroid.s2_archiving.fragment.HomeFragment
 import com.cookandroid.s2_archiving.fragment.LikeFragment
-import com.cookandroid.s2_archiving.fragment.MydataEdit
 import com.cookandroid.s2_archiving.fragment.UserFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.add_friend.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,7 +15,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var homeFragment: HomeFragment
     private lateinit var likeFragment: LikeFragment
     private lateinit var userFragment: UserFragment
-    private lateinit var mydataedit : MydataEdit
 
 
 
@@ -31,8 +27,6 @@ class MainActivity : AppCompatActivity() {
         homeFragment = HomeFragment.newInstance()
         supportFragmentManager.beginTransaction().add(R.id.fragment_frame, homeFragment).commit()
 
-        userFragment = UserFragment.newInstance()
-        mydataedit =  MydataEdit.newInstance()
 
     }
 
@@ -56,12 +50,4 @@ class MainActivity : AppCompatActivity() {
         true
     }
 
-    //버튼 클릭시 프레그먼트 화면 전환
-    public fun OnFragmentChange(index: Int){
-       if(index == 0){
-           supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, userFragment).commit()
-        }else if(index==1){
-            supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, mydataedit).commit()
-        }
-    }
 }
