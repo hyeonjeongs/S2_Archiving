@@ -68,13 +68,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     //버튼 클릭시 프레그먼트 화면 전환
-    //public fun OnFragmentChange(index : Int){
-    //   if(index == 0 ){
-    //        userFragment = UserFragment.newInstance()
-    //        supportFragmentManager.beginTransaction().replace(R.id.container,userFragment).commit()
-    //    }else if(index==1){
-    //        mydataedit = MydataEdit.newInstance()
-    //        supportFragmentManager.beginTransaction().replace(R.id.container,mydataedit).commit()
-    //    }
-    //}
+    public fun OnFragmentChange(index : Int){
+       if(index == 0 ){
+           userFragment = UserFragment.newInstance()
+           supportFragmentManager.beginTransaction().replace(R.id.container,userFragment).commit()
+        }else if(index==1){
+           // mydataedit = MydataEdit.newInstance()
+            supportFragmentManager.beginTransaction().replace(R.id.container,mydataedit).commit()
+        }
+    }
 }
