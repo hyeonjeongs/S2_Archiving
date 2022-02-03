@@ -21,8 +21,6 @@ import kotlinx.android.synthetic.main.fragment_user.*
 
 class UserFragment : Fragment() {
 
-    lateinit var activitys : MainActivity
-
     lateinit var mDatabaseRef : DatabaseReference
     lateinit var mFirebaseAuth: FirebaseAuth
 
@@ -38,14 +36,14 @@ class UserFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        //
-//        btnChangeInfo.setOnClickListener {
-//            activity?.let{
-//                val intent = Intent(context, MydataEdit::class.java)
-//                startActivity(intent)
-//            }
-//        }
+                btnChangeInfo.setOnClickListener {
+            activity?.let{
+                val intent = Intent(context, ModifyAccount::class.java)
+                startActivity(intent)
+            }
+        }
     }
+
     // 메모리에 올라갔을때
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,13 +55,10 @@ class UserFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val d = Log.d(TAG, "UserFragement - onAttach() called")
-        activitys = activity as MainActivity
     }
 
     override fun onDetach() {
         super.onDetach()
-        //activitys= null
-
 
     }
     // 뷰가 생성되었을 때
@@ -142,11 +137,6 @@ class UserFragment : Fragment() {
             startActivity(intent)
         }
 
-        val btnChangeInfo: Button = view.findViewById(R.id.btnChangeInfo)
-
-        //내정보수정 버튼 눌렀을때
-        btnChangeInfo.setOnClickListener(View.OnClickListener {
-            activitys.OnFragmentChange(1) })
 
             return view
         }

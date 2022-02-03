@@ -1,74 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ModifyAccount">
 
-    <EditText
-        android:id="@+id/etModifyNickName"
-        android:layout_width="261dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="236dp"
-        android:layout_marginEnd="75dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/etModifyEmail"
-        android:layout_width="268dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="81dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginEnd="122dp"
-        app:layout_constraintBottom_toTopOf="@+id/etModifyNickName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.166"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/etModifyBeforePwd"
-        android:layout_width="283dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="139dp"
-        android:hint="현재 비밀번호를 입력하세요"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.035"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etModifyNickName" />
-
-    <EditText
-        android:id="@+id/etModifyAfterPwd"
-        android:layout_width="297dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="81dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="149dp"
-        android:layout_marginBottom="56dp"
-        android:hint="변경할 비밀번호를 입력하세요"
-        app:layout_constraintBottom_toTopOf="@+id/btnModify"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.146"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etModifyBeforePwd" />
-
-    <Button
-        android:id="@+id/btnModify"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csimf"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="154dp"
-        android:layout_marginEnd="164dp"
-        android:layout_marginBottom="160dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginTop="6dp">
+
+        <Button
+            android:id="@+id/btnEditMyDataback"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:backgroundTint="@color/black"
+            android:background="@drawable/ic_baseline_arrow_back_24"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/btnEditEditMyData"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:text="완료"
+            android:clickable="true"
+            android:background="#DCDBDB"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageView
+        android:id="@+id/ivEditImageMydata"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_image"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/user" />
+    <Button
+        android:id="@+id/imageEditMyData"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/ivEditImageMydata"
+        android:background="@drawable/pencil"/>
+
+    <LinearLayout
+        android:id="@+id/ListMydataEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+
+        android:layout_below="@+id/imageEditMyData">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edge"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvEditNameMyData"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="닉네임"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/etEditNameMyData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/dupliCheckMyData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="중복확인"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edge"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvEditEmailMyData"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="이메일"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/etEditEmailMyData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:ems="10"
+                android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/txEmailEditposMyData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="수정불가"
+                android:layout_marginEnd="10dp"
+                android:textColor="#972D2D" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edge"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCurrentPwdMyData"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="현재 비밀번호"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/etCurrentPwdMyData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edge"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvNewPwdMyData"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="새 비밀번호"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/etNewPwdMyData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edge"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvEditBirthMyData"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:padding="10dp"
+                android:text="생일"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+
+            <Spinner
+                android:id="@+id/edit_year_spinner"
+                android:layout_weight="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvEditBirthYear"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="년" />
+
+            <Spinner
+                android:id="@+id/edit_month_spinner"
+                android:layout_weight="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvEditBirthMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="월" />
+
+            <Spinner
+                android:id="@+id/edit_day_spinner"
+                android:layout_weight="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvEditBirthDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="일" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
