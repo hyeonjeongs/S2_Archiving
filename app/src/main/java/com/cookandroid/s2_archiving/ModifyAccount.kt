@@ -1,5 +1,7 @@
 package com.cookandroid.s2_archiving
 
+import android.app.PendingIntent.getActivity
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -95,7 +97,11 @@ class ModifyAccount : AppCompatActivity() {
                         hashMap.put("userPwd", strAfterPwd)
 
                         mDatabaseRef.child("UserAccount")
-                            .child("${mFirebaseAuth?.currentUser!!.uid}").setValue(hashMap)
+                            .child("${mFirebaseAuth?.currentUser!!.uid}").updateChildren(hashMap as Map<String, Any>)
+                            .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
+                            .addOnFailureListener{ Log.e("changepw", "정보 변경 실패") }
+
+                        finish()
 
                     }
                 })

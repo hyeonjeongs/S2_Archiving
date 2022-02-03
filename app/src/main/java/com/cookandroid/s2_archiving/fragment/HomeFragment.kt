@@ -17,6 +17,7 @@ import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -97,6 +98,7 @@ class HomeFragment : Fragment() {
         database = FirebaseDatabase.getInstance() //파이어베이스 데이터베이스 연동
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
 
+
         // 사용자의 닉네임, 사진 로드
         mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object : ValueEventListener {
 
@@ -106,7 +108,7 @@ class HomeFragment : Fragment() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-                //tvName.text = "${user!!.userNickname}"
+                tvName.text = "${user!!.userNickname}"
                 // 사진 url 추가 후 load하는 코드 넣을 자리
             }
         })
