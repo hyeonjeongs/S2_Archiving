@@ -9,6 +9,11 @@ import com.cookandroid.s2_archiving.R
 
 class MydataEdit : Fragment() {
 
+    companion object{
+        fun newInstance() : MydataEdit{
+            return MydataEdit()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? { //edit_mydata xml파일이랑 연결
         val view = inflater.inflate(R.layout.edit_mydata,container, false)
