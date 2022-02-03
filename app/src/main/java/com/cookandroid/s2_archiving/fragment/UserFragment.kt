@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_user.*
 
 class UserFragment : Fragment() {
 
-    //val activity : MainActivity ??=null
+    //lateinit var activitys : MainActivity
 
     lateinit var mDatabaseRef : DatabaseReference
     lateinit var mFirebaseAuth: FirebaseAuth
@@ -56,11 +56,13 @@ class UserFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val d = Log.d(TAG, "UserFragement - onAttach() called")
-        //activity = activity as MainActivity
+        //activitys = activity as MainActivity
     }
 
     override fun onDetach() {
         super.onDetach()
+        //activitys
+
 
     }
     // 뷰가 생성되었을 때
@@ -141,7 +143,7 @@ class UserFragment : Fragment() {
 
         //내정보수정 버튼 눌렀을때
         //btnChangeInfo.setOnClickListener {
-        //    (activity as MainActivity)
+         //   activitys.OnFragmentChange(1)
         //}
 
         return view
