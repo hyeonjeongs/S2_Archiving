@@ -16,27 +16,28 @@
             android:id="@+id/btnEditMyDataback"
             android:layout_width="70dp"
             android:layout_height="50dp"
-            android:clickable="true"
-            android:backgroundTint="@color/black"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/ic_baseline_arrow_back_24"
+            android:backgroundTint="@color/black"
+            android:clickable="true"
             android:textColor="#000000"
             android:textSize="18sp"
-            android:layout_marginLeft="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             tools:ignore="MissingConstraints" />
+
         <Button
             android:id="@+id/btnEditEditMyData"
             android:layout_width="70dp"
             android:layout_height="40dp"
-            android:text="완료"
-            android:clickable="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
             android:background="#DCDBDB"
+            android:clickable="true"
+            android:text="완료"
             android:textColor="#000000"
             android:textSize="18sp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
             app:layout_constraintRight_toRightOf="parent"
             tools:ignore="MissingConstraints" />
 
@@ -47,29 +48,30 @@
         android:id="@+id/ivEditImageMydata"
         android:layout_width="130dp"
         android:layout_height="130dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/round_image"
-        android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/user" />
+
     <Button
         android:id="@+id/imageEditMyData"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/ivEditImageMydata"
-        android:background="@drawable/pencil"/>
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/pencil" />
 
     <LinearLayout
         android:id="@+id/ListMydataEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="30dp"
+        android:layout_below="@+id/imageEditMyData"
         android:layout_alignParentBottom="true"
-        android:padding="10dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
 
-        android:layout_below="@+id/imageEditMyData">
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,9 +102,9 @@
                 android:id="@+id/dupliCheckMyData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="중복확인"
-                android:layout_marginStart="10dp"/>
+                android:text="중복확인" />
         </LinearLayout>
 
 
@@ -123,22 +125,22 @@
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
-            <EditText
-                android:id="@+id/etEditPhone"
+            <TextView
+                android:id="@+id/etEditEmailMyData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:ellipsize="end"
-                android:maxLines="1"
-                android:hint="특수기호 없이 번호만 입력하세요"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLines="1" />
+
             <TextView
                 android:id="@+id/txEmailEditposMyData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="수정불가"
                 android:layout_marginEnd="10dp"
+                android:text="수정불가"
                 android:textColor="#972D2D" />
         </LinearLayout>
 
@@ -215,22 +217,22 @@
 
             <Spinner
                 android:id="@+id/edit_year_spinner"
-                android:layout_weight="2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="2" />
 
             <TextView
                 android:id="@+id/tvEditBirthYear"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="년" />
 
             <Spinner
                 android:id="@+id/edit_month_spinner"
-                android:layout_weight="2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="2" />
 
             <TextView
                 android:id="@+id/tvEditBirthMonth"
@@ -241,9 +243,9 @@
 
             <Spinner
                 android:id="@+id/edit_day_spinner"
-                android:layout_weight="2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="2" />
 
             <TextView
                 android:id="@+id/tvEditBirthDay"
