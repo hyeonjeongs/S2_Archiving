@@ -38,6 +38,7 @@ class UserFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+<<<<<<< Updated upstream
         //
 //        btnChangeInfo.setOnClickListener {
 //            activity?.let{
@@ -45,6 +46,8 @@ class UserFragment : Fragment() {
 //                startActivity(intent)
 //            }
 //        }
+=======
+>>>>>>> Stashed changes
     }
     // 메모리에 올라갔을때
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,11 +99,11 @@ class UserFragment : Fragment() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
+                var user = snapshot.getValue(UserAccount::class.java)
 
-                tvNickname.setText("${user!!.userNickname.toString()}")
+                tvNickname.setText("${user!!.userNickname}")
 
-                tvEmail.setText("${user!!.userEmail.toString()}")
+                tvEmail.setText("${user!!.userEmail}")
 
 //                if(user!!.userProfileImage.equals("")){
 //                    ivInfoimg.setImageResource(R.drawable.user)
@@ -122,7 +125,7 @@ class UserFragment : Fragment() {
         //정보 수정 액티비티로 넘어가는 버튼
         btnChangeinfo.setOnClickListener {
 
-            val intent = Intent(getActivity(), ModifyAccount::class.java)
+            val intent = Intent(requireContext(), ModifyAccount::class.java)
             startActivity(intent)
         }
 
@@ -138,10 +141,16 @@ class UserFragment : Fragment() {
         btnDrop.setOnClickListener {
 
             mFirebaseAuth!!.currentUser!!.delete()
+            mDatabaseRef.removeValue()
             val intent = Intent(getActivity(), LoginActivity::class.java)
             startActivity(intent)
+            activity?.supportFragmentManager
+                ?.beginTransaction()
+                ?.remove(this)
+                ?.commit()
         }
 
+<<<<<<< Updated upstream
         val btnChangeInfo: Button = view.findViewById(R.id.btnChangeInfo)
 
         //내정보수정 버튼 눌렀을때
@@ -151,6 +160,10 @@ class UserFragment : Fragment() {
             return view
         }
 
+=======
+        return view
+    }
+>>>>>>> Stashed changes
 
 
 }

@@ -1,5 +1,6 @@
 package com.cookandroid.s2_archiving
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -99,6 +100,9 @@ class ResisterActivity : AppCompatActivity() {
                                 .setValue(account)
 
                             Toast.makeText(this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this, LoginActivity::class.java)
+                            startActivity(intent)
+                            finish() // 현재 액티비티 파괴
 
                         } else {
                             Toast.makeText(this, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show()
