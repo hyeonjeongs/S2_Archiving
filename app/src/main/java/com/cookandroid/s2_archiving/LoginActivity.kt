@@ -54,6 +54,7 @@ class LoginActivity : AppCompatActivity() {
 
             val intent = Intent(this, ResisterActivity::class.java)
             startActivity(intent)
+            finish()
 
         })
     }

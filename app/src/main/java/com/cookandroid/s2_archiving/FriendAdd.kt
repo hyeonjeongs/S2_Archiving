@@ -221,6 +221,7 @@ class FriendAdd : AppCompatActivity() {
         btnfriendback.setOnClickListener{
             val intent=Intent(this, HomeFragment::class.java)
             startActivity(intent)
+            finish()
         }
     }
 

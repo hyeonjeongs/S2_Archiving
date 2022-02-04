@@ -16,12 +16,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var likeFragment: LikeFragment
     private lateinit var userFragment: UserFragment
 
+    private lateinit  var mainActivity:MainActivity
+
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mainActivity = this@MainActivity
 
         bottom_navi.setOnNavigationItemSelectedListener(onBottomNaviItemSelectedListner)
         homeFragment = HomeFragment.newInstance()
@@ -50,4 +54,7 @@ class MainActivity : AppCompatActivity() {
         true
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }
