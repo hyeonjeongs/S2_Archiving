@@ -1,6 +1,7 @@
 package com.cookandroid.s2_archiving
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.cookandroid.s2_archiving.fragment.HomeFragment
 import com.cookandroid.s2_archiving.fragment.LikeFragment
@@ -56,5 +57,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.e("MainActivity","메인액티비티파괴")
     }
 }
