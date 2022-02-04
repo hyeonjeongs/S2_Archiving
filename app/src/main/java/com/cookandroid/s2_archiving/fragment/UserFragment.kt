@@ -12,13 +12,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.cookandroid.s2_archiving.*
+import com.cookandroid.s2_archiving.LoginActivity
+import com.cookandroid.s2_archiving.ModifyAccount
 import com.cookandroid.s2_archiving.R
+import com.cookandroid.s2_archiving.UserAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_user.*
 
 
 class UserFragment : Fragment() {
@@ -26,6 +26,7 @@ class UserFragment : Fragment() {
     //파이어베이스에서 인스턴스 가져오기
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance()
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")
+    private lateinit var listener: ValueEventListener
 
 
     // xml 요소들
@@ -67,14 +68,13 @@ class UserFragment : Fragment() {
         activity = context as Activity
     }
 
-    override fun onDetach() {
-        super.onDetach()
-
-    }
-
     // 뷰가 생성되었을 때
     // 프레그먼트와 레이아웃을 연결시켜주는 부분이다.
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         Log.d(TAG, "UserFragement - onCreateView() called")
 
@@ -97,7 +97,7 @@ class UserFragment : Fragment() {
             .child("UserAccount").child(mFirebaseUser!!.uid)
 
         //화면에 사용자 프로필 이미지, 닉네임, 이메일 출력
-        mDatabaseRef.addValueEventListener(object : ValueEventListener {
+        listener=mDatabaseRef.addValueEventListener(object : ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
 
@@ -138,18 +138,31 @@ class UserFragment : Fragment() {
         btnLogout.setOnClickListener {
 
             mFirebaseAuth!!.signOut()
-            val intent = Intent(getActivity(), LoginActivity::class.java)
-            startActivity(intent)
+            getActivity()?.finishAffinity()
+            val packageManager = requireContext().packageManager
+            val intent = packageManager.getLaunchIntentForPackage(requireContext().packageName)
+            val componentName = intent!!.component
+            val mainIntent = Intent.makeRestartActivityTask(componentName)
+            requireContext().startActivity(mainIntent)
+            Runtime.getRuntime().exit(0)
         }
 
         //탈퇴 버튼
         btnDrop.setOnClickListener {
-            val mainActivity = context as MainActivity
-            mainActivity.finishAffinity()
+
+            mDatabaseRef.removeEventListener(listener)
+            Log.e("UserFragment", "listner remove")
             mDatabaseRef.removeValue()
-//            mFirebaseAuth!!.currentUser!!.delete()
-            val intent = Intent(getActivity(), LoginActivity::class.java)
-            startActivity(intent)
+            mFirebaseAuth!!.currentUser!!.delete()
+            getActivity()?.finishAffinity()
+            val packageManager = requireContext().packageManager
+            val intent = packageManager.getLaunchIntentForPackage(requireContext().packageName)
+            val componentName = intent!!.component
+            val mainIntent = Intent.makeRestartActivityTask(componentName)
+            requireContext().startActivity(mainIntent)
+            Runtime.getRuntime().exit(0)
+
+
 
         }
 
@@ -161,7 +174,18 @@ class UserFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.e("UserFragment", "유저프래그먼트 사라짐")
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mDatabaseRef.removeEventListener(listener)
+        Log.e("UserFragment", "유저프래그먼트 파괴됨")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.e("UserFragment", "유저프래그먼트 분리됨")
+    }
 
 }

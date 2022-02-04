@@ -38,6 +38,8 @@ class HomeFragment : Fragment() {
     private lateinit var database : FirebaseDatabase
     private lateinit var mDatabaseRef : DatabaseReference
     private var mFirebaseAuth: FirebaseAuth? = null //파이어베이스 인증
+    private lateinit var listener: ValueEventListener
+    private lateinit var listener1: ValueEventListener
 
     // 버튼 연결
     private lateinit var userNickname : TextView
@@ -100,9 +102,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) { // <-- 리사이클러뷰 넣어보기
         super.onViewCreated(view, savedInstanceState)
+        Log.e("HomeFragment","onViewCreated")
 
         // 사용자의 닉네임, 사진 로드
-       mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object : ValueEventListener {
+        listener =mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object : ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
 
@@ -117,7 +120,7 @@ class HomeFragment : Fragment() {
         })
 
         //리사이클러뷰에 담을 데이터 가져오기(selectedItem 태그를 통해서 보여줄 게시글 구분)
-        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}")
+        listener1 = mDatabaseRef.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}")
             .orderByChild("timestamp").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     friendDataList.clear()
@@ -166,5 +169,18 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.e("HomeFragment","홈프레그먼트 사라짐")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("HomeFragment","홈프래그먼트 파괴됨")
+        mDatabaseRef.removeEventListener(listener)
+        mDatabaseRef.removeEventListener(listener1)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.e("HomeFragment","홈프래그먼트 분리")
     }
 }
