@@ -102,7 +102,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 사용자의 닉네임, 사진 로드
-        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object : ValueEventListener {
+       mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object : ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
 
@@ -163,4 +163,8 @@ class HomeFragment : Fragment() {
         super.onAttach(context)
     }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 }

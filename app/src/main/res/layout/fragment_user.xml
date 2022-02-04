@@ -81,6 +81,14 @@
                 android:text="회원 탈퇴" />
 
             <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:text="로그 아웃" />
+
+            <Button
                 android:id="@+id/btnChangeInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,13 +96,7 @@
                 android:layout_weight="1"
                 android:text="회원 정보 수정" />
 
-            <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:text="로그 아웃" />
+
 
 
 

@@ -11,14 +11,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_user.*
 
 
@@ -27,6 +26,7 @@ class UserFragment : Fragment() {
     //파이어베이스에서 인스턴스 가져오기
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance()
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")
+
 
     // xml 요소들
     private lateinit var btnChangeinfo : Button
@@ -63,7 +63,7 @@ class UserFragment : Fragment() {
     // 프레그먼트를 안고 있는 액티비티에 붙었을 때(프래그먼트가 엑티비티에 올라온 순간)
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        val d = Log.d(TAG, "UserFragement - onAttach() called")
+        Log.d(TAG, "UserFragement - onAttach() called")
         activity = context as Activity
     }
 
@@ -106,9 +106,9 @@ class UserFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
 
-                mTvNickName.text=("${user!!.userNickname}")
+                mTvNickName.text = ("${user!!.userNickname}")
 
-                mTvEmail.text=("${user!!.userEmail}")
+                mTvEmail.text = ("${user!!.userEmail}")
 
 //                if(user!!.userProfileImage.equals("")){
 //                    ivInfoimg.setImageResource(R.drawable.user)
@@ -144,12 +144,12 @@ class UserFragment : Fragment() {
 
         //탈퇴 버튼
         btnDrop.setOnClickListener {
-
-            mFirebaseAuth!!.currentUser!!.delete()
+            val mainActivity = context as MainActivity
+            mainActivity.finishAffinity()
             mDatabaseRef.removeValue()
-//            val intent = Intent(activity, LoginActivity::class.java)
-//            startActivity(intent)
-
+//            mFirebaseAuth!!.currentUser!!.delete()
+            val intent = Intent(getActivity(), LoginActivity::class.java)
+            startActivity(intent)
 
         }
 
@@ -157,6 +157,11 @@ class UserFragment : Fragment() {
         return view
     }
 
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 
 
 }
