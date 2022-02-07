@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 
-
 class UserFragment : Fragment() {
 
     //파이어베이스에서 인스턴스 가져오기
@@ -106,9 +105,9 @@ class UserFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
 
-                mTvNickName.text = ("${user!!.userNickname}")
+                mTvNickName.text = ("${user?.userNickname}")
 
-                mTvEmail.text = ("${user!!.userEmail}")
+                mTvEmail.text = ("${user?.userEmail}")
 
 //                if(user!!.userProfileImage.equals("")){
 //                    ivInfoimg.setImageResource(R.drawable.user)
@@ -149,7 +148,6 @@ class UserFragment : Fragment() {
 
         //탈퇴 버튼
         btnDrop.setOnClickListener {
-
             mDatabaseRef.removeEventListener(listener)
             Log.e("UserFragment", "listner remove")
             mDatabaseRef.removeValue()
@@ -161,8 +159,6 @@ class UserFragment : Fragment() {
             val mainIntent = Intent.makeRestartActivityTask(componentName)
             requireContext().startActivity(mainIntent)
             Runtime.getRuntime().exit(0)
-
-
 
         }
 

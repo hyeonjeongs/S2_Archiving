@@ -3,6 +3,7 @@ package com.cookandroid.s2_archiving
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import com.cookandroid.s2_archiving.fragment.HomeFragment
 import com.cookandroid.s2_archiving.fragment.LikeFragment
 import com.cookandroid.s2_archiving.fragment.UserFragment
@@ -40,15 +41,15 @@ class MainActivity : AppCompatActivity() {
         when(it.itemId){
             R.id.home -> {
                 homeFragment = HomeFragment.newInstance()
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, homeFragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, homeFragment,"home").commit()
             }
             R.id.like -> {
                 likeFragment = LikeFragment.newInstance()
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, likeFragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, likeFragment,"like").commit()
             }
             R.id.user -> {
                 userFragment = UserFragment.newInstance()
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, userFragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, userFragment,"user").commit()
 
             }
         }
