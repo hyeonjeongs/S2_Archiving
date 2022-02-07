@@ -93,7 +93,7 @@ class HomeFragment : Fragment() {
 
         etSearch.setOnClickListener {
             activity?.let{
-                val intent = Intent(context, ModifyAccount::class.java)
+                val intent = Intent(context, SearchCategory::class.java)
                 startActivity(intent)
             }
         }
@@ -114,6 +114,7 @@ class HomeFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
                 var nickName = "${user!!.userNickname}"
+                //var nickName = "${user?.userNickname}"
                 userNickname.text = nickName
                 // 사진 url 추가 후 load하는 코드 넣을 자리
             }
