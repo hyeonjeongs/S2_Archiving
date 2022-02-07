@@ -93,7 +93,7 @@ class HomeFragment : Fragment() {
 
         etSearch.setOnClickListener {
             activity?.let{
-                val intent = Intent(context, ModifyAccount::class.java)
+                val intent = Intent(context, SearchCategory::class.java)
                 startActivity(intent)
             }
         }
