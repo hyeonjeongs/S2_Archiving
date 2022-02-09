@@ -153,6 +153,7 @@ class UserFragment : Fragment() {
             mDatabaseRef.removeValue()
             mFirebaseAuth!!.currentUser!!.delete()
             getActivity()?.finishAffinity()
+            Log.e("UserFragment", "MainActivity Destory")
             val packageManager = requireContext().packageManager
             val intent = packageManager.getLaunchIntentForPackage(requireContext().packageName)
             val componentName = intent!!.component

@@ -6,10 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.cookandroid.s2_archiving.fragment.HomeFragment
@@ -69,6 +66,10 @@ class FriendAdd : AppCompatActivity() {
         etPhone = findViewById(R.id.etPhone)
         etRel = findViewById(R.id.etRel)
         etAdd = findViewById(R.id.etAdd)
+
+        var year_spinner = findViewById<Spinner>(R.id.year_spinner)
+        var month_spinner = findViewById<Spinner>(R.id.month_spinner)
+        var day_spinner = findViewById<Spinner>(R.id.day_spinner)
 
 
         //파이어베이스 계정, 리얼타임 데이터베이스
