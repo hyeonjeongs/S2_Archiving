@@ -4,14 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cookandroid.s2_archiving.fragment.HomeFragment
 import com.example.instaprac.FriendAdapter
 import com.example.instaprac.FriendModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_friend_page.*
+
 
 class FriendPage : AppCompatActivity() {
 
@@ -22,9 +25,13 @@ class FriendPage : AppCompatActivity() {
     private lateinit var listener: ValueEventListener
     lateinit var postDataList: ArrayList<PostData>
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friend_page)
+
+        val homefragment = HomeFragment()
+
         val friendlist = arrayListOf( //리스트형태의 객체들을 넣어줌
 
                 FriendModel(R.drawable.ic_account,20220203,"화이팅",R.drawable.ic_baseline_favorite_24),
@@ -68,6 +75,8 @@ class FriendPage : AppCompatActivity() {
             val intent = Intent(this,PostActivity::class.java)
             startActivity(intent)
         }
+
+
 
     }
 }

@@ -219,11 +219,11 @@ class FriendAdd : AppCompatActivity() {
 
 
         //뒤로가기 버튼 클릭 시 홈으로 이동
-        btnfriendback.setOnClickListener{
+        /*btnfriendback.setOnClickListener{
             val intent=Intent(this, HomeFragment::class.java)
             startActivity(intent)
             finish()
-        }
+        }*/
     }
 
     fun setViews(){

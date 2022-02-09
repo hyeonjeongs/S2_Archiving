@@ -1,6 +1,7 @@
 package com.cookandroid.s2_archiving
 
 import android.content.Context
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,12 +18,15 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 
 
+
 class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: Context, val fragment_s:Fragment) : RecyclerView.Adapter<FriendDataAdapter.CustomViewHolder>() {
 
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
     private lateinit var fbStorage: FirebaseStorage
+
     private var activity : MainActivity? = null//메인에 함수 부르기 위해 선언하기
+
 
 
 
