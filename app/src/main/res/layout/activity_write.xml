@@ -87,7 +87,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/etWriteStory"
+        android:id="@+id/etWritePost"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:ems="10"
@@ -95,4 +95,10 @@
         android:padding="10dp"
         android:background="@drawable/edge"
         android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/btnWriteRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="게시글 등록" />
 </LinearLayout>
