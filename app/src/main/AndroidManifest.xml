@@ -25,6 +25,7 @@
         <activity android:name=".ResisterActivity" />
         <activity android:name=".FriendAdd" />
         <activity android:name=".SearchCategory"/>
+        <activity android:name=".WriteActivity"/>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">
