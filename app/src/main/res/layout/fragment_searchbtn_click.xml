@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/logo_Ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:weightSum="3">
+        <Button
+            android:id="@+id/searchclick_backbtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="0.1"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="@color/black"
+            android:background="@drawable/ic_baseline_arrow_back_24"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="2.8"
+            android:textSize="24dp"
+            android:text="20220202"/>
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_baseline_more_horiz_24"
+            android:backgroundTint="@color/black"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.1"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/boundary_line"
+        android:layout_below="@+id/logo_Ll"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:orientation="horizontal"></LinearLayout>
+
+    <TextView
+        android:id="@+id/searchbtn_click_specialtv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/boundary_line"
+        android:gravity="center"
+        android:textSize="24dp"
+        android:layout_marginTop="20dp"
+        android:text="크리스마스"/>
+    <TextView
+        android:id="@+id/searchbtn_click_presentNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchbtn_click_specialtv"
+        android:text="12개"
+        android:layout_marginStart="14dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchbtn_click_rv"
+        android:layout_below="@+id/searchbtn_click_presentNum"
+        android:layout_marginTop="7dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

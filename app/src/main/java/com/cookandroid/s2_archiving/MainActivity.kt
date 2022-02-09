@@ -3,7 +3,9 @@ package com.cookandroid.s2_archiving
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import com.cookandroid.s2_archiving.fragment.FriendpageFragment
 import com.cookandroid.s2_archiving.fragment.HomeFragment
 import com.cookandroid.s2_archiving.fragment.LikeFragment
 import com.cookandroid.s2_archiving.fragment.UserFragment
@@ -17,8 +19,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var homeFragment: HomeFragment
     private lateinit var likeFragment: LikeFragment
     private lateinit var userFragment: UserFragment
-
-    private lateinit  var mainActivity:MainActivity
+    private lateinit var friendpageFragment : FriendpageFragment
+    private lateinit var mainActivity: MainActivity
 
 
 
@@ -55,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         }
         true
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
