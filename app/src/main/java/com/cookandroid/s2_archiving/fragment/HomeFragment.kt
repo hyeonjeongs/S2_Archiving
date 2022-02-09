@@ -141,7 +141,7 @@ class HomeFragment : Fragment() {
                 }
             })
 
-        adapter = FriendDataAdapter(friendDataList, this.requireContext())
+        adapter = FriendDataAdapter(friendDataList, this.requireContext(), this)
         rvProfile.setAdapter(adapter)
 
 

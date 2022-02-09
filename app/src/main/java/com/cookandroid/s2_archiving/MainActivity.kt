@@ -3,6 +3,7 @@ package com.cookandroid.s2_archiving
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.cookandroid.s2_archiving.fragment.HomeFragment
 import com.cookandroid.s2_archiving.fragment.LikeFragment
@@ -59,5 +60,11 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.e("MainActivity","메인액티비티파괴")
+    }
+
+    //이 함수를 통해 다른 fragment로 이동한다.생성자가 아닌 불러오는 형식
+    // 프래그먼트 친구 이름 클릭 시 프래그먼트 변경하는 함수
+    fun fragmentChange_for_adapter(friendpageFragment: Fragment){
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, friendpageFragment).commit()
     }
 }
