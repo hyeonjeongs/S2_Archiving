@@ -3,7 +3,6 @@ package com.cookandroid.s2_archiving
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.instaprac.FriendAdapter
@@ -30,7 +29,7 @@ class FriendPage : AppCompatActivity() {
 
         //플러스 버튼 클릭 시 게시글 쓰기 페이지로 이동
         btnGoWrite.setOnClickListener{
-            val intent = Intent(this,WriteActivity::class.java)
+            val intent = Intent(this,PostActivity::class.java)
             startActivity(intent)
         }
 
