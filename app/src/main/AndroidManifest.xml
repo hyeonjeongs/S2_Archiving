@@ -18,14 +18,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".PostActivity" />
+        <activity android:name=".PostData"></activity>
+        <activity android:name=".PostActivity_1" />
         <activity android:name=".FriendPage" />
         <activity android:name=".ModifyAccount" />
         <activity android:name=".ResisterActivity" />
         <activity android:name=".FriendAdd" />
-        <activity android:name=".SearchCategory"/>
-        <activity android:name=".WriteActivity"/>
+        <activity android:name=".SearchCategory" />
+        <activity android:name=".PostActivity" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">

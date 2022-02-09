@@ -2,6 +2,8 @@ package com.cookandroid.s2_archiving.fragment
 
 import android.content.Intent
 import android.os.Bundle
+
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.s2_archiving.FavoriteAdapter
 import com.cookandroid.s2_archiving.R
-import com.cookandroid.s2_archiving.WriteActivity
 import com.example.instaprac.FriendAdapter
 import com.example.instaprac.FriendModel
 import kotlinx.android.synthetic.main.activity_friend_page.*
@@ -27,7 +28,9 @@ class FriendpageFragment : Fragment() {
 
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         return super.onCreateView(inflater, container, savedInstanceState)
+
 
         val friendlist = arrayListOf( //리스트형태의 객체들을 넣어줌
                 FriendModel(R.drawable.ic_account,20220202,"아카이빙", R.drawable.ic_baseline_favorite_24),
@@ -37,11 +40,13 @@ class FriendpageFragment : Fragment() {
                 FriendModel(R.drawable.ic_account,20221015,"열심히", R.drawable.ic_baseline_favorite_24),
                 FriendModel(R.drawable.ic_account,20221015,"하기", R.drawable.ic_baseline_favorite_border_24)
         )
-        val fragmentView = LayoutInflater.from(activity).inflate(R.layout.fragment_friendpage,container, false)
-        fragmentView?.fragmentlike_rv?.adapter = FriendAdapter(friendlist)
-        fragmentView?.fragmentlike_rv?.layoutManager = GridLayoutManager(activity,2)
 
-        return fragmentView
+        val view = LayoutInflater.from(activity).inflate(R.layout.fragment_friendpage,container, false)
+        view?.fragmentlike_rv?.adapter = FriendAdapter(friendlist)
+        view?.fragmentlike_rv?.layoutManager = GridLayoutManager(activity,2)
+
+        return view
+
 
         //플러스 버튼 클릭 시 게시글 쓰기 페이지로 이동
        /* btnGoWrite.setOnClickListener{
