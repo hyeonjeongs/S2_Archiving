@@ -9,4 +9,5 @@
     <color name="strawberry">#FB224F</color>
     <color name="orange">#FC5F70</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
 </resources>

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.s2_archiving.FavoriteAdapter
 import com.cookandroid.s2_archiving.R
-import com.cookandroid.s2_archiving.WriteActivity
 import com.example.instaprac.FriendAdapter
 import com.example.instaprac.FriendModel
 import kotlinx.android.synthetic.main.activity_friend_page.*
