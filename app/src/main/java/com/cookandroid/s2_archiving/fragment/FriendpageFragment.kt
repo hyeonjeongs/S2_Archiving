@@ -7,14 +7,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.s2_archiving.FavoriteAdapter
+import com.cookandroid.s2_archiving.PostActivity
 import com.cookandroid.s2_archiving.R
 import com.example.instaprac.FriendAdapter
 import com.example.instaprac.FriendModel
 import kotlinx.android.synthetic.main.activity_friend_page.*
+import kotlinx.android.synthetic.main.fragment_friendpage.view.*
 import kotlinx.android.synthetic.main.fragment_like.view.*
 
 class FriendpageFragment : Fragment() {
@@ -41,17 +44,22 @@ class FriendpageFragment : Fragment() {
                 FriendModel(R.drawable.ic_account,20221015,"하기", R.drawable.ic_baseline_favorite_border_24)
         )
 
-        val view = LayoutInflater.from(activity).inflate(R.layout.fragment_friendpage,container, false)
-        view?.fragmentlike_rv?.adapter = FriendAdapter(friendlist)
-        view?.fragmentlike_rv?.layoutManager = GridLayoutManager(activity,2)
+        val view = inflater.inflate(R.layout.fragment_friendpage,container, false)
+
+        view?.rv_friend?.adapter = FriendAdapter(friendlist)
+        view?.rv_friend?.layoutManager = GridLayoutManager(getActivity(),2)
+
+        var btnGoWrite = view.findViewById<Button>(R.id.btnGoWrite)
+
+
+        //플러스 버튼 클릭 시 게시글 쓰기 페이지로 이동
+        btnGoWrite.setOnClickListener{
+            val intent = Intent(getActivity(), PostActivity::class.java)
+            startActivity(intent)
+        }
 
         return view
 
 
-        //플러스 버튼 클릭 시 게시글 쓰기 페이지로 이동
-       /* btnGoWrite.setOnClickListener{
-            val intent = Intent(this, WriteActivity::class.java)
-            startActivity(intent)
-        }*/
     }
 }

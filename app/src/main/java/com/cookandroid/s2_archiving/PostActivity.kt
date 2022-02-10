@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -85,6 +86,7 @@ class PostActivity : AppCompatActivity() {
         storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
         mBtnPostRegister.setOnClickListener{
+            Log.e("PostActivity","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             val hashMap : HashMap<String, String> = HashMap()
 
             var strDate: String = mEtDate.text.toString()
@@ -105,8 +107,8 @@ class PostActivity : AppCompatActivity() {
                     }
 
             Toast.makeText(this, "게시글 추가 완료", Toast.LENGTH_SHORT).show()
-            var intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+//            var intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
             finish()
 
         }
