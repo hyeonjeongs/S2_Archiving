@@ -23,6 +23,7 @@ class ResisterActivity : AppCompatActivity() {
     private lateinit var mEtPwdCheck: EditText // 비밀번호 확인 필드
     private lateinit var mBtnConfirmID : Button //이메일 중복확인 버튼
     private lateinit var mBtnRegister: Button // 회원 가입 버튼
+    private lateinit var mBtnBack: Button // 뒤로 가기 버튼
     private var test: Int = 0 // 이메일 중복 검사 버튼을 눌렀는지 확인
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +39,7 @@ class ResisterActivity : AppCompatActivity() {
         mEtPwd = findViewById<EditText>(R.id.etPwd)
         mEtPwdCheck = findViewById<EditText>(R.id.etPwdCheck)
         mBtnRegister = findViewById<Button>(R.id.btnRegister)
+        mBtnBack = findViewById<Button>(R.id.btnBack)
 
         var pattern : Pattern = android.util.Patterns.EMAIL_ADDRESS
 
@@ -111,6 +113,11 @@ class ResisterActivity : AppCompatActivity() {
                         }
             }
         })
+
+        mBtnBack.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
