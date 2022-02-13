@@ -109,7 +109,6 @@ class FriendAdd : AppCompatActivity() {
         year_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
-
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 birthDay = birthDay + year_spinner.selectedItem.toString()+"년"
              }
@@ -118,7 +117,6 @@ class FriendAdd : AppCompatActivity() {
         month_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
-
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 birthDay = birthDay + month_spinner.selectedItem.toString()+"월"
             }
