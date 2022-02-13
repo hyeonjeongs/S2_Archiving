@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.finishAffinity
@@ -42,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-        var btn_login = findViewById<Button>(R.id.btnLogin)
+        var btn_login = findViewById<ImageView>(R.id.btnLogin)
         btn_login.setOnClickListener(View.OnClickListener {
             // 로그인 요청
             var strEmail: String = mEtEmail.getText().toString()
@@ -62,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                 }
         })
 
-        val btnRegister = findViewById<Button>(R.id.btnRegister)
+        val btnRegister = findViewById<ImageView>(R.id.btnRegister)
         btnRegister.setOnClickListener(View.OnClickListener{
 
             val intent = Intent(this, ResisterActivity::class.java)

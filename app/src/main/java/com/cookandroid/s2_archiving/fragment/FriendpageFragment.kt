@@ -36,7 +36,7 @@ class FriendpageFragment : Fragment() {
         val friendName = requireArguments().getString("friend_name")
         val friendId = requireArguments().getString("friend_id")
 
-       
+
 
         val friendlist = arrayListOf( //리스트형태의 객체들을 넣어줌
                 FriendModel(R.drawable.ic_account,20220202,"아카이빙", R.drawable.ic_baseline_favorite_24),

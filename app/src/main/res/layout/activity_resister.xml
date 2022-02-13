@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".ResisterActivity">
 
 
@@ -12,25 +13,25 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="460dp"
+        android:layout_marginEnd="100dp"
         android:background="@drawable/edge"
         android:ems="10"
         android:hint="비밀번호를 한번 더 입력하세요"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.517" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="188dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/edge"
         android:ems="10"
         android:hint="이메일을 입력하세요"
-        android:background="@drawable/edge"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -42,24 +43,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="188dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="50dp"
         android:text="중복확인"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/etEmail"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <ImageView
         android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_width="104dp"
+        android:layout_height="43.5dp"
+        android:background="@drawable/join_img"
         android:layout_marginTop="99dp"
         android:layout_marginEnd="223dp"
         android:layout_marginBottom="33dp"
-        android:text="회원가입"
-        android:textColor="#000000"
-        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +67,6 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="101dp"
         android:layout_marginEnd="261dp"
         android:text="이메일"
         android:textColor="#000000"
@@ -82,7 +79,6 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="101dp"
         android:layout_marginEnd="261dp"
         android:text="닉네임"
         android:textColor="#000000"
@@ -96,9 +92,10 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="268dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/edge"
         android:ems="10"
         android:hint="닉네임을 입력하세요"
-        android:background="@drawable/edge"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -109,8 +106,9 @@
         android:id="@+id/etPwd"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:background="@drawable/edge"
+        android:layout_marginEnd="100dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/edge"
         android:ems="10"
         android:hint="비밀번호를 입력하세요"
         android:inputType="textPassword"
@@ -123,7 +121,6 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="101dp"
         android:layout_marginEnd="244dp"
         android:text="비밀번호"
         android:textColor="#000000"
@@ -136,7 +133,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="81dp"
+        android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -146,27 +143,17 @@
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="취소"
-            android:textColor="#000000"
-            android:textSize="18sp" />
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/back_btn" />
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="재설정"
-            android:textColor="#000000"
-            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btnRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="104dp"
-            android:text="가입하기"
-            android:textColor="#000000"
-            android:textSize="18sp" />
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:background="@drawable/join_btn_red"
+            android:layout_marginBottom="104dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

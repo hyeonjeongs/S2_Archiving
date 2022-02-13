@@ -39,7 +39,7 @@ class ModifyAccount : AppCompatActivity() {
 
         // 사용자의 닉네임, 이메일 출력(이메일은 수정 불가능)
         mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object :
-            ValueEventListener {
+                ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
 
@@ -61,49 +61,49 @@ class ModifyAccount : AppCompatActivity() {
 
             //파이어베이스에 정보 변경 내용 업데이트
             mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}")
-                .addValueEventListener(object : ValueEventListener {
+                    .addValueEventListener(object : ValueEventListener {
 
-                    override fun onCancelled(error: DatabaseError) {
+                        override fun onCancelled(error: DatabaseError) {
 
-                    }
-
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-
-                        var strEmail:String = user!!.userEmail // 이메일은 원래 저장되어있던 이메일을 사용해야함
-                        var comparePassword:String = user!!.userPwd// 현재 비밀번호
-                        if(mEtBeforePwd.text.isNotEmpty()&&mEtAfterPwd.text.isNotEmpty()){ // 비밀번호를 변경하고자 한다면
-                            if(comparePassword.equals(mEtBeforePwd.text.toString())) {
-                                changePassword()
-                                strAfterPwd = mEtAfterPwd.text.toString()
-                            }
-                            else{ // 현재 비밀번호 입력 오류 시
-                                Toast.makeText(this@ModifyAccount, "현재 비밀번호를 확인해주세요", Toast.LENGTH_SHORT)
-                                strAfterPwd = user!!.userPwd // 원래 비밀번호로 update
-                            }
-                        }
-                        else{ // 비밀번호를 변경하고자 하지 않는다면
-                            strAfterPwd = user!!.userPwd
                         }
 
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
 
-                        val hashMap: HashMap<String, String> = HashMap()
-                        hashMap.put("userBirth", "")
-                        hashMap.put("userEmail", strEmail)
-                        hashMap.put("userId", user.userId)
-                        hashMap.put("userNickname", strNickName)
-                        hashMap.put("userPwd", strAfterPwd)
+                            var strEmail:String = user!!.userEmail // 이메일은 원래 저장되어있던 이메일을 사용해야함
+                            var comparePassword:String = user!!.userPwd// 현재 비밀번호
+                            if(mEtBeforePwd.text.isNotEmpty()&&mEtAfterPwd.text.isNotEmpty()){ // 비밀번호를 변경하고자 한다면
+                                if(comparePassword.equals(mEtBeforePwd.text.toString())) {
+                                    changePassword()
+                                    strAfterPwd = mEtAfterPwd.text.toString()
+                                }
+                                else{ // 현재 비밀번호 입력 오류 시
+                                    Toast.makeText(this@ModifyAccount, "현재 비밀번호를 확인해주세요", Toast.LENGTH_SHORT)
+                                    strAfterPwd = user!!.userPwd // 원래 비밀번호로 update
+                                }
+                            }
+                            else{ // 비밀번호를 변경하고자 하지 않는다면
+                                strAfterPwd = user!!.userPwd
+                            }
 
-                        mDatabaseRef.child("UserAccount")
-                            .child("${mFirebaseAuth?.currentUser!!.uid}").updateChildren(hashMap as Map<String, Any>)
-                            .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
-                            .addOnFailureListener{ Log.e("changepw", "정보 변경 실패") }
 
-                        finish()
+                            val hashMap: HashMap<String, String> = HashMap()
+                            hashMap.put("userBirth", "")
+                            hashMap.put("userEmail", strEmail)
+                            hashMap.put("userId", user.userId)
+                            hashMap.put("userNickname", strNickName)
+                            hashMap.put("userPwd", strAfterPwd)
+
+                            mDatabaseRef.child("UserAccount")
+                                    .child("${mFirebaseAuth?.currentUser!!.uid}").updateChildren(hashMap as Map<String, Any>)
+                                    .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
+                                    .addOnFailureListener{ Log.e("changepw", "정보 변경 실패") }
+
+                            finish()
 
 
-                    }
-                })
+                        }
+                    })
 
 
         }
