@@ -18,7 +18,6 @@ import com.cookandroid.s2_archiving.PostActivity
 import com.cookandroid.s2_archiving.R
 import com.example.instaprac.FriendAdapter
 import com.example.instaprac.FriendModel
-import kotlinx.android.synthetic.main.activity_friend_page.*
 import kotlinx.android.synthetic.main.fragment_friendpage.view.*
 import kotlinx.android.synthetic.main.fragment_like.view.*
 
@@ -36,7 +35,7 @@ class FriendpageFragment : Fragment() {
         val friendName = requireArguments().getString("friend_name")
         val friendId = requireArguments().getString("friend_id")
 
-       
+
 
         val friendlist = arrayListOf( //리스트형태의 객체들을 넣어줌
                 FriendModel(R.drawable.ic_account,20220202,"아카이빙", R.drawable.ic_baseline_favorite_24),
