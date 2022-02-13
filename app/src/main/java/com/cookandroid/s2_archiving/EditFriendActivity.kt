@@ -6,10 +6,9 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.gms.tasks.Continuation
@@ -59,6 +58,8 @@ class EditFriendActivity : AppCompatActivity() {
 
     var timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
 
+    var birthDay: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -82,12 +83,46 @@ class EditFriendActivity : AppCompatActivity() {
                     }
                 })
 
-        //생년원일 스피너
-        edit_year_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.yearItemList, android.R.layout.simple_spinner_item)
-        edit_month_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.monthItemList, android.R.layout.simple_spinner_item)
-        edit_day_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.dayItemList, android.R.layout.simple_spinner_item)
 
-        var birthDay:String = year_spinner.selectedItem.toString()+"년"+month_spinner.selectedItem.toString()+"월"+day_spinner.selectedItem.toString()+"일"
+        //생년원일 스피너
+        var yData = resources.getStringArray(R.array.yearItemList)
+        var adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,yData)
+        edit_year_spinner.adapter=adapter
+
+        var mData = resources.getStringArray(R.array.monthItemList)
+        var madapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,mData)
+        edit_month_spinner.adapter=madapter
+
+        var dData = resources.getStringArray(R.array.dayItemList)
+        var dadapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,dData)
+        edit_day_spinner.adapter=dadapter
+
+        //생년원일 스피너 아이템 선택했을때
+        edit_year_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                birthDay = birthDay + edit_year_spinner.selectedItem.toString()+"년"
+            }
+        }
+
+        edit_month_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                birthDay = birthDay + edit_month_spinner.selectedItem.toString()+"월"
+            }
+        }
+
+        edit_day_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                birthDay = birthDay + edit_day_spinner.selectedItem.toString()+"일"
+            }
+        }
 
 
         storagePermission=registerForActivityResult(
@@ -191,6 +226,7 @@ class EditFriendActivity : AppCompatActivity() {
                     mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
 
                     Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
+
                     var intent = Intent(this, MainActivity::class.java)
                     //intent.putExtra("SELECTED_ITEM", selectedItem)
                     startActivity(intent)

@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,10 +18,12 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import kotlinx.android.synthetic.main.activity_edit_friend.*
 
 //import com.example.recyclerviewkt.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.add_friend.*
+import kotlinx.android.synthetic.main.add_friend.tvEditGal
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -70,7 +73,7 @@ class FriendAdd : AppCompatActivity() {
         var year_spinner = findViewById<Spinner>(R.id.year_spinner)
         var month_spinner = findViewById<Spinner>(R.id.month_spinner)
         var day_spinner = findViewById<Spinner>(R.id.day_spinner)
-
+        var birthDay: String = ""
 
         //파이어베이스 계정, 리얼타임 데이터베이스
         mFirebaseAuth = FirebaseAuth.getInstance()
@@ -90,11 +93,44 @@ class FriendAdd : AppCompatActivity() {
             })
 
         //생년원일 스피너
-        year_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.yearItemList, android.R.layout.simple_spinner_item)
-        month_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.monthItemList, android.R.layout.simple_spinner_item)
-        day_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.dayItemList, android.R.layout.simple_spinner_item)
+        var yData = resources.getStringArray(R.array.yearItemList)
+        var adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,yData)
+        year_spinner.adapter=adapter
 
-        var birthDay:String = year_spinner.selectedItem.toString()+"년"+month_spinner.selectedItem.toString()+"월"+day_spinner.selectedItem.toString()+"일"
+        var mData = resources.getStringArray(R.array.monthItemList)
+        var madapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,mData)
+        month_spinner.adapter=madapter
+
+        var dData = resources.getStringArray(R.array.dayItemList)
+        var dadapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,dData)
+        day_spinner.adapter=dadapter
+
+        //생년원일 스피너 아이템 선택했을때
+        year_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                birthDay = birthDay + year_spinner.selectedItem.toString()+"년"
+             }
+        }
+
+        month_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                birthDay = birthDay + month_spinner.selectedItem.toString()+"월"
+            }
+        }
+
+        day_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                birthDay = birthDay + day_spinner.selectedItem.toString()+"일"
+            }
+        }
 
 
         storagePermission=registerForActivityResult(
@@ -206,6 +242,7 @@ class FriendAdd : AppCompatActivity() {
                     mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").child("${fid}").setValue(hashMap)
 
                     Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
+
                     var intent = Intent(this, MainActivity::class.java)
                     //intent.putExtra("SELECTED_ITEM", selectedItem)
                     startActivity(intent)
