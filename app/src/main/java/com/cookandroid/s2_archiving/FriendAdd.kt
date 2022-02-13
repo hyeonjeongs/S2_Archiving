@@ -113,7 +113,6 @@ class FriendAdd : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 birthDay = birthDay + year_spinner.selectedItem.toString()+"년"
              }
-            
         }
 
         month_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
