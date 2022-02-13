@@ -41,6 +41,8 @@ class FriendPage : AppCompatActivity() {
                 FriendModel(R.drawable.ic_account,20221015,"하기",R.drawable.ic_baseline_favorite_border_24)
         )
 
+        postDataList = ArrayList<PostData>() //PostData 객체를 담을 ArrayList
+
 
         //리사이클러뷰에 담을 데이터 가져오기(selectedItem 태그를 통해서 보여줄 게시글 구분)
         listener = mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}")
@@ -50,12 +52,16 @@ class FriendPage : AppCompatActivity() {
 
                         var cnt=0
 
-                        /* 수정필요
+
                         for (data : DataSnapshot in snapshot.getChildren()) {
-                            FriendModel(R.drawable.ic_account,data.key("postData"),"화이팅",R.drawable.ic_baseline_favorite_24)
+                            var postData : PostData? = data.getValue(PostData::class.java)
+
+                            postDataList.add(postData!!) // 리스트에 넣기
+                            Log.e("태그","$postDataList")
+                            //FriendModel(R.drawable.ic_account,data.key("postData"),"화이팅",R.drawable.ic_baseline_favorite_24)
                             cnt=cnt+1
                         }
-                        */
+
                     }
 
                     override fun onCancelled(error: DatabaseError) {
