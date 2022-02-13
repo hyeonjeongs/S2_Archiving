@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cookandroid.s2_archiving.EditFriendActivity
 import com.cookandroid.s2_archiving.FavoriteAdapter
 import com.cookandroid.s2_archiving.PostActivity
 import com.cookandroid.s2_archiving.R
@@ -31,6 +33,8 @@ class FriendpageFragment : Fragment() {
 
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val friendName = requireArguments().getString("friend_name")
+        val friendId = requireArguments().getString("friend_id")
 
        
 
@@ -47,13 +51,22 @@ class FriendpageFragment : Fragment() {
 
         view?.rv_friend?.adapter = FriendAdapter(friendlist)
         view?.rv_friend?.layoutManager = GridLayoutManager(getActivity(),2)
+        val friendpageName = view.findViewById<TextView>(R.id.friendpage_name)
+        friendpageName.text = friendName
 
         var btnGoWrite = view.findViewById<Button>(R.id.btnGoWrite)
+        var btnEditFriend = view.findViewById<Button>(R.id.friendpage_edit_btn)
 
+        // 버튼 클릭 시 친구 정보 수정 페이지로 이동
+        btnEditFriend.setOnClickListener{
+            val intent = Intent(requireContext(), EditFriendActivity::class.java)
+            intent.putExtra("fId",friendId)
+            startActivity(intent)
+        }
 
         //플러스 버튼 클릭 시 게시글 쓰기 페이지로 이동
         btnGoWrite.setOnClickListener{
-            val intent = Intent(getActivity(), PostActivity::class.java)
+            val intent = Intent(requireContext(), PostActivity::class.java)
             startActivity(intent)
         }
 
