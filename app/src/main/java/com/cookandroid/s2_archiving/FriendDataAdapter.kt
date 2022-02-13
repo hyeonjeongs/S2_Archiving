@@ -43,9 +43,10 @@ class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: 
         val image = itemView.findViewById<ImageView>(R.id.ivProfile)
         val fName = itemView.findViewById<TextView>(R.id.tvName)
         val star = itemView.findViewById<ImageView>(R.id.ivStar)
+        var fId = ""
         fun bind(data: FriendData,context: Context){
             fName.text = data.fName
-
+            fId = data.fId
         }
     }
 
@@ -68,6 +69,7 @@ class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: 
         }
 
         holder.fName.text = friendDataList.get(position).fName
+        holder.fId = friendDataList.get(position).fId
 
         if (friendDataList.get(position).fStar == "0") {
             holder.star.setImageResource(R.drawable.star_empty)
@@ -77,10 +79,11 @@ class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: 
 
 
         holder.fName.setOnClickListener {
-            Log.d("성공??", "성공!!!!!!!!!!!!!!!")
+            Log.d("FriendpageFragment", "이동 성공!")
             var fragment:Fragment = FriendpageFragment()
             var bundle: Bundle = Bundle()
-            bundle.putString("frend_name",holder?.fName.text.toString())
+            bundle.putString("friend_name",holder?.fName.text.toString())
+            bundle.putString("friend_id",holder?.fId)
 
             fragment.arguments=bundle
             activity = fragment_s.activity as MainActivity?

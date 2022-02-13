@@ -42,11 +42,10 @@ class EditFriendActivity : AppCompatActivity() {
     lateinit var cameraLauncher:ActivityResultLauncher<Uri>
     lateinit var galleryLauncher:ActivityResultLauncher<String>
 
-    lateinit var btnAddFriend: TextView
-    lateinit var etName: EditText
-    lateinit var etPhone: EditText
-    lateinit var etRel: EditText
-    lateinit var etAdd: EditText
+    private lateinit var etName: EditText
+    private lateinit var etPhone: EditText
+    private lateinit var etRel: EditText
+    private lateinit var etAdd: EditText
 
     var imgUrl : String = ""
 
@@ -55,8 +54,6 @@ class EditFriendActivity : AppCompatActivity() {
     private lateinit var fbStorage: FirebaseStorage
     private lateinit var storageRef: StorageReference
     private var GALLEY_CODE : Int = 10
-
-    var timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
 
     var birthDay: String = ""
 
@@ -70,13 +67,19 @@ class EditFriendActivity : AppCompatActivity() {
         mFirebaseAuth = FirebaseAuth.getInstance()
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
         fbStorage = FirebaseStorage.getInstance()
+        var friendId = getIntent().getStringExtra("fId")
 
-        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth!!.currentUser!!.uid}")
+        etName = findViewById<EditText>(R.id.etEditName)
+        etPhone = findViewById<EditText>(R.id.etEditPhone)
+        etRel = findViewById<EditText>(R.id.etEditRel)
+        etAdd = findViewById<EditText>(R.id.etEditAdd)
+
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId!!)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         //파이어베이스의 데이터를 가져옴
-                        var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-                        Log.d("택", "${user!!.userEmail.toString()}")
+                        var friend: FriendData? = snapshot.getValue(FriendData::class.java)
+                        Log.d("택", "${friend?.fName}")
                     }
                     override fun onCancelled(error: DatabaseError) {
                         Log.d("Tag", "Failed")
@@ -157,7 +160,7 @@ class EditFriendActivity : AppCompatActivity() {
 
         storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
-        btnAddFriend.setOnClickListener{
+        btnEditAddFriend.setOnClickListener{
             try {
                 var storageReference : StorageReference = fbStorage.getReference()
 
@@ -177,32 +180,29 @@ class EditFriendActivity : AppCompatActivity() {
 
                         val hashMap : HashMap<String, String> = HashMap()
 
-                        var strName: String = etEditName.text.toString()
-                        var strPhone = etEditEmailMyData.text.toString()
+                        var strName: String = etName.text.toString()
+                        var strPhone = etPhone.text.toString()
                         var strBday: String = birthDay
-                        var strRelationship: String = etEditRel.text.toString()
-                        var strAdd: String = etEditAdd.text.toString()
+                        var strRelationship: String = etRel.text.toString()
+                        var strAdd: String = etAdd.text.toString()
 
                         hashMap.put("imgUrl", downloadUrl.toString())
-                        hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
+                        hashMap.put("fId", friendId)
                         hashMap.put("fName", strName)
                         hashMap.put("fPhone", strPhone)
                         hashMap.put("fBday", strBday)
                         hashMap.put("fRel", strRelationship)
                         hashMap.put("fAdd", strAdd)
-                        hashMap.put("timstamp", timestamp)
 
 
-                        mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
+                        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId).updateChildren(hashMap as Map<String, Any>)
                                 .addOnCompleteListener {
                                     if(it.isSuccessful){
                                         Toast.makeText(this, "업로드", Toast.LENGTH_SHORT).show()
                                     }
                                 }
 
-                        Toast.makeText(this, "친구 추가 완료", Toast.LENGTH_SHORT).show()
-                        var intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
+                        Toast.makeText(this, "친구 정보 수정 완료", Toast.LENGTH_SHORT).show()
                         finish()
                     }
                 }.addOnFailureListener {
@@ -216,20 +216,17 @@ class EditFriendActivity : AppCompatActivity() {
                     var strAdd: String = etAdd.text.toString()
 
 
-                    hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
+                    hashMap.put("fId", friendId)
                     hashMap.put("fName", strName)
                     hashMap.put("fPhone", strPhone)
                     hashMap.put("fBday", strBday)
                     hashMap.put("fRel", strRelationship)
                     hashMap.put("fAdd", strAdd)
-                    hashMap.put("timstamp", timestamp)
-                    mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
 
-                    Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
+                    mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId).updateChildren(hashMap as Map<String, Any>)
 
-                    var intent = Intent(this, MainActivity::class.java)
-                    //intent.putExtra("SELECTED_ITEM", selectedItem)
-                    startActivity(intent)
+                    Toast.makeText(this, "친구 정보 수정 완료", Toast.LENGTH_SHORT).show()
+
                     finish()
 
                 }
