@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.cookandroid.s2_archiving.LoginActivity
 import com.cookandroid.s2_archiving.ModifyAccount
 import com.cookandroid.s2_archiving.R
@@ -84,9 +85,9 @@ class UserFragment : Fragment() {
         btnDrop = view.findViewById(R.id.btnDrop)
         mTvEmail = view.findViewById(R.id.tvNickName)
         mTvNickName = view.findViewById(R.id.tvEmail)
+        ivInfoimg  = view.findViewById(R.id.ivProf)
 
-        //ivInfoimg : ImageView = view.findViewById(R.id.ivProf)
-        //닉네임 받아오기
+        //닉네임과 이메일 받아오기
         mTvNickName = view.findViewById(R.id.tvNickName)
         mTvEmail = view.findViewById(R.id.tvEmail)
 
@@ -105,19 +106,19 @@ class UserFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
 
-                mTvNickName.text = ("${user?.userNickname}")
+                mTvNickName.text = "${user?.userNickname}"
 
-                mTvEmail.text = ("${user?.userEmail}")
+                mTvEmail.text = "${user?.userEmail}"
 
-//                if(user!!.userProfileImage.equals("")){
-//                    ivInfoimg.setImageResource(R.drawable.user)
-//                }else{
-//                    var cropOptions : RequestOptions = RequestOptions()
-//                    Glide.with(this@ProfileFragment)
-//                            .load(user!!.user_profileImage)
-//                            .apply(cropOptions.optionalCircleCrop())
-//                            .into(ivInfoimg)
-//                }
+                // 사진 url 추가 후 load하는 코드 넣을 자리
+                if("${user!!.userPhotoUri}"==""){
+                    ivInfoimg.setImageResource(R.drawable.user)
+                }
+                else{ // userPhotoUri가 있으면 그 사진 로드하기
+                    Glide.with(this@UserFragment)
+                        .load(user!!.userPhotoUri)
+                        .into(ivInfoimg)
+                }
             }
         })
 
