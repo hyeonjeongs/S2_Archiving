@@ -152,7 +152,7 @@ class HomeFragment : Fragment() {
             })
 
         adapter = FriendDataAdapter(friendDataList, this.requireContext(), this)
-        rvProfile.setAdapter(adapter)
+        rvProfile.adapter= adapter
 
 
 //        rvProfile.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
