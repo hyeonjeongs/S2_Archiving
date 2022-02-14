@@ -29,15 +29,6 @@ class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: 
 
 
 
-
-    override fun onBindViewHolder(holder: CustomViewHolder, position: Int, payloads: MutableList<Any>) {
-        super.onBindViewHolder(holder, position, payloads)
-        holder.itemView.setOnClickListener {
-
-        }
-    }
-
-
     //위젯 연결할 변수 선언
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image = itemView.findViewById<ImageView>(R.id.ivProfile)
@@ -51,7 +42,7 @@ class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: 
     }
 
     override fun getItemCount(): Int {
-        if (friendDataList != null) {
+        if(friendDataList != null) {
             return friendDataList.size
         } else {
             return 0

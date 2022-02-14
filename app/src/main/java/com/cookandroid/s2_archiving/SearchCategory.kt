@@ -8,8 +8,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.instaprac.FriendAdapter
-import com.example.instaprac.FriendModel
 import kotlinx.android.synthetic.main.category_search.*
 
 class SearchCategory: AppCompatActivity() {

@@ -98,12 +98,9 @@ class PostActivity : AppCompatActivity() {
             hashMap.put("post", strPost)
 
             mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child("$friendId").push().setValue(hashMap)
-
-                    .addOnCompleteListener {
-                        if(it.isSuccessful){
-                            Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
-                        }
-
+                .addOnCompleteListener {
+                    if(it.isSuccessful){
+                        Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
                     }
                 }
 
