@@ -41,8 +41,7 @@
             android:layout_height="40dp"
             android:layout_marginLeft="30dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/btnCategorySearchBack"
-            app:srcCompat="@drawable/search_icon" />
+            android:layout_toRightOf="@id/btnCategorySearchBack" />
 
     </RelativeLayout>
 
