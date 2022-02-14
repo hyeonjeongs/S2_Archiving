@@ -5,50 +5,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     tools:context=".SearchCategory">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnCategorySearchBack"
-            android:layout_width="70dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="16dp"
-            android:background="@drawable/ic_baseline_arrow_back_24"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/backspace_btn"
             android:backgroundTint="@color/black"
             android:clickable="true"
             android:textColor="#000000"
             android:textSize="18sp"
             tools:layout_editor_absoluteY="16dp" />
 
-        <EditText
-            android:id="@+id/etCategorySearch"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:layout_alignLeft="@+id/btnCategorySearchBack"
-            android:layout_marginLeft="88dp"
-            android:background="@drawable/edge"
-            android:ems="10"
-            android:hint="               날짜나 기념일 이름 검색 "
-            android:inputType="textPersonName" />
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="30dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/btnCategorySearchBack" />
+            <EditText
+                android:id="@+id/etCategorySearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edge_round"
+                android:gravity="center"
+                android:ems="10"
+                android:hint="날짜나 기념일 이름 검색"
+                android:textSize="15dp"
+                android:inputType="textPersonName" />
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:padding="5dp"
+                app:srcCompat="@drawable/search_img" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearchCategory"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        />
 
 
 </LinearLayout>

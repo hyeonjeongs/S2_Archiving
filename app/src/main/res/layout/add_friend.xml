@@ -4,40 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/background"
     tools:context=".FriendAdd">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_marginTop="6dp">
 
         <Button
             android:id="@+id/btnfriendback"
             android:layout_width="70dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:clickable="true"
             android:backgroundTint="@color/black"
-            android:background="@drawable/ic_baseline_arrow_back_24"
+            android:background="@drawable/backspace_btn"
             android:textColor="#000000"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             tools:ignore="MissingConstraints" />
+
         <Button
             android:id="@+id/btnAddFriend"
-            android:layout_width="70dp"
+            android:layout_width="100dp"
             android:layout_height="40dp"
-            android:text="완료"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:background="@drawable/join_btn_red"
             android:clickable="true"
-            android:background="#DCDBDB"
             android:textColor="#000000"
             android:textSize="18sp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
             app:layout_constraintRight_toRightOf="parent"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -58,8 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#DCDBDB"
+            android:background="@drawable/button_design"
             android:text="사진 추가"
+            android:textColor="@color/black"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/ivProfileImage" />
 
@@ -69,12 +72,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/tvEditGal">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/edge"
+            android:layout_height="70dp"
+            android:padding="10dp"
+            android:background="@drawable/edge_round_top"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -100,7 +105,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="70dp"
+            android:padding="10dp"
             android:background="@drawable/edge"
             android:gravity="center"
             android:orientation="horizontal">
@@ -123,72 +129,85 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:hint="특수기호 없이 번호만 입력하세요"
+                android:textSize="15dp"
                 android:ems="10"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="70dp"
+            android:weightSum="20"
+            android:padding="10dp"
             android:background="@drawable/edge"
             android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tvBirth"
-                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:padding="10dp"
                 android:text="생일"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:layout_width="80dp" />
 
-            <Spinner
-                android:id="@+id/year_spinner"
-                android:layout_weight="2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="15"
+                android:gravity="center">
 
-            <TextView
-                android:id="@+id/tvBirthYear"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="년" />
+                <Spinner
+                    android:id="@+id/year_spinner"
+                    android:layout_weight="4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
 
-            <Spinner
-                android:id="@+id/month_spinner"
-                android:layout_weight="2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tvBirthYear"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="년" />
 
-            <TextView
-                android:id="@+id/tvBirthMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="월" />
+                <Spinner
+                    android:id="@+id/month_spinner"
+                    android:layout_weight="4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
 
-            <Spinner
-                android:id="@+id/day_spinner"
-                android:layout_weight="2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tvBirthMonth"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="월" />
 
-            <TextView
-                android:id="@+id/tvBirthDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="일" />
+                <Spinner
+                    android:id="@+id/day_spinner"
+                    android:layout_weight="4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/tvBirthDay"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="일" />
+            </LinearLayout>
 
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="70dp"
+            android:padding="10dp"
             android:background="@drawable/edge"
             android:gravity="center"
             android:orientation="horizontal">
@@ -214,8 +233,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/edge"
+            android:layout_height="70dp"
+            android:padding="10dp"
+            android:background="@drawable/edge_round_bottom"
             android:gravity="center"
             android:orientation="horizontal">
 
