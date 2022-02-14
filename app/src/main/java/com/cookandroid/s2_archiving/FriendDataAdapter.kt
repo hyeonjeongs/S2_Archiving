@@ -51,11 +51,11 @@ class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: 
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
-        if (friendDataList.get(position).fImgurl == "") {
+        if (friendDataList.get(position).fImgUri == "") {
             holder.image.setImageResource(R.drawable.man)
         } else {
             Glide.with(holder.itemView)
-                .load(friendDataList.get(position).fImgurl)
+                .load(friendDataList.get(position).fImgUri)
                 .into(holder.image)
         }
 
