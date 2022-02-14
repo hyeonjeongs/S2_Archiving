@@ -4,39 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".ModifyAccount">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/csimf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_marginTop="6dp">
 
         <Button
             android:id="@+id/btnEditMyDataback"
             android:layout_width="70dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:clickable="true"
             android:backgroundTint="@color/black"
-            android:background="@drawable/ic_baseline_arrow_back_24"
+            android:background="@drawable/backspace_btn"
             android:textColor="#000000"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             tools:ignore="MissingConstraints" />
+
         <Button
             android:id="@+id/btnEditEditMyData"
-            android:layout_width="70dp"
+            android:layout_width="100dp"
             android:layout_height="40dp"
-            android:text="완료"
             android:clickable="true"
-            android:background="#DCDBDB"
+            android:background="@drawable/join_btn_red"
             android:textColor="#000000"
             android:textSize="18sp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
+            android:gravity="center"
             app:layout_constraintRight_toRightOf="parent"
             tools:ignore="MissingConstraints" />
 
@@ -54,27 +55,29 @@
         app:srcCompat="@drawable/user" />
     <Button
         android:id="@+id/imageEditMyData"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/ivEditImageMydata"
-        android:background="@drawable/pencil"/>
+        android:background="@drawable/edit_btn"/>
 
     <LinearLayout
         android:id="@+id/ListMydataEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
         android:layout_alignParentBottom="true"
         android:padding="10dp"
-
         android:layout_below="@+id/imageEditMyData">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edge"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/edge_round_top"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -98,17 +101,18 @@
 
             <Button
                 android:id="@+id/dupliCheckMyData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="중복확인"
-                android:layout_marginStart="10dp"/>
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/confirm_btn" />
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1"
             android:background="@drawable/edge"
             android:gravity="center"
             android:orientation="horizontal">
@@ -134,16 +138,19 @@
                 android:inputType="textPersonName" />
             <TextView
                 android:id="@+id/txEmailEditposMyData"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="수정불가"
-                android:layout_marginEnd="10dp"
+                android:layout_margin="10dp"
                 android:textColor="#972D2D" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
             android:background="@drawable/edge"
             android:gravity="center"
             android:orientation="horizontal">
@@ -171,6 +178,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1"
             android:background="@drawable/edge"
             android:gravity="center"
             android:orientation="horizontal">
@@ -198,7 +207,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edge"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/edge_round_bottom"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -251,8 +262,8 @@
                 android:layout_weight="1"
                 android:text="일" />
 
-
         </LinearLayout>
+
 
     </LinearLayout>
 

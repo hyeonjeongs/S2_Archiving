@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/man" />
+        app:srcCompat="@drawable/user" />
 
     <TextView
         android:id="@+id/tvName"

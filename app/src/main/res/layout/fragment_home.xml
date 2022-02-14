@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -11,6 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -21,12 +23,33 @@
             android:background="#050505"
             android:src="@drawable/ic_launcher_foreground" />
 
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:hint="검색하세요" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/edge_round"
+            android:layout_weight="8">
+
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:text="검색"
+                android:background="@null"
+                android:gravity="center"/>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                app:srcCompat="@drawable/search_img" />
+
+        </RelativeLayout>
+
     </LinearLayout>
 
 
@@ -46,7 +69,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="#8BC34A"
+                app:cardBackgroundColor="#FFC71F"
                 app:cardCornerRadius="20dp"
 
                 app:cardElevation="10dp" >
@@ -56,12 +79,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -80,7 +97,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/man" />
+                    app:srcCompat="@drawable/user" />
 
                 <TextView
                     android:id="@+id/tvName"
@@ -97,44 +114,47 @@
                     app:layout_constraintTop_toTopOf="@+id/ivProfile" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <TextView
-                android:id="@+id/tvFriend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edge"
-                android:text="친구"
-                android:textColor="#000000"
-                android:textSize="18sp" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edge_round_top"
+                android:orientation="horizontal">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/list_item"
-                    android:id="@+id/rvProfile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none"
-                    android:background="#FFFFFF" />
+                <TextView
+                    android:id="@+id/tvFriend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="15dp"
+                    android:text="친구"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:id="@+id/ivPlus"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_marginRight="20dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginRight="50dp"
-                    android:layout_marginBottom="70dp"
-                    app:srcCompat="@drawable/blue_plus" />
+                    app:srcCompat="@drawable/plus_btn" />
 
+            </LinearLayout>
 
-            </RelativeLayout>
-
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edge_round_bottom"
+                    android:scrollbars="none"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/list_item" />
+            </LinearLayout>
 
         </LinearLayout>
 

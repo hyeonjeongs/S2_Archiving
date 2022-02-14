@@ -4,7 +4,6 @@ import android.Manifest
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -39,7 +38,7 @@ class PostActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_write)
+        setContentView(R.layout.activity_post)
 
         //파이어베이스 계정, 리얼타임 데이터베이스
         mFirebaseAuth = FirebaseAuth.getInstance()
