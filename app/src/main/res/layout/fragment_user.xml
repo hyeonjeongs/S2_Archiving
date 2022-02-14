@@ -11,7 +11,7 @@
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:text="LOGO"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
@@ -22,11 +22,13 @@
 
     <LinearLayout
         android:id="@+id/userimf"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:orientation="vertical"
         android:weightSum="7"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/applesdgothic_bold"
-                android:text="닉네임"
+                android:text="hyeons"
                 android:textSize="28dp" />
 
             <TextView
@@ -67,7 +69,7 @@
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/applesdgothic_regular"
                 android:layout_marginTop="10dp"
-                android:text="이메일"
+                android:text="py0429@naver.com"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -76,7 +78,7 @@
             <Button
                 android:id="@+id/btnChangeInfo"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/applesdgothic_regular"
@@ -86,7 +88,7 @@
             <Button
                 android:id="@+id/btnDrop"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/applesdgothic_regular"
@@ -96,7 +98,7 @@
             <Button
                 android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
                 android:text="로그 아웃"

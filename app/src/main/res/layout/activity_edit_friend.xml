@@ -18,7 +18,6 @@
             android:layout_height="30dp"
             android:clickable="true"
             android:background="@drawable/backspace_btn"
-            android:textColor="#000000"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -54,7 +53,7 @@
     <android.widget.Button
         android:id="@+id/tvEditGal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:textSize="16sp"
