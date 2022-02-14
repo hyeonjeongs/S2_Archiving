@@ -189,8 +189,13 @@ class FriendAdd : AppCompatActivity() {
                         var strBday: String = birthDay
                         var strRelationship: String = etRel.text.toString()
                         var strAdd: String = etAdd.text.toString()
-                        
-                        hashMap.put("fId", mFirebaseAuth!!.currentUser!!.uid)
+                        var id: String? = fid
+
+
+                        if (id != null) {
+                            hashMap.put("fId", id )
+                        }
+ 
                         hashMap.put("fName", strName)
                         hashMap.put("fImgurl", downloadUrl.toString())
                         hashMap.put("fPhone", strPhone)

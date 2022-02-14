@@ -1,23 +1,22 @@
 package com.cookandroid.s2_archiving
 
-import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_write.*
+
 
 class PostActivity : AppCompatActivity() {
 
-
+    // 이미지 선택시 상수 값값
+    var PICK_IMAGE_FROM_ALBUM = 0
     var photoUri: Uri? = null
 
     lateinit var cameraPermission: ActivityResultLauncher<String>
@@ -27,6 +26,7 @@ class PostActivity : AppCompatActivity() {
     lateinit var galleryLauncher: ActivityResultLauncher<String>
 
     var imgUrl : String = ""
+    private var postId:String=""
 
     private lateinit var mFirebaseAuth: FirebaseAuth // 파이어베이스 인증 처리
     private lateinit var mDatabaseRef: DatabaseReference // 실시간 데이터 베이스
@@ -39,93 +39,73 @@ class PostActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_write)
+        setContentView(R.layout.activity_post)
 
         //파이어베이스 계정, 리얼타임 데이터베이스
         mFirebaseAuth = FirebaseAuth.getInstance()
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
 
-        mEtDate = findViewById<EditText>(R.id.etWriteDate)
-        mEtDateName = findViewById<EditText>(R.id.etWriteName)
+        mEtDate = findViewById<EditText>(R.id.etPostDate)
+        mEtDateName = findViewById<EditText>(R.id.etPostName)
         mEtPost = findViewById<EditText>(R.id.etWritePost)
-        mBtnPostRegister = findViewById<Button>(R.id.btnWriteRegister)
+        mBtnPostRegister = findViewById<Button>(R.id.btnPostRegister)
 
         var friendId = getIntent().getStringExtra("fPostId")
+        postId =
+            mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child("${friendId!!}").push().key.toString()
 
-        storagePermission=registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ){isGranted ->
-            if(isGranted){
-                setViews()
-            } else{
-                Toast.makeText(baseContext, "외부 저장소 권한을 승인해야 앱을 사용할 수 있습니다.", Toast.LENGTH_SHORT).show()
+
+
+
+
+
+
+//        mBtnPostRegister.setOnClickListener{
+//            val hashMap : HashMap<String, String> = HashMap()
+//            var strDate: String = mEtDate.text.toString()
+//            var strDateName: String = mEtDateName.text.toString()
+//            var strPost: String = mEtPost.text.toString()
+//            var strPostId: String = postId
+//
+//
+//            hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
+//            hashMap.put("postDate", strDate)
+//            hashMap.put("postDateName", strDateName)
+//            hashMap.put("postId", strPostId)
+//            hashMap.put("post", strPost)
+//
+//            mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child("$friendId").push().setValue(hashMap)
+//                .addOnCompleteListener {
+//                    if(it.isSuccessful){
+//                        Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//
+//            Toast.makeText(this, "게시글 추가 완료", Toast.LENGTH_SHORT).show()
+////            var intent = Intent(this, MainActivity::class.java)
+////            startActivity(intent)
+//            finish()
+
+        }
+
+    // onActivityResult
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == PICK_IMAGE_FROM_ALBUM){
+            if(resultCode== Activity.RESULT_OK){
+                // This is path to the selected image
+                photoUri = data?.data
+            }
+            else{
+                // Exit the addPhotoActivity if you leave the album without selecting it
                 finish()
             }
         }
-
-
-        cameraPermission=registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ){isGranted ->
-            if(isGranted){
-                //openCamera()
-            } else{
-                Toast.makeText(baseContext, "카메라 권한을 승인해야 앱을 사용할 수 있습니다.", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        }
-
-
-
-        galleryLauncher = registerForActivityResult(
-            ActivityResultContracts.
-            GetContent()){uri->
-            ivWriteCamera.setImageURI(uri)
-        }
-
-        storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
-        mBtnPostRegister.setOnClickListener{
-            val hashMap : HashMap<String, String> = HashMap()
-            var strDate: String = mEtDate.text.toString()
-            var strDateName: String = mEtDateName.text.toString()
-            var strPost: String = mEtPost.text.toString()
-
-
-            hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
-            hashMap.put("postDate", strDate)
-            hashMap.put("postDateName", strDateName)
-            hashMap.put("post", strPost)
-
-            mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child("$friendId").push().setValue(hashMap)
-                .addOnCompleteListener {
-                    if(it.isSuccessful){
-                        Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-            Toast.makeText(this, "게시글 추가 완료", Toast.LENGTH_SHORT).show()
-//            var intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-            finish()
-
-        }
-
     }
-
-    fun setViews(){
-        ivWriteCamera.setOnClickListener{
-            openGallery()
-        }
-        tvWriteImage.setOnClickListener{
-            openGallery()
-        }
-    }
-
-    fun openGallery(){
-        galleryLauncher.launch("image/*")
-    }
-
-
 
 }
+
+
+
+
+
