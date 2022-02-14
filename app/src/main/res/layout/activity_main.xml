@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#1E8E83"
+        android:background="#1BB6A8"
         android:layout_centerHorizontal="true">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>

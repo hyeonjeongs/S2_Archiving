@@ -16,14 +16,12 @@
 
         <Button
             android:id="@+id/btnEditMyDataback"
-            android:layout_width="70dp"
+            android:layout_width="100dp"
             android:layout_height="40dp"
             android:clickable="true"
-            android:backgroundTint="@color/black"
-            android:background="@drawable/backspace_btn"
+            android:background="@drawable/back_btn"
             android:textColor="#000000"
             android:textSize="18sp"
-            android:layout_marginLeft="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             tools:ignore="MissingConstraints" />
 
@@ -55,8 +53,8 @@
         app:srcCompat="@drawable/user" />
     <Button
         android:id="@+id/imageEditMyData"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/ivEditImageMydata"
         android:background="@drawable/edit_btn"/>
@@ -66,16 +64,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:layout_alignParentBottom="true"
-        android:padding="10dp"
         android:layout_below="@+id/imageEditMyData">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:layout_weight="1"
             android:background="@drawable/edge_round_top"
             android:gravity="center"
@@ -101,8 +97,8 @@
 
             <Button
                 android:id="@+id/dupliCheckMyData"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
                 android:layout_margin="10dp"
                 android:background="@drawable/confirm_btn" />
         </LinearLayout>
@@ -111,7 +107,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:layout_weight="1"
             android:background="@drawable/edge"
             android:gravity="center"
@@ -150,7 +145,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="10dp"
             android:background="@drawable/edge"
             android:gravity="center"
             android:orientation="horizontal">
@@ -178,7 +172,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:layout_weight="1"
             android:background="@drawable/edge"
             android:gravity="center"
@@ -207,7 +200,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:layout_weight="1"
             android:background="@drawable/edge_round_bottom"
             android:gravity="center"
@@ -227,6 +219,7 @@
             <Spinner
                 android:id="@+id/edit_year_spinner"
                 android:layout_weight="2"
+                android:padding="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -240,6 +233,7 @@
             <Spinner
                 android:id="@+id/edit_month_spinner"
                 android:layout_weight="2"
+                android:padding="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -254,6 +248,7 @@
                 android:id="@+id/edit_day_spinner"
                 android:layout_weight="2"
                 android:layout_width="wrap_content"
+                android:padding="20dp"
                 android:layout_height="wrap_content" />
 
             <TextView

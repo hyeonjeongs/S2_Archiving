@@ -58,7 +58,7 @@
                 android:layout_width="50dp"
                 android:layout_height="38dp"
                 android:onClick="onDialogBtnClicked"
-                app:srcCompat="@drawable/etc" />
+                app:srcCompat="@drawable/menu_btn" />
 
 
         </LinearLayout>
