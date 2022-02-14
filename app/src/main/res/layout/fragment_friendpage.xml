@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".MainActivity">
-
+    tools:context="com.cookandroid.s2_archiving.fragment.FriendpageFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,30 +17,33 @@
         android:weightSum="10">
 
         <android.widget.Button
-            android:id="@+id/back_btn"
-            android:layout_width="20dp"
-            android:layout_height="match_parent"
+            android:id="@+id/friendpage_back_btn"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_baseline_arrow_back_24"
-            android:backgroundTint="#040404"
+            android:background="@drawable/back_btn"
             android:gravity="center"
             app:strokeColor="#000000" />
 
         <TextView
+            android:id="@+id/friendpage_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="8"
+            android:fontFamily="@font/applesdgothic_regular"
             android:gravity="center"
             android:text="박현정"
             android:textSize="25dp"/>
 
         <android.widget.Button
-            android:id="@+id/edit_btn"
-            android:layout_width="20dp"
-            android:layout_height="match_parent"
+            android:id="@+id/friendpage_edit_btn"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_baseline_edit_24"
-            android:backgroundTint="#000000"
+            android:text="편집"
+            android:fontFamily="@font/applesdgothic_regular"
+            android:textAlignment="center"
+            android:background="@drawable/button_design"
             android:gravity="center" />
 
 
@@ -53,10 +55,10 @@
 
         <ImageView
             android:id="@+id/account_profile"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_woman" />
+            android:src="@drawable/woman" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,15 +75,16 @@
 
                 <ImageView
                     android:id="@+id/account_star"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_baseline_star_24" />
+                    android:src="@drawable/star_full_line" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/applesdgothic_thin"
                     android:text="following" />
             </LinearLayout>
 
@@ -104,6 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/applesdgothic_thin"
                     android:text="message" />
             </LinearLayout>
 
@@ -125,6 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/applesdgothic_thin"
                     android:text="call" />
             </LinearLayout>
 
@@ -132,9 +137,21 @@
         </LinearLayout>
 
     </RelativeLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_friend"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_post"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/btnGoWrite"
+            android:layout_width="55dp"
+            android:layout_height="60dp"
+            android:background="@drawable/plus_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

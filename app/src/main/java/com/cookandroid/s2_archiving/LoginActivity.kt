@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat.finishAffinity
+import androidx.fragment.app.commit
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -22,6 +25,17 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+
+        supportFragmentManager.commit {
+            supportFragmentManager.findFragmentByTag("home")?.let { remove(it) }
+        }
+        supportFragmentManager.commit {
+            supportFragmentManager.findFragmentByTag("like")?.let { remove(it) }
+        }
+        supportFragmentManager.commit {
+            supportFragmentManager.findFragmentByTag("user")?.let { remove(it) }
+        }
+
         mFirebaseAuth = FirebaseAuth.getInstance()
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
         mEtEmail = findViewById<EditText>(R.id.etEmail)
@@ -29,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-        var btn_login = findViewById<Button>(R.id.btnLogin)
+        var btn_login = findViewById<ImageView>(R.id.btnLogin)
         btn_login.setOnClickListener(View.OnClickListener {
             // 로그인 요청
             var strEmail: String = mEtEmail.getText().toString()
@@ -49,11 +63,13 @@ class LoginActivity : AppCompatActivity() {
                 }
         })
 
-        val btnRegister = findViewById<Button>(R.id.btnRegister)
+        val btnRegister = findViewById<ImageView>(R.id.btnRegister)
         btnRegister.setOnClickListener(View.OnClickListener{
 
             val intent = Intent(this, ResisterActivity::class.java)
             startActivity(intent)
+            finish()
+
 
         })
     }

@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature android:name="android.hardware.camera" />
+    <meta-data android:name="android.max_aspect" android:value="2.1" />
 
     <application
         android:allowBackup="true"
@@ -18,12 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditMyData"></activity>
-        <activity android:name=".PostActivity" />
+        <activity android:name=".PostActivity_1" />
         <activity android:name=".FriendPage" />
+        <activity android:name=".EditFriendActivity" />
         <activity android:name=".ModifyAccount" />
         <activity android:name=".ResisterActivity" />
         <activity android:name=".FriendAdd" />
+        <activity android:name=".SearchCategory" />
+        <activity android:name=".PostActivity" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">

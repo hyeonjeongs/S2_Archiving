@@ -1,92 +1,106 @@
 package com.cookandroid.s2_archiving
 
 import android.content.Context
-import android.content.Intent
+
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.cookandroid.s2_archiving.fragment.FriendpageFragment
+import com.cookandroid.s2_archiving.fragment.ViewpageFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.list_item.view.*
-import kotlin.collections.ArrayList
-import com.bumptech.glide.Glide;
 
-class FriendDataAdapter() : RecyclerView.Adapter<FriendDataAdapter.CustomViewHolder>() {
+
+
+class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: Context, val fragment_s:Fragment) : RecyclerView.Adapter<FriendDataAdapter.CustomViewHolder>() {
 
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
     private lateinit var fbStorage: FirebaseStorage
 
-    private lateinit var friendDataList : ArrayList<FriendData>
-    private lateinit var context : Context
-
-    constructor(friendDataList: ArrayList<FriendData>, context: Context) : this(){
-        this.friendDataList = friendDataList
-        this.context = context
-    }
-
-
+    private var activity : MainActivity? = null//메인에 함수 부르기 위해 선언하기
 
 
 
     //위젯 연결할 변수 선언
-    class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image = itemView.findViewById<ImageView>(R.id.ivProfile)
         val fName = itemView.findViewById<TextView>(R.id.tvName)
         val star = itemView.findViewById<ImageView>(R.id.ivStar)
+        var fId = ""
+        fun bind(data: FriendData,context: Context){
+            fName.text = data.fName
+            fId = data.fId
+        }
     }
 
     override fun getItemCount(): Int {
-        if(friendDataList != null){
+        if(friendDataList != null) {
             return friendDataList.size
-        }else
-        {
+        } else {
             return 0
         }
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        if(friendDataList.get(position).fImgurl == ""){
+
+        if (friendDataList.get(position).fImgUri == "") {
             holder.image.setImageResource(R.drawable.man)
-        }else{
+        } else {
             Glide.with(holder.itemView)
-                .load(friendDataList.get(position).fImgurl)
+                .load(friendDataList.get(position).fImgUri)
                 .into(holder.image)
         }
 
         holder.fName.text = friendDataList.get(position).fName
+        holder.fId = friendDataList.get(position).fId
 
-        if(friendDataList.get(position).fStar == "0"){
+        if (friendDataList.get(position).fStar == "0") {
             holder.star.setImageResource(R.drawable.star_empty)
-        }
-        else if(friendDataList.get(position).fStar == "1"){
+        } else if (friendDataList.get(position).fStar == "1") {
             holder.star.setImageResource(R.drawable.star_full)
         }
 
+
+        holder.fName.setOnClickListener {
+            Log.d("FriendpageFragment", "이동 성공!")
+            var fragment:Fragment = FriendpageFragment()
+            var bundle: Bundle = Bundle()
+            bundle.putString("friend_name",holder?.fName.text.toString())
+            bundle.putString("friend_id",holder?.fId)
+
+            fragment.arguments=bundle
+            activity = fragment_s.activity as MainActivity?
+            activity?.fragmentChange_for_adapter(fragment)
+
+        }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return CustomViewHolder(view).apply {
-            var i=0
+
+            var i = 0
             star.setOnClickListener {
 
-                val curPos : Int = adapterPosition
-                Log.e("위치",curPos.toString())
+                val curPos: Int = adapterPosition
+                Log.e("위치", curPos.toString())
 
-                val friendData : FriendData = friendDataList.get(curPos)
+                val friendData: FriendData = friendDataList.get(curPos)
                 val fId = friendData.fId
 
-                if(i==0) { // full star로 바꿀 때
+                if (i == 0) { // full star로 바꿀 때
                     star.setImageResource(R.drawable.star_full)
-                    i=1
+                    i = 1
                     mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child("${fId}")
                         .addValueEventListener(object : ValueEventListener {
 
@@ -119,10 +133,9 @@ class FriendDataAdapter() : RecyclerView.Adapter<FriendDataAdapter.CustomViewHol
 
                             }
                         })
-                }
-                else if(i==1){ // empty_star로 바꿀 때
+                } else if (i == 1) { // empty_star로 바꿀 때
                     star.setImageResource(R.drawable.star_empty)
-                    i=0
+                    i = 0
                     mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child("${fId}")
                         .addValueEventListener(object : ValueEventListener {
 
@@ -160,16 +173,16 @@ class FriendDataAdapter() : RecyclerView.Adapter<FriendDataAdapter.CustomViewHol
                 }
 
 
-
                 //val friendData : FriendData = friendDataList.get(curPos)
                 //if(curPos != RecyclerView.NO_POSITION){
-                    //var intent = Intent(context, FriendActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    //intent.putExtra("IMGURL", friendData.fImgurl)
-                    //intent.putExtra("FNAME", friendData.fName)
-                    //intent.putExtra("STAR", friendData.fStar)
-                    //context.startActivity(intent)
-               // }
+                //var intent = Intent(context, FriendActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                //intent.putExtra("IMGURL", friendData.fImgurl)
+                //intent.putExtra("FNAME", friendData.fName)
+                //intent.putExtra("STAR", friendData.fStar)
+                //context.startActivity(intent)
+                // }
             }
         }
     }
 }
+

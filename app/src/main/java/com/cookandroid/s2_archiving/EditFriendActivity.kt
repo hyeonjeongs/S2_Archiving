@@ -6,10 +6,9 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.gms.tasks.Continuation
@@ -22,7 +21,6 @@ import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_edit_friend.*
 
 //import com.example.recyclerviewkt.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.add_friend.*
 import kotlinx.android.synthetic.main.add_friend.tvEditGal
 import java.io.File
@@ -44,11 +42,10 @@ class EditFriendActivity : AppCompatActivity() {
     lateinit var cameraLauncher:ActivityResultLauncher<Uri>
     lateinit var galleryLauncher:ActivityResultLauncher<String>
 
-    lateinit var btnAddFriend: TextView
-    lateinit var etName: EditText
-    lateinit var etPhone: EditText
-    lateinit var etRel: EditText
-    lateinit var etAdd: EditText
+    private lateinit var etName: EditText
+    private lateinit var etPhone: EditText
+    private lateinit var etRel: EditText
+    private lateinit var etAdd: EditText
 
     var imgUrl : String = ""
 
@@ -58,7 +55,7 @@ class EditFriendActivity : AppCompatActivity() {
     private lateinit var storageRef: StorageReference
     private var GALLEY_CODE : Int = 10
 
-    var timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+    var birthDay: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -66,29 +63,70 @@ class EditFriendActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_friend)
 
 
+
         //파이어베이스 계정, 리얼타임 데이터베이스
         mFirebaseAuth = FirebaseAuth.getInstance()
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
         fbStorage = FirebaseStorage.getInstance()
+        var friendId = getIntent().getStringExtra("fId")
 
-        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth!!.currentUser!!.uid}")
+        etName = findViewById<EditText>(R.id.etEditName)
+        etPhone = findViewById<EditText>(R.id.etEditPhone)
+        etRel = findViewById<EditText>(R.id.etEditRel)
+        etAdd = findViewById<EditText>(R.id.etEditAdd)
+
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId!!)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         //파이어베이스의 데이터를 가져옴
-                        var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-                        Log.d("택", "${user!!.userEmail.toString()}")
+                        var friend: FriendData? = snapshot.getValue(FriendData::class.java)
+                        Log.d("택", "${friend?.fName}")
                     }
                     override fun onCancelled(error: DatabaseError) {
                         Log.d("Tag", "Failed")
                     }
                 })
 
-        //생년원일 스피너
-        edit_year_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.yearItemList, android.R.layout.simple_spinner_item)
-        edit_month_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.monthItemList, android.R.layout.simple_spinner_item)
-        edit_day_spinner.adapter = ArrayAdapter.createFromResource(this, R.array.dayItemList, android.R.layout.simple_spinner_item)
 
-        var birthDay:String = year_spinner.selectedItem.toString()+"년"+month_spinner.selectedItem.toString()+"월"+day_spinner.selectedItem.toString()+"일"
+        //생년원일 스피너
+        var yData = resources.getStringArray(R.array.yearItemList)
+        var adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,yData)
+        edit_year_spinner.adapter=adapter
+
+        var mData = resources.getStringArray(R.array.monthItemList)
+        var madapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,mData)
+        edit_month_spinner.adapter=madapter
+
+        var dData = resources.getStringArray(R.array.dayItemList)
+        var dadapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,dData)
+        edit_day_spinner.adapter=dadapter
+
+        //생년원일 스피너 아이템 선택했을때
+        edit_year_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                birthDay = birthDay + edit_year_spinner.selectedItem.toString()+"년"
+            }
+        }
+
+        edit_month_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                birthDay = birthDay + edit_month_spinner.selectedItem.toString()+"월"
+            }
+        }
+
+        edit_day_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                birthDay = birthDay + edit_day_spinner.selectedItem.toString()+"일"
+            }
+        }
 
 
         storagePermission=registerForActivityResult(
@@ -123,7 +161,7 @@ class EditFriendActivity : AppCompatActivity() {
 
         storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
-        btnAddFriend.setOnClickListener{
+        btnEditAddFriend.setOnClickListener{
             try {
                 var storageReference : StorageReference = fbStorage.getReference()
 
@@ -143,32 +181,29 @@ class EditFriendActivity : AppCompatActivity() {
 
                         val hashMap : HashMap<String, String> = HashMap()
 
-                        var strName: String = etEditName.text.toString()
-                        var strPhone = etEditPhone.text.toString()
+                        var strName: String = etName.text.toString()
+                        var strPhone = etPhone.text.toString()
                         var strBday: String = birthDay
-                        var strRelationship: String = etEditRel.text.toString()
-                        var strAdd: String = etEditAdd.text.toString()
+                        var strRelationship: String = etRel.text.toString()
+                        var strAdd: String = etAdd.text.toString()
 
                         hashMap.put("imgUrl", downloadUrl.toString())
-                        hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
+                        hashMap.put("fId", friendId)
                         hashMap.put("fName", strName)
                         hashMap.put("fPhone", strPhone)
                         hashMap.put("fBday", strBday)
                         hashMap.put("fRel", strRelationship)
                         hashMap.put("fAdd", strAdd)
-                        hashMap.put("timstamp", timestamp)
 
 
-                        mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
+                        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId).updateChildren(hashMap as Map<String, Any>)
                                 .addOnCompleteListener {
                                     if(it.isSuccessful){
                                         Toast.makeText(this, "업로드", Toast.LENGTH_SHORT).show()
                                     }
                                 }
 
-                        Toast.makeText(this, "친구 추가 완료", Toast.LENGTH_SHORT).show()
-                        var intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
+                        Toast.makeText(this, "친구 정보 수정 완료", Toast.LENGTH_SHORT).show()
                         finish()
                     }
                 }.addOnFailureListener {
@@ -182,19 +217,17 @@ class EditFriendActivity : AppCompatActivity() {
                     var strAdd: String = etAdd.text.toString()
 
 
-                    hashMap.put("uid", mFirebaseAuth!!.currentUser!!.uid)
+                    hashMap.put("fId", friendId)
                     hashMap.put("fName", strName)
                     hashMap.put("fPhone", strPhone)
                     hashMap.put("fBday", strBday)
                     hashMap.put("fRel", strRelationship)
                     hashMap.put("fAdd", strAdd)
-                    hashMap.put("timstamp", timestamp)
-                    mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
 
-                    Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
-                    var intent = Intent(this, MainActivity::class.java)
-                    //intent.putExtra("SELECTED_ITEM", selectedItem)
-                    startActivity(intent)
+                    mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId).updateChildren(hashMap as Map<String, Any>)
+
+                    Toast.makeText(this, "친구 정보 수정 완료", Toast.LENGTH_SHORT).show()
+
                     finish()
 
                 }

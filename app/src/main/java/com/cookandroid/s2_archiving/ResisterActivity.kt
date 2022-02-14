@@ -1,7 +1,10 @@
 package com.cookandroid.s2_archiving
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -9,6 +12,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import java.util.regex.Pattern
 ;
 class ResisterActivity : AppCompatActivity() {
@@ -21,6 +25,7 @@ class ResisterActivity : AppCompatActivity() {
     private lateinit var mEtPwdCheck: EditText // 비밀번호 확인 필드
     private lateinit var mBtnConfirmID : Button //이메일 중복확인 버튼
     private lateinit var mBtnRegister: Button // 회원 가입 버튼
+    private lateinit var mBtnBack: Button // 뒤로 가기 버튼
     private var test: Int = 0 // 이메일 중복 검사 버튼을 눌렀는지 확인
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +41,7 @@ class ResisterActivity : AppCompatActivity() {
         mEtPwd = findViewById<EditText>(R.id.etPwd)
         mEtPwdCheck = findViewById<EditText>(R.id.etPwdCheck)
         mBtnRegister = findViewById<Button>(R.id.btnRegister)
+        mBtnBack = findViewById<Button>(R.id.btnBack)
 
         var pattern : Pattern = android.util.Patterns.EMAIL_ADDRESS
 
@@ -43,24 +49,24 @@ class ResisterActivity : AppCompatActivity() {
 
         mBtnConfirmID.setOnClickListener {
             mDatabaseRef.orderByChild("userEmail").equalTo("${mEtEmail.text.toString()}")
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onCancelled(error: DatabaseError) {
-
-                    }
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        var value = snapshot.getValue()
-                        if(!pattern.matcher(mEtEmail.text.toString()).matches()){
-                            Toast.makeText(this@ResisterActivity,"이메일 형식으로 입력하세요",Toast.LENGTH_SHORT).show()
-                        }else if(value != null){
-                            Toast.makeText(this@ResisterActivity,"이미 가입되어 있는 아이디입니다",Toast.LENGTH_SHORT).show()
-                        }else{
-                            //가입 가능한 아이디이면 이메일 입력 창 비활성화 후 나머지 창 활성화
-                            test = 1
-                            Toast.makeText(this@ResisterActivity,"사용 가능한 아이디입니다",Toast.LENGTH_SHORT).show()
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(error: DatabaseError) {
 
                         }
-                    }
-                })
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            var value = snapshot.getValue()
+                            if(!pattern.matcher(mEtEmail.text.toString()).matches()){
+                                Toast.makeText(this@ResisterActivity,"이메일 형식으로 입력하세요",Toast.LENGTH_SHORT).show()
+                            }else if(value != null){
+                                Toast.makeText(this@ResisterActivity,"이미 가입되어 있는 아이디입니다",Toast.LENGTH_SHORT).show()
+                            }else{
+                                //가입 가능한 아이디이면 이메일 입력 창 비활성화 후 나머지 창 활성화
+                                test = 1
+                                Toast.makeText(this@ResisterActivity,"사용 가능한 아이디입니다",Toast.LENGTH_SHORT).show()
+
+                            }
+                        }
+                    })
         }
         mBtnRegister.setOnClickListener(View.OnClickListener {
             // 회원가입 처리 시작
@@ -84,28 +90,35 @@ class ResisterActivity : AppCompatActivity() {
             else {
 
                 mFirebaseAuth?.createUserWithEmailAndPassword(strEmail, strPwd)
-                    ?.addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            var firebaseUser: FirebaseUser? = mFirebaseAuth.currentUser
-                            var account = UserAccount()
-                            account.userId = firebaseUser?.uid.toString()
-                            account.userEmail = firebaseUser?.email.toString()
-                            account.userNickname = strNickname
-                            //account.userPhone = strPhone
-                            account.userPwd = strPwd
+                        ?.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                var firebaseUser: FirebaseUser? = mFirebaseAuth.currentUser
+                                var account = UserAccount()
+                                account.userId = firebaseUser?.uid.toString()
+                                account.userEmail = firebaseUser?.email.toString()
+                                account.userNickname = strNickname
+                                account.userPwd = strPwd
 
-                            // setValue : database에 insert (삽입) 행위
-                            mDatabaseRef.child(firebaseUser?.uid.toString())
-                                .setValue(account)
+                                // setValue : database에 insert (삽입) 행위
+                                mDatabaseRef.child(firebaseUser?.uid.toString())
+                                        .setValue(account)
 
-                            Toast.makeText(this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, LoginActivity::class.java)
+                                startActivity(intent)
+                                finish() // 현재 액티비티 파괴
 
-                        } else {
-                            Toast.makeText(this, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show()
+                            }
                         }
-                    }
             }
         })
+
+        mBtnBack.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
