@@ -81,8 +81,5 @@ class FriendPage : AppCompatActivity() {
             val intent = Intent(this,PostActivity::class.java)
             startActivity(intent)
         }
-
-
-
     }
 }

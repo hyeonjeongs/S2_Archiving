@@ -1,7 +1,6 @@
 package com.cookandroid.s2_archiving
 
 import android.Manifest
-import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_write.*
 
 class PostActivity : AppCompatActivity() {
@@ -43,7 +41,7 @@ class PostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
 
-    //파이어베이스 계정, 리얼타임 데이터베이스
+        //파이어베이스 계정, 리얼타임 데이터베이스
         mFirebaseAuth = FirebaseAuth.getInstance()
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
 
@@ -51,6 +49,8 @@ class PostActivity : AppCompatActivity() {
         mEtDateName = findViewById<EditText>(R.id.etWriteName)
         mEtPost = findViewById<EditText>(R.id.etWritePost)
         mBtnPostRegister = findViewById<Button>(R.id.btnWriteRegister)
+
+        var friendId = getIntent().getStringExtra("fPostId")
 
         storagePermission=registerForActivityResult(
             ActivityResultContracts.RequestPermission()
@@ -79,16 +79,14 @@ class PostActivity : AppCompatActivity() {
 
         galleryLauncher = registerForActivityResult(
             ActivityResultContracts.
-        GetContent()){uri->
+            GetContent()){uri->
             ivWriteCamera.setImageURI(uri)
         }
 
         storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
         mBtnPostRegister.setOnClickListener{
-            Log.e("PostActivity","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             val hashMap : HashMap<String, String> = HashMap()
-
             var strDate: String = mEtDate.text.toString()
             var strDateName: String = mEtDateName.text.toString()
             var strPost: String = mEtPost.text.toString()
@@ -99,12 +97,12 @@ class PostActivity : AppCompatActivity() {
             hashMap.put("postDateName", strDateName)
             hashMap.put("post", strPost)
 
-            mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
-                    .addOnCompleteListener {
-                        if(it.isSuccessful){
-                            Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
-                        }
+            mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child("$friendId").push().setValue(hashMap)
+                .addOnCompleteListener {
+                    if(it.isSuccessful){
+                        Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
                     }
+                }
 
             Toast.makeText(this, "게시글 추가 완료", Toast.LENGTH_SHORT).show()
 //            var intent = Intent(this, MainActivity::class.java)
