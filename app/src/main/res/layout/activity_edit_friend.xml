@@ -14,11 +14,10 @@
 
         <Button
             android:id="@+id/btnEditfriendback"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
             android:clickable="true"
-            android:backgroundTint="@color/black"
-            android:background="@drawable/ic_baseline_arrow_back_24"
+            android:background="@drawable/backspace_btn"
             android:textColor="#000000"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
@@ -26,16 +25,17 @@
             tools:ignore="MissingConstraints" />
         <Button
             android:id="@+id/btnEditAddFriend"
-            android:layout_width="70dp"
+            android:layout_width="80dp"
             android:layout_height="40dp"
             android:text="완료"
             android:clickable="true"
-            android:background="#DCDBDB"
+            android:fontFamily="@font/applesdgothic_regular"
+            android:background="@drawable/button_design"
             android:textColor="#000000"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
             app:layout_constraintRight_toRightOf="parent"
             tools:ignore="MissingConstraints" />
@@ -47,10 +47,8 @@
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="70dp"
-
-        android:background="@drawable/round_image"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/gallery" />
+        android:background="@drawable/woman"
+        android:layout_centerHorizontal="true" />
 
 
     <android.widget.Button
@@ -59,7 +57,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:background="#DCDBDB"
+        android:textSize="16sp"
+        android:background="@drawable/button_design"
+        android:fontFamily="@font/applesdgothic_regular"
         android:text="사진 추가"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/ivEditProfileImage" />
@@ -85,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="10dp"
+                android:fontFamily="@font/applesdgothic_regular"
                 android:text="이름"
                 android:textColor="#000000"
                 android:textSize="20dp" />
@@ -112,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="10dp"
+                android:fontFamily="@font/applesdgothic_regular"
                 android:text="전화번호"
                 android:textColor="#000000"
                 android:textSize="20dp" />
@@ -142,6 +144,7 @@
                 android:layout_weight="3"
                 android:padding="10dp"
                 android:text="생일"
+                android:fontFamily="@font/applesdgothic_regular"
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
@@ -201,6 +204,7 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="관계"
+                android:fontFamily="@font/applesdgothic_regular"
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
@@ -227,6 +231,7 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="추가정보"
+                android:fontFamily="@font/applesdgothic_regular"
                 android:textColor="#000000"
                 android:textSize="20dp" />
 

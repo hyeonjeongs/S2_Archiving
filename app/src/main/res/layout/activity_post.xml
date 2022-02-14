@@ -16,13 +16,13 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/ivWriteClose"
+            android:id="@+id/ivPostClose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/close_btn" />
 
         <TextView
-            android:id="@+id/tvWriteName"
+            android:id="@+id/tvPostName"
             android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,34 +31,33 @@
             android:textAlignment="center"
             android:text="조윤진"
             android:textColor="#000000"
-            android:textSize="30sp" />
+            android:textSize="30sp"/>
+
 
         <Button
-            android:id="@+id/btnWriteRegister"
+            android:id="@+id/btnPostRegister"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:background="@drawable/join_btn_red"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:textColor="#000000"
-            android:textSize="18sp" />
+            android:textSize="30sp"
+            android:gravity="center_horizontal"/>
+
     </LinearLayout>
 
 
     <EditText
-        android:id="@+id/etWriteDate"
+        android:id="@+id/etPostDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="날짜를 입력하세요(6자리 ex.220101)"
-        android:background="@drawable/edge_round_top"
+        android:background="@drawable/edge"
         android:inputType="textPersonName"
         android:padding="10dp"
          />
 
     <EditText
-        android:id="@+id/etWriteName"
+        android:id="@+id/etPostName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -70,12 +69,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edge"
         android:padding="10dp"
+        android:background="@drawable/edge"
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/ivWriteCamera"
+            android:id="@+id/ivPostCamera"
             android:layout_width="60dp"
             android:layout_height="60dp"
             app:srcCompat="@drawable/camera"
@@ -89,6 +88,7 @@
             android:padding="10dp"
             android:text="선물, 편지 등의 사진을 업로드 하세요"
             android:textSize="16sp" />
+
     </LinearLayout>
 
     <EditText
@@ -99,8 +99,7 @@
         android:ems="10"
         android:hint="글쓰기"
         android:padding="10dp"
-        android:background="@drawable/edge_round_bottom"
-        android:inputType="textPersonName" />
+        android:background="@drawable/edge_round_bottom"/>
 
 
 </LinearLayout>
