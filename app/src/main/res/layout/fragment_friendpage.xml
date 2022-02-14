@@ -18,10 +18,10 @@
 
         <android.widget.Button
             android:id="@+id/friendpage_back_btn"
-            android:layout_width="18dp"
+            android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:background="@drawable/backspace_btn"
+            android:background="@drawable/back_btn"
             android:gravity="center"
             app:strokeColor="#000000" />
 
@@ -37,10 +37,13 @@
 
         <android.widget.Button
             android:id="@+id/friendpage_edit_btn"
-            android:layout_width="6dp"
-            android:layout_height="26dp"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:background="@drawable/close_btn"
+            android:text="편집"
+            android:fontFamily="@font/applesdgothic_regular"
+            android:textAlignment="center"
+            android:background="@drawable/button_design"
             android:gravity="center" />
 
 
@@ -144,8 +147,8 @@
 
         <Button
             android:id="@+id/btnGoWrite"
-            android:layout_width="50dp"
-            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_height="60dp"
             android:background="@drawable/plus_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />

@@ -15,21 +15,18 @@
 
         <Button
             android:id="@+id/btnfriendback"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
             android:clickable="true"
-            android:backgroundTint="@color/black"
             android:background="@drawable/backspace_btn"
-            android:textColor="#000000"
             android:textSize="18sp"
-            android:layout_marginLeft="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             tools:ignore="MissingConstraints" />
 
         <Button
             android:id="@+id/btnAddFriend"
             android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:gravity="center"
@@ -49,19 +46,19 @@
         android:layout_height="130dp"
         android:layout_marginTop="70dp"
 
-        android:background="@drawable/round_image"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/gallery" />
+        android:background="@drawable/woman"
+        android:layout_centerHorizontal="true" />
 
 
         <android.widget.Button
             android:id="@+id/tvEditGal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/button_design"
             android:text="사진 추가"
+            android:fontFamily="@font/applesdgothic_regular"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/ivProfileImage" />
