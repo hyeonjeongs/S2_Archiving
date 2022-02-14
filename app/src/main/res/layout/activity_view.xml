@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context=".ViewActivity">
 
@@ -11,7 +12,6 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@drawable/edge"
         android:gravity="center">
 
         <ImageView
@@ -45,29 +45,13 @@
 
     </LinearLayout>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20dp"
         android:layout_weight="4"
-        android:background="@drawable/edge"
-         />
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavi"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:itemBackground="@android:color/white"
-        app:itemIconTint="#000000"
-        app:itemTextColor="#000000"
-        app:menu="@menu/navi_menu"
-        tools:ignore="MissingConstraints">
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        android:background="@drawable/edge" />
 
 
 

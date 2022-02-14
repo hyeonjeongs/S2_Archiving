@@ -5,10 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.cookandroid.s2_archiving.fragment.FriendpageFragment
-import com.cookandroid.s2_archiving.fragment.HomeFragment
-import com.cookandroid.s2_archiving.fragment.LikeFragment
-import com.cookandroid.s2_archiving.fragment.UserFragment
+import com.cookandroid.s2_archiving.fragment.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -21,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userFragment: UserFragment
     private lateinit var friendpageFragment : FriendpageFragment
     private lateinit var mainActivity: MainActivity
+    private lateinit var viewpageFragment : ViewpageFragment
 
 
 
@@ -68,5 +66,9 @@ class MainActivity : AppCompatActivity() {
     // 프래그먼트 친구 이름 클릭 시 프래그먼트 변경하는 함수
     fun fragmentChange_for_adapter(friendpageFragment: Fragment){
         supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, friendpageFragment).commit()
+    }
+
+    fun fragemtChage_for_adapter_view(viewpageFragment: Fragment){
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, viewpageFragment).commit()
     }
 }
