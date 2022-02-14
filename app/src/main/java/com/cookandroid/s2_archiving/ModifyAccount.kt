@@ -20,8 +20,7 @@ import java.util.*
 
 
 class ModifyAccount : AppCompatActivity() {
-
-    // 이미지 선택시 상수 값값
+   // 이미지 선택시 상수 값값
    var PICK_IMAGE_FROM_ALBUM = 0
 
     //파이어베이스에서 인스턴스 가져오기
