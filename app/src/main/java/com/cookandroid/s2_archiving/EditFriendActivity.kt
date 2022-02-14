@@ -63,6 +63,7 @@ class EditFriendActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_friend)
 
 
+
         //파이어베이스 계정, 리얼타임 데이터베이스
         mFirebaseAuth = FirebaseAuth.getInstance()
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")

@@ -14,6 +14,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
 import com.google.firebase.auth.FirebaseAuth
@@ -41,9 +42,9 @@ class HomeFragment : Fragment() {
     private lateinit var listener: ValueEventListener
     private lateinit var listener1: ValueEventListener
 
-    // 버튼 연결
+    // xml
     private lateinit var userNickname : TextView
-
+    private lateinit var ivProfile:ImageView
 
     //
     var photoUri: Uri? = null
@@ -74,6 +75,7 @@ class HomeFragment : Fragment() {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
 
         userNickname = view.findViewById(R.id.tvName)
+        ivProfile = view.findViewById(R.id.ivProfile)
 
 
         return view
@@ -117,6 +119,14 @@ class HomeFragment : Fragment() {
                 //var nickName = "${user?.userNickname}"
                 userNickname.text = nickName
                 // 사진 url 추가 후 load하는 코드 넣을 자리
+                if("${user!!.userPhotoUri}"==""){
+                    ivProfile.setImageResource(R.drawable.user)
+                }
+                else{ // userPhotoUri가 있으면 그 사진 로드하기
+                    Glide.with(this@HomeFragment)
+                        .load(user!!.userPhotoUri)
+                        .into(ivProfile)
+                }
             }
         })
 
@@ -142,7 +152,7 @@ class HomeFragment : Fragment() {
             })
 
         adapter = FriendDataAdapter(friendDataList, this.requireContext(), this)
-        rvProfile.setAdapter(adapter)
+        rvProfile.adapter= adapter
 
 
 //        rvProfile.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)

@@ -1,6 +1,7 @@
 package com.cookandroid.s2_archiving
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import java.util.regex.Pattern
 ;
 class ResisterActivity : AppCompatActivity() {
@@ -95,7 +97,6 @@ class ResisterActivity : AppCompatActivity() {
                                 account.userId = firebaseUser?.uid.toString()
                                 account.userEmail = firebaseUser?.email.toString()
                                 account.userNickname = strNickname
-                                //account.userPhone = strPhone
                                 account.userPwd = strPwd
 
                                 // setValue : database에 insert (삽입) 행위
