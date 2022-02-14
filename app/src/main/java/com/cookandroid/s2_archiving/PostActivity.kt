@@ -79,7 +79,7 @@ class PostActivity : AppCompatActivity() {
 
         galleryLauncher = registerForActivityResult(
             ActivityResultContracts.
-        GetContent()){uri->
+            GetContent()){uri->
             ivWriteCamera.setImageURI(uri)
         }
 
@@ -98,11 +98,14 @@ class PostActivity : AppCompatActivity() {
             hashMap.put("post", strPost)
 
             mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child("$friendId").push().setValue(hashMap)
+
                     .addOnCompleteListener {
                         if(it.isSuccessful){
                             Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
                         }
+
                     }
+                }
 
             Toast.makeText(this, "게시글 추가 완료", Toast.LENGTH_SHORT).show()
 //            var intent = Intent(this, MainActivity::class.java)
