@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cookandroid.s2_archiving.fragment.FriendpageFragment
+import com.cookandroid.s2_archiving.fragment.ViewpageFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -62,16 +63,30 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         holder.special.text = postDataList.get(position).postDateName
         holder.heart.setImageResource(R.drawable.heart)
 
+
+//        holder.fName.setOnClickListener {
+//            Log.d("FriendpageFragment", "이동 성공!")
+//            var fragment:Fragment = FriendpageFragment()
+//            var bundle: Bundle = Bundle()
+//            bundle.putString("friend_name",holder?.fName.text.toString())
+//            bundle.putString("friend_id",holder?.fId)
+//
+//            fragment.arguments=bundle
+//            activity = fragment_s.activity as MainActivity?
+//            activity?.fragmentChange_for_adapter(fragment)
+//
+//        }
+
+
         holder.postCardView.setOnClickListener {
-            Log.d("FriendpageFragment", "이동 성공!")
-            var fragment: Fragment = FriendpageFragment()
+            Log.d("ViewpageFragment", "이동 성공!")
+            var fragment: Fragment = ViewpageFragment()
             var bundle: Bundle = Bundle()
 //            bundle.putString("friend_name",holder?.fName.text.toString())
 //            bundle.putString("friend_id",holder?.fId)
-
             fragment.arguments = bundle
             activity = fragment_s.activity as MainActivity?
-            activity?.fragmentChange_for_adapter(fragment)
+            activity?.fragemtChage_for_adapter_view(fragment)
 
         }
     }

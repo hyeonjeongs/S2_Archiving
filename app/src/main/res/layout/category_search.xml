@@ -37,7 +37,8 @@
                 android:background="@drawable/edge_round"
                 android:gravity="center"
                 android:ems="10"
-                android:hint="검색 (날짜나 기념일 이름 검색)"
+                android:hint="날짜나 기념일 이름 검색"
+                android:textSize="15dp"
                 android:inputType="textPersonName" />
 
             <ImageView
@@ -55,9 +56,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearchCategory"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        />
 
 
 </LinearLayout>

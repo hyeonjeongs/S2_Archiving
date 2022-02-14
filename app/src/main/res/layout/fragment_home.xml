@@ -19,6 +19,7 @@
             android:id="@+id/ivLogo"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="#050505"
             android:src="@drawable/ic_launcher_foreground" />
@@ -26,6 +27,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="5dp"
             android:background="@drawable/edge_round"
             android:layout_weight="8">
 
@@ -129,7 +131,7 @@
                 <TextView
                     android:id="@+id/tvFriend"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="15dp"
                     android:text="친구"
@@ -140,6 +142,7 @@
                     android:id="@+id/ivPlus"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="center"
                     android:layout_marginRight="20dp"
                     android:layout_alignParentEnd="true"
                     app:srcCompat="@drawable/plus_btn" />

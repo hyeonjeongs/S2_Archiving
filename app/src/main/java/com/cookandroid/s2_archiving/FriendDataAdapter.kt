@@ -72,14 +72,14 @@ class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: 
 
         holder.fName.setOnClickListener {
             Log.d("FriendpageFragment", "이동 성공!")
-            var fragment:Fragment = ViewpageFragment()
+            var fragment:Fragment = FriendpageFragment()
             var bundle: Bundle = Bundle()
             bundle.putString("friend_name",holder?.fName.text.toString())
             bundle.putString("friend_id",holder?.fId)
 
             fragment.arguments=bundle
             activity = fragment_s.activity as MainActivity?
-            activity?.fragemtChage_for_adapter_view(fragment)
+            activity?.fragmentChange_for_adapter(fragment)
 
         }
 
