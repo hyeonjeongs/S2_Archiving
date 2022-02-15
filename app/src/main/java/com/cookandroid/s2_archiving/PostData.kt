@@ -8,5 +8,5 @@ data class PostData(
         var postDate : String = "",
         var postDateName : String = "",
         var heart:Int = 0,
-        var timestamp: String = ""
+        var timestamp: Long? = null
 )

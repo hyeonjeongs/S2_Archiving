@@ -40,8 +40,8 @@ class ModifyAccount : AppCompatActivity() {
 
     // 정보 저장에 쓸 변수
     private lateinit var strNickName: String
-    private lateinit var strEmail: String
     private lateinit var strAfterPwd: String
+    private var strPhotoUri: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,8 +67,14 @@ class ModifyAccount : AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
+                // 사용자가 미리 볼 수 있도록 setText
                 mTvEmail.text = "${user!!.userEmail}"
                 mEtNickName.setText("${user!!.userNickname}")
+
+                // 원래 정보 담아두기
+                strNickName = user!!.userNickname
+                strAfterPwd = user!!.userPwd
+
 
                 if("${user!!.userPhotoUri}"==""){
                     ivProfile.setImageResource(R.drawable.user)
@@ -92,49 +98,25 @@ class ModifyAccount : AppCompatActivity() {
         //정보 수정 버튼
         btnModify.setOnClickListener {
 
-            strNickName = mEtNickName.text.toString()
+            // 변경된 정보 확인
+            if(mEtNickName.text.isNotEmpty()){
+                strNickName = mEtNickName.text.toString()
+            }
 
-            //파이어베이스에 정보 변경 전에 입력된 값들 변수에 저장
-            mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}")
-                    .addValueEventListener(object : ValueEventListener {
+            var comparePassword:String = strAfterPwd// 현재 비밀번호
+             if(mEtBeforePwd.text.isNotEmpty()&&mEtAfterPwd.text.isNotEmpty()){ // 비밀번호를 변경하고자 한다면
+                if(comparePassword.equals(mEtBeforePwd.text.toString())) {
+                    changePassword()
+                    strAfterPwd = mEtAfterPwd.text.toString() // 새로운 비밀번호로 업데이트
+                }
+                else{ // 현재 비밀번호 입력 오류 시
+                    Toast.makeText(this@ModifyAccount, "현재 비밀번호를 확인해주세요", Toast.LENGTH_SHORT) // 원래 비밀번호로 update
+                }
+             }
 
-                        override fun onCancelled(error: DatabaseError) {
-
-                        }
-
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-
-                            strEmail = user!!.userEmail // 이메일은 원래 저장되어있던 이메일을 사용해야함
-
-                            if(mEtNickName.text.isNotEmpty()){
-                                strNickName = mEtNickName.text.toString()
-                            }
-                            else{
-                                strNickName = user!!.userNickname
-                            }
-
-
-                            var comparePassword:String = user!!.userPwd// 현재 비밀번호
-                            if(mEtBeforePwd.text.isNotEmpty()&&mEtAfterPwd.text.isNotEmpty()){ // 비밀번호를 변경하고자 한다면
-                                if(comparePassword.equals(mEtBeforePwd.text.toString())) {
-                                    changePassword()
-                                    strAfterPwd = mEtAfterPwd.text.toString()
-                                }
-                                else{ // 현재 비밀번호 입력 오류 시
-                                    Toast.makeText(this@ModifyAccount, "현재 비밀번호를 확인해주세요", Toast.LENGTH_SHORT)
-                                    strAfterPwd = user!!.userPwd // 원래 비밀번호로 update
-                                }
-                            }
-                            else{ // 비밀번호를 변경하고자 하지 않는다면
-                                strAfterPwd = user!!.userPwd
-                            }
-                        }
-                    })
             modifyAccount()
-
-
         }
+
     }
 
     // onActivityResult
@@ -162,27 +144,32 @@ class ModifyAccount : AppCompatActivity() {
         var storageRef = storage?.reference?.child("images")?.child(imageFileName)
 
         // Promise method
-        storageRef?.putFile(photoUri!!)
-            ?.continueWithTask { task: com.google.android.gms.tasks.Task<UploadTask.TaskSnapshot> ->
-                return@continueWithTask storageRef.downloadUrl
-            }?.addOnSuccessListener { uri ->
-            val hashMap: HashMap<String, String> = HashMap()
-            hashMap.put("userBirth", "")
-            hashMap.put("userPhotoUri", uri.toString())
-            hashMap.put("userEmail", strEmail)
-            hashMap.put("userId", "${mFirebaseAuth?.currentUser!!.uid}")
-            hashMap.put("userNickname", strNickName)
-            hashMap.put("userPwd", strAfterPwd)
-
-            mDatabaseRef.child("UserAccount")
-                .child("${mFirebaseAuth?.currentUser!!.uid}")
-                .updateChildren(hashMap as Map<String, Any>)
-                .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
-                .addOnFailureListener { Log.e("changepw", "정보 변경 실패") }
-
-            setResult(Activity.RESULT_OK)
-            finish()
+        if(photoUri != null) {
+            storageRef?.putFile(photoUri!!)
+                ?.continueWithTask { task: com.google.android.gms.tasks.Task<UploadTask.TaskSnapshot> ->
+                    return@continueWithTask storageRef.downloadUrl
+                }?.addOnSuccessListener { uri ->
+                    strPhotoUri = uri.toString()
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                }
         }
+
+        val hashMap: HashMap<String, String> = HashMap()
+        hashMap.put("userBirth", "")
+        if(strPhotoUri!=null){
+            hashMap.put("userPhotoUri", strPhotoUri!!)
+        }
+        else{
+            hashMap.put("userPhotoUri", "")
+        }
+        hashMap.put("userNickname", strNickName)
+        hashMap.put("userPwd", strAfterPwd)
+        mDatabaseRef.child("UserAccount")
+            .child("${mFirebaseAuth?.currentUser!!.uid}")
+            .updateChildren(hashMap as Map<String, Any>)
+            .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
+            .addOnFailureListener { Log.e("changepw", "정보 변경 실패") }
     }
 
     // 비밀번호 변경 메소드

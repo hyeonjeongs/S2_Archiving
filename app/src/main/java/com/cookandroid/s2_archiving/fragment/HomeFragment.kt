@@ -46,15 +46,6 @@ class HomeFragment : Fragment() {
     private lateinit var userNickname : TextView
     private lateinit var ivProfile:ImageView
 
-    //
-    var photoUri: Uri? = null
-
-
-    lateinit var cameraPermission: ActivityResultLauncher<String>
-    lateinit var storagePermission : ActivityResultLauncher<String>
-
-    lateinit var cameraLauncher: ActivityResultLauncher<Uri>
-    lateinit var galleryLauncher: ActivityResultLauncher<String>
 
     //정적으로 사용되는 부분
     companion object {
@@ -130,13 +121,16 @@ class HomeFragment : Fragment() {
             }
         })
 
+
         //리사이클러뷰에 담을 데이터 가져오기(selectedItem 태그를 통해서 보여줄 게시글 구분)
-        listener1 = mDatabaseRef.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}")
-            .orderByChild("timestamp").addValueEventListener(object : ValueEventListener {
+        listener1 = mDatabaseRef.child("UserFriends")
+            .child("${mFirebaseAuth!!.currentUser!!.uid}")
+            .orderByChild("fStar")
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     friendDataList.clear()
 
-                    for (data : DataSnapshot in snapshot.getChildren()) {
+                    for (data : DataSnapshot in snapshot.children) {
                         var friendData : FriendData? = data.getValue(FriendData::class.java)
 
                         friendDataList.add(friendData!!) //담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
@@ -148,18 +142,12 @@ class HomeFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
+
                 }
             })
 
         adapter = FriendDataAdapter(friendDataList, this.requireContext(), this)
         rvProfile.adapter= adapter
-
-
-//        rvProfile.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-//        //layoutManager = LinearLayoutManager(this.context)
-//        rvProfile.setHasFixedSize(true)//리사이클러뷰 성능 강화
-//        rvProfile.adapter = FriendDataAdapter(friendDataList)
-
 
     }
 

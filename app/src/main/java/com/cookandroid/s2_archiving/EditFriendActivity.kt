@@ -1,6 +1,6 @@
 package com.cookandroid.s2_archiving
 
-import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -8,9 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -22,7 +20,6 @@ import kotlinx.android.synthetic.main.activity_edit_friend.*
 
 //import com.example.recyclerviewkt.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.add_friend.*
-import kotlinx.android.synthetic.main.add_friend.tvEditGal
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,32 +27,33 @@ import kotlin.collections.HashMap
 
 class EditFriendActivity : AppCompatActivity() {
 
-    //
+    // 상수 선언 및 uri 변수
+    var PICK_IMAGE_FROM_ALBUM = 0
     var photoUri: Uri? = null
 
-//    private var mBinding: ActivityMainBinding? = null
-//    private val binding get() = mBinding!!
-
-    lateinit var cameraPermission: ActivityResultLauncher<String>
-    lateinit var storagePermission :ActivityResultLauncher<String>
-
-    lateinit var cameraLauncher:ActivityResultLauncher<Uri>
-    lateinit var galleryLauncher:ActivityResultLauncher<String>
-
+    // xml
     private lateinit var etName: EditText
     private lateinit var etPhone: EditText
     private lateinit var etRel: EditText
     private lateinit var etAdd: EditText
+    private lateinit var btnGal: Button
+    private lateinit var ivProfile:ImageView
 
-    var imgUrl : String = ""
-
+    // firebase
     private var mFirebaseAuth: FirebaseAuth? = null //파이어베이스 인증
     private lateinit var mDatabaseRef: DatabaseReference //실시간 데이터베이스
-    private lateinit var fbStorage: FirebaseStorage
-    private lateinit var storageRef: StorageReference
-    private var GALLEY_CODE : Int = 10
+    var storage : FirebaseStorage? = FirebaseStorage.getInstance()
 
-    var birthDay: String = ""
+    // 정보 저장에 쓸 변수
+    private lateinit var strName:String
+    private lateinit var strPhone:String
+    private lateinit var strBday:String
+    private lateinit var strRel:String
+    private lateinit var strAdd:String
+    private lateinit var strUri:String
+
+    // Intent로 넘어오는 정보
+    private lateinit var friendId:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -63,30 +61,41 @@ class EditFriendActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_friend)
 
 
-
         //파이어베이스 계정, 리얼타임 데이터베이스
         mFirebaseAuth = FirebaseAuth.getInstance()
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
-        fbStorage = FirebaseStorage.getInstance()
-        var friendId = getIntent().getStringExtra("fId")
 
-        etName = findViewById<EditText>(R.id.etEditName)
-        etPhone = findViewById<EditText>(R.id.etEditPhone)
-        etRel = findViewById<EditText>(R.id.etEditRel)
-        etAdd = findViewById<EditText>(R.id.etEditAdd)
+        friendId = intent.getStringExtra("fId").toString()
+
+        etName = findViewById(R.id.etEditName)
+        etPhone = findViewById(R.id.etEditPhone)
+        etRel = findViewById(R.id.etEditRel)
+        etAdd = findViewById(R.id.etEditAdd)
+        ivProfile = findViewById(R.id.ivEditProfileImage)
 
         mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId!!)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        //파이어베이스의 데이터를 가져옴
-                        var friend: FriendData? = snapshot.getValue(FriendData::class.java)
-                        Log.d("택", "${friend?.fName}")
-                    }
-                    override fun onCancelled(error: DatabaseError) {
-                        Log.d("Tag", "Failed")
-                    }
-                })
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    // 사용자가 미리 볼 수 있도록 setText
+                    var friend: FriendData? = snapshot.getValue(FriendData::class.java)
+                    etName.setText(friend!!.fName)
+                    etPhone.setText(friend!!.fPhone)
+                    etRel.setText(friend!!.fBday)
+                    etAdd.setText(friend!!.fAdd)
 
+                    // 원래 정보 가져오기
+                    strName = friend.fName
+                    strPhone = friend.fPhone
+                    strRel = friend.fRel
+                    strAdd = friend.fAdd
+                    strUri = friend.fImgUri
+
+                    Log.d("택", "${friend?.fName}")
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d("Tag", "Failed")
+                }
+            })
 
         //생년원일 스피너
         var yData = resources.getStringArray(R.array.yearItemList)
@@ -107,7 +116,7 @@ class EditFriendActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                birthDay = birthDay + edit_year_spinner.selectedItem.toString()+"년"
+                strBday = strBday + edit_year_spinner.selectedItem.toString()+"년"
             }
         }
 
@@ -116,7 +125,7 @@ class EditFriendActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                birthDay = birthDay + edit_month_spinner.selectedItem.toString()+"월"
+                strBday = strBday + edit_month_spinner.selectedItem.toString()+"월"
             }
         }
 
@@ -124,136 +133,74 @@ class EditFriendActivity : AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                birthDay = birthDay + edit_day_spinner.selectedItem.toString()+"일"
+                strBday = strBday + edit_day_spinner.selectedItem.toString()+"일"
             }
         }
 
-
-        storagePermission=registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-        ){isGranted ->
-            if(isGranted){
-                setViews()
-            } else{
-                Toast.makeText(baseContext, "외부 저장소 권한을 승인해야 앱을 사용할 수 있습니다.",Toast.LENGTH_SHORT).show()
-                finish()
-            }
+        if(strUri.isNotBlank()){
+            Glide.with(this)
+                .load(strUri)
+                .into(ivProfile)
         }
 
-
-        cameraPermission=registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-        ){isGranted ->
-            if(isGranted){
-                //openCamera()
-            } else{
-                Toast.makeText(baseContext, "카메라 권한을 승인해야 앱을 사용할 수 있습니다.",Toast.LENGTH_SHORT).show()
-                finish()
-            }
+        btnGal.setOnClickListener{
+            // open the album
+            val photoPickerIntent = Intent(Intent.ACTION_PICK)
+            photoPickerIntent.type="image/*"
+            startActivityForResult(photoPickerIntent,PICK_IMAGE_FROM_ALBUM)
         }
 
-
-
-        galleryLauncher = registerForActivityResult(ActivityResultContracts.
-        GetContent()){uri->
-            ivProfileImage.setImageURI(uri)
-        }
-
-        storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
         btnEditAddFriend.setOnClickListener{
-            try {
-                var storageReference : StorageReference = fbStorage.getReference()
-
-                var file : Uri = Uri.fromFile(File(imgUrl))
-                var riversRef : StorageReference = storageReference.child("images/"+file.lastPathSegment)
-                var uploadTask : UploadTask = riversRef.putFile(file)
-
-                var urlTask : Task<Uri> = uploadTask.continueWithTask(Continuation {
-                    if(!it.isSuccessful){
-                        it.exception
-                    }
-                    riversRef.downloadUrl
-                }).addOnCompleteListener {
-                    if(it.isSuccessful)
-                    {
-                        var downloadUrl : Uri? = it.result
-
-                        val hashMap : HashMap<String, String> = HashMap()
-
-                        var strName: String = etName.text.toString()
-                        var strPhone = etPhone.text.toString()
-                        var strBday: String = birthDay
-                        var strRelationship: String = etRel.text.toString()
-                        var strAdd: String = etAdd.text.toString()
-
-                        hashMap.put("imgUrl", downloadUrl.toString())
-                        hashMap.put("fId", friendId)
-                        hashMap.put("fName", strName)
-                        hashMap.put("fPhone", strPhone)
-                        hashMap.put("fBday", strBday)
-                        hashMap.put("fRel", strRelationship)
-                        hashMap.put("fAdd", strAdd)
-
-
-                        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId).updateChildren(hashMap as Map<String, Any>)
-                                .addOnCompleteListener {
-                                    if(it.isSuccessful){
-                                        Toast.makeText(this, "업로드", Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-
-                        Toast.makeText(this, "친구 정보 수정 완료", Toast.LENGTH_SHORT).show()
-                        finish()
-                    }
-                }.addOnFailureListener {
-
-                    val hashMap : HashMap<String, String> = HashMap()
-
-                    var strName: String = etName.text.toString()
-                    var strPhone = etPhone.text.toString()
-                    var strBday: String = birthDay
-                    var strRelationship: String = etRel.text.toString()
-                    var strAdd: String = etAdd.text.toString()
-
-
-                    hashMap.put("fId", friendId)
-                    hashMap.put("fName", strName)
-                    hashMap.put("fPhone", strPhone)
-                    hashMap.put("fBday", strBday)
-                    hashMap.put("fRel", strRelationship)
-                    hashMap.put("fAdd", strAdd)
-
-                    mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId).updateChildren(hashMap as Map<String, Any>)
-
-                    Toast.makeText(this, "친구 정보 수정 완료", Toast.LENGTH_SHORT).show()
-
-                    finish()
-
-                }
-            }catch (e : NullPointerException){
-                Toast.makeText(this, "이미지 선택 안함", Toast.LENGTH_SHORT).show();
+            // 변경된 정보 확인
+            if(etName.text.isNotEmpty()){
+                strName = etName.text.toString()
             }
+            if(etPhone.text.isNotEmpty()){
+                strPhone = etPhone.text.toString()
+            }
+            if(etRel.text.isNotEmpty()){
+                strRel = etRel.text.toString()
+            }
+            if(etAdd.text.isNotEmpty()){
+                strAdd = etAdd.text.toString()
+            }
+            editFriend()
         }
-
 
     }
 
-    fun setViews(){
-        ivEditProfileImage.setOnClickListener{
-            openGallery()
+    private fun editFriend() {
+        // Make filename
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var imageFileName = "IMAGE_" + timestamp + "_.png"
+        var storageRef = storage?.reference?.child("images")?.child(imageFileName)
+
+        // Promise method
+        if(photoUri != null) {
+            storageRef?.putFile(photoUri!!)
+                ?.continueWithTask { task: com.google.android.gms.tasks.Task<UploadTask.TaskSnapshot> ->
+                    return@continueWithTask storageRef.downloadUrl
+                }?.addOnSuccessListener { uri ->
+                    strUri = uri.toString()
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                }
         }
-        tvEditGal.setOnClickListener{
-            openGallery()
-        }
+
+        // hashmap data
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap.put("fPhone", strPhone)
+        hashMap.put("fBday", strBday)
+        hashMap.put("fRel", strRel)
+        hashMap.put("fAdd", strAdd)
+        hashMap.put("fImgUri", strUri!!)
+
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId!!)
+            .updateChildren(hashMap)
+            .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
+            .addOnFailureListener { Log.e("changepw", "정보 변경 실패") }
     }
-
-    fun openGallery(){
-        galleryLauncher.launch("image/*")
-    }
-
-
-
 }
 
 

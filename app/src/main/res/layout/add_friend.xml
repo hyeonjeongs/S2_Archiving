@@ -51,7 +51,7 @@
 
 
         <android.widget.Button
-            android:id="@+id/tvEditGal"
+            android:id="@+id/btnEditGal"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
@@ -70,7 +70,7 @@
         android:orientation="vertical"
         android:padding="10dp"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/tvEditGal">
+        android:layout_below="@+id/btnEditGal">
 
         <LinearLayout
             android:layout_width="match_parent"
