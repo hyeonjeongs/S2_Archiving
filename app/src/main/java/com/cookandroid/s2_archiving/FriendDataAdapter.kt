@@ -79,9 +79,9 @@ class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: 
             starAction(position)
         }
 
-        if (friendDataList.get(position).fStar == "0") {
+        if (friendDataList.get(position).fStar == 1) {
             holder.star.setImageResource(R.drawable.star_empty)
-        } else if (friendDataList.get(position).fStar == "1") {
+        } else if (friendDataList.get(position).fStar == 0) {
             holder.star.setImageResource(R.drawable.star_full)
         }
 
@@ -89,16 +89,17 @@ class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: 
 
     private fun starAction(position: Int) {
         var friendData:FriendData = friendDataList.get(position)
-        var star:String?
-        if(friendData.fStar=="0"){
-            star ="1"
+        var star:Int?
+
+        if(friendData.fStar==1){
+            star = 0
         }
         else{
-            star="0"
+            star= 1
         }
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap.put("fStar", star!!)
-        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child("${friendData.fId}").updateChildren(hashMap)
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendData.fId).updateChildren(hashMap)
 
     }
 
