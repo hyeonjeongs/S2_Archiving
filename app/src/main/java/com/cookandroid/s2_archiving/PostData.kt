@@ -7,5 +7,6 @@ data class PostData(
         var post : String = "",
         var postDate : String = "",
         var postDateName : String = "",
-        var heart:Int = 0
+        var heart:Int = 0,
+        var timestamp: String = ""
 )
