@@ -8,10 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.cookandroid.s2_archiving.fragment.UserFragment
-import com.cookandroid.s2_archiving.fragment.ViewpageFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -156,9 +153,8 @@ class ModifyAccount : AppCompatActivity() {
     private fun modifyAccount() {
         Log.e("정보업데이트","되는거니..?")
         // Make filename
-        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        var imageFileName = "IMAGE_" + timestamp + "_.png"
-        var storageRef = storage?.reference?.child("images")?.child(imageFileName)
+        var imageFileName = "IMAGE_" + "${mFirebaseAuth?.currentUser!!.uid}"+ "_profile_.png"
+        var storageRef = storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)
         var hashMap: HashMap<String, Any> = HashMap()
 
         hashMap.put("userNickname", strNickName)

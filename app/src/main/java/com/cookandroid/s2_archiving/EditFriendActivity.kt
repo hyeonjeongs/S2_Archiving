@@ -9,19 +9,12 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import com.bumptech.glide.Glide
-import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_edit_friend.*
-
-//import com.example.recyclerviewkt.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.add_friend.*
-import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -46,12 +39,12 @@ class EditFriendActivity : AppCompatActivity() {
     var storage : FirebaseStorage? = FirebaseStorage.getInstance()
 
     // 정보 저장에 쓸 변수
-    private lateinit var strName:String
-    private lateinit var strPhone:String
-    private lateinit var strBday:String
-    private lateinit var strRel:String
-    private lateinit var strAdd:String
-    private lateinit var strUri:String
+    private var strName:String = ""
+    private var strPhone:String = ""
+    private var strBday:String = ""
+    private var strRel:String = ""
+    private var strAdd:String = ""
+    private var strUri:String = ""
 
     // Intent로 넘어오는 정보
     private lateinit var friendId:String
@@ -177,6 +170,7 @@ class EditFriendActivity : AppCompatActivity() {
             if(etAdd.text.isNotEmpty()){
                 strAdd = etAdd.text.toString()
             }
+
             editFriend()
             finish()
         }
@@ -200,9 +194,8 @@ class EditFriendActivity : AppCompatActivity() {
 
     private fun editFriend() {
         // Make filename
-        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        var imageFileName = "IMAGE_" + timestamp + "_.png"
-        var storageRef = storage?.reference?.child("images")?.child(imageFileName)
+        var imageFileName = "IMAGE_" + friendId + "_friendProfile_.png"
+        var storageRef = storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)
 
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap.put("fName",strName)

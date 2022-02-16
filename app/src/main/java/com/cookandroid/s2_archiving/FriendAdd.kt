@@ -46,13 +46,13 @@ class FriendAdd : AppCompatActivity() {
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")
 
     // 정보 저장에 쓸 변수
-    lateinit var strName: String
-    lateinit var strPhone: String
+    var strName: String =""
+    var strPhone: String =""
     var strBday: String =""
-    lateinit var strRelationship: String
-    lateinit var strAdd: String
-    lateinit var strFid:String
-    lateinit var strUri:String
+    var strRelationship: String =""
+    var strAdd: String =""
+    var strFid:String =""
+    var strUri:String =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -125,8 +125,13 @@ class FriendAdd : AppCompatActivity() {
             strFid = mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().key.toString()
             strUri = ""
 
-            friendAdd()
-            finish()
+            if(strName.isNotBlank()){
+                friendAdd()
+                finish()
+            }
+            else{
+                Toast.makeText(this, "친구 이름은 필수 기입 항목입니다", Toast.LENGTH_SHORT).show()
+            }
         }
 
         btnfriendback.setOnClickListener{ // 백
@@ -153,8 +158,8 @@ class FriendAdd : AppCompatActivity() {
     fun friendAdd(){
         // Make filename
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        var imageFileName = "IMAGE_" + timestamp + "_.png"
-        var storageRef = storage?.reference?.child("images")?.child(imageFileName)
+        var imageFileName = "IMAGE_" + strFid + "_friendProfile_.png"
+        var storageRef = storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)
 
         // hashmap data
         var hashMap: HashMap<String, Any> = HashMap()
