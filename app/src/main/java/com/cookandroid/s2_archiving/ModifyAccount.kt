@@ -8,12 +8,16 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.cookandroid.s2_archiving.fragment.UserFragment
+import com.cookandroid.s2_archiving.fragment.ViewpageFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
+import kotlinx.android.synthetic.main.activity_modify_account.*
 import java.lang.System.load
 import java.text.SimpleDateFormat
 import java.util.*
@@ -87,6 +91,12 @@ class ModifyAccount : AppCompatActivity() {
 
             }
         })
+
+        btnEditMyDataback.setOnClickListener {
+            super.onBackPressed()
+            finish()
+        }
+
 
         btnGAl.setOnClickListener{
             // open the album

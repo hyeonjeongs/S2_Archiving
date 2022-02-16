@@ -71,4 +71,6 @@ class MainActivity : AppCompatActivity() {
     fun fragemtChage_for_adapter_view(viewpageFragment: Fragment){
         supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, viewpageFragment).commit()
     }
+
+
 }
