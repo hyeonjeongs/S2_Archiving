@@ -6,53 +6,63 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    tools:context=".ViewActivity">
+    tools:context="com.cookandroid.s2_archiving.fragment.ViewpageFragment">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:gravity="center">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ivViewProfileImage"
+        <Button
+            android:id="@+id/btnActivityViewBack"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvViewName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.491"
-            app:srcCompat="@drawable/man"
-            tools:srcCompat="@drawable/man" />
-
-        <TextView
-            android:id="@+id/tvViewName"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:layout_marginEnd="32dp"
-            android:text="조윤진"
+            android:layout_margin="10dp"
+            android:background="@drawable/backspace_btn"
+            android:backgroundTint="@color/black"
+            android:clickable="true"
             android:textColor="#000000"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/ivViewProfileImage"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivViewProfileImage"
-            app:layout_constraintTop_toTopOf="@+id/ivViewProfileImage"
-            app:layout_constraintVertical_bias="0.0" />
+            android:textSize="18sp" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:gravity="center">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivViewProfileImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="32dp"
+                app:srcCompat="@drawable/man"
+                tools:srcCompat="@drawable/man" />
+
+            <TextView
+                android:id="@+id/tvViewName"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:layout_marginEnd="32dp"
+                android:text="조윤진"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ivViewProfileImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivViewProfileImage"
+                app:layout_constraintTop_toTopOf="@+id/ivViewProfileImage"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </LinearLayout>
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp"
         android:layout_weight="4"
-        android:background="@drawable/edge" />
-
+        android:background="@drawable/edge"
+        android:padding="20dp" />
 
 
 </LinearLayout>
