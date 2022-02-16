@@ -13,10 +13,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.cookandroid.s2_archiving.LoginActivity
-import com.cookandroid.s2_archiving.ModifyAccount
+import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
-import com.cookandroid.s2_archiving.UserAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -85,19 +83,17 @@ class UserFragment : Fragment() {
         mTvEmail = view.findViewById(R.id.tvEmail)
 
         val mFirebaseUser : FirebaseUser? = mFirebaseAuth?.currentUser
+        val userId:String = mFirebaseUser!!.uid
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
-            .child("UserAccount").child(mFirebaseUser!!.uid)
-
-
-        var mFirebaseAuth : FirebaseAuth? = null //파이어베이스 인증
+            .child("UserAccount").child(userId)
 
         mFirebaseAuth = FirebaseAuth.getInstance()
 
         //정보 수정 액티비티로 넘어가는 버튼
         btnChangeinfo.setOnClickListener {
 
-            val intent = Intent(getActivity(), ModifyAccount::class.java)
+            val intent = Intent(activity, ModifyAccount::class.java)
             startActivity(intent)
         }
 
@@ -112,20 +108,17 @@ class UserFragment : Fragment() {
 
         //탈퇴 버튼
         btnDrop.setOnClickListener {
-            activity?.finish()
-            val packageManager = requireContext().packageManager
-            val intent = packageManager.getLaunchIntentForPackage(requireContext().packageName)
-            val componentName = intent!!.component
-            val mainIntent = Intent.makeRestartActivityTask(componentName)
-            requireContext().startActivity(mainIntent)
-            Runtime.getRuntime().exit(0)
-            activity?.finishAffinity()
-            mDatabaseRef.removeValue()
-            mFirebaseAuth!!.currentUser!!.delete()
+
+            mFirebaseUser.delete().addOnCompleteListener { task ->
+                if(task.isSuccessful){
+                    mDatabaseRef.removeValue()
+                    mFirebaseAuth!!.signOut()
+                    startActivity(Intent(activity,LoginActivity::class.java))
+                }
+            }
 
 
         }
-
 
         return view
     }
@@ -140,20 +133,24 @@ class UserFragment : Fragment() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
+                if(snapshot.value ==null){ // 널이면 아무것도하지마
 
-                mTvNickName.text = "${user?.userNickname}"
-
-                mTvEmail.text = "${user?.userEmail}"
-
-                // 사진 url 추가 후 load하는 코드 넣을 자리
-                if("${user!!.userPhotoUri}"==""){
-                    ivInfoimg.setImageResource(R.drawable.user)
                 }
-                else{ // userPhotoUri가 있으면 그 사진 로드하기
-                    Glide.with(activitys)
-                        .load(user!!.userPhotoUri)
-                        .into(ivInfoimg)
+                else {
+                    var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
+
+                    mTvNickName.text = "${user?.userNickname}"
+
+                    mTvEmail.text = "${user?.userEmail}"
+
+                    // 사진 url 추가 후 load하는 코드 넣을 자리
+                    if ("${user!!.userPhotoUri}" == "") {
+                        ivInfoimg.setImageResource(R.drawable.user)
+                    } else { // userPhotoUri가 있으면 그 사진 로드하기
+                        Glide.with(activitys)
+                            .load(user!!.userPhotoUri)
+                            .into(ivInfoimg)
+                    }
                 }
             }
         })
