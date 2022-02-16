@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
 import com.google.firebase.auth.FirebaseAuth
@@ -18,18 +19,17 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_friendpage.*
 import kotlinx.android.synthetic.main.fragment_friendpage.view.*
+import org.w3c.dom.Text
 
 class FriendpageFragment : Fragment() {
 
     lateinit var adapter : RecyclerView.Adapter<PostAdapter.CustomViewHolder>
     lateinit var postDataList: ArrayList<PostData>
     lateinit var friendId:String
+    lateinit var friendpageName:TextView
 
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
-    private lateinit var fbStorage: FirebaseStorage
-
-    private lateinit var listener: ValueEventListener
 
 
     companion object {
@@ -41,15 +41,16 @@ class FriendpageFragment : Fragment() {
 
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val friendName = requireArguments().getString("friend_name")
+
         friendId = requireArguments().getString("friend_id").toString()
 
-        postDataList = ArrayList<PostData>() //PostData 객체를 담을 ArrayList
+        postDataList = ArrayList() //PostData 객체를 담을 ArrayList
 
         val view = inflater.inflate(R.layout.fragment_friendpage,container, false)
-        view?.rv_post?.layoutManager = GridLayoutManager(getActivity(),2)
-        val friendpageName = view.findViewById<TextView>(R.id.friendpage_name)
-        friendpageName.text = friendName
+        view?.rv_post?.layoutManager = GridLayoutManager(activity,2)
+        friendpageName = view.findViewById(R.id.friendpage_name)
+
+
 
         var btnGoWrite = view.findViewById<Button>(R.id.btnGoWrite)
         var btnEditFriend = view.findViewById<Button>(R.id.friendpage_edit_btn)
@@ -75,7 +76,20 @@ class FriendpageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listener = mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child("${friendId!!}")
+
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId).addValueEventListener(object : ValueEventListener {
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var friend:FriendData? = snapshot.getValue(FriendData::class.java)
+                friendpageName.text = friend!!.fName
+            }
+        })
+
+        mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child("${friendId!!}")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     postDataList.clear()

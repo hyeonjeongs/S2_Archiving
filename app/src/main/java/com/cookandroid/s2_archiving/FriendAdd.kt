@@ -36,7 +36,6 @@ class FriendAdd : AppCompatActivity() {
     lateinit var etRel: EditText
     lateinit var etAdd: EditText
     lateinit var ivProfileImage:ImageView
-    private var birthDay: String = ""
     lateinit var year_spinner : Spinner
     lateinit var month_spinner : Spinner
     lateinit var day_spinner : Spinner
@@ -45,6 +44,15 @@ class FriendAdd : AppCompatActivity() {
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance()
     var storage : FirebaseStorage? = FirebaseStorage.getInstance()
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")
+
+    // 정보 저장에 쓸 변수
+    lateinit var strName: String
+    lateinit var strPhone: String
+    var strBday: String =""
+    lateinit var strRelationship: String
+    lateinit var strAdd: String
+    lateinit var strFid:String
+    lateinit var strUri:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -81,7 +89,7 @@ class FriendAdd : AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                birthDay = birthDay + year_spinner.selectedItem.toString()+"년"
+                strBday =  year_spinner.selectedItem.toString()+"년"
              }
         }
 
@@ -89,7 +97,7 @@ class FriendAdd : AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                birthDay = birthDay + month_spinner.selectedItem.toString()+"월"
+                strBday = strBday + month_spinner.selectedItem.toString()+"월"
             }
         }
 
@@ -97,7 +105,7 @@ class FriendAdd : AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                birthDay = birthDay + day_spinner.selectedItem.toString()+"일"
+                strBday = strBday + day_spinner.selectedItem.toString()+"일"
             }
         }
 
@@ -109,6 +117,14 @@ class FriendAdd : AppCompatActivity() {
         }
 
         btnAddFriend.setOnClickListener{
+            // data 가져오기
+            strName = etName.text.toString()
+            strPhone = etPhone.text.toString()
+            strRelationship = etRel.text.toString()
+            strAdd = etAdd.text.toString()
+            strFid = mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().key.toString()
+            strUri = ""
+
             friendAdd()
             finish()
         }
@@ -130,7 +146,6 @@ class FriendAdd : AppCompatActivity() {
             }
             else{
                 // Exit the addPhotoActivity if you leave the album without selecting it
-                finish()
             }
         }
     }
@@ -142,34 +157,8 @@ class FriendAdd : AppCompatActivity() {
         var storageRef = storage?.reference?.child("images")?.child(imageFileName)
 
         // hashmap data
-        var strName: String = etName.text.toString()
-        var strPhone = etPhone.text.toString()
-        var strBday: String = birthDay
-        var strRelationship: String = etRel.text.toString()
-        var strAdd: String = etAdd.text.toString()
-        val strFid:String? = mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().key
-        var strUri:String? = null
-
-        // Promise method
-        if(photoUri != null) {
-            storageRef?.putFile(photoUri!!)
-                ?.continueWithTask { task: com.google.android.gms.tasks.Task<UploadTask.TaskSnapshot> ->
-                    return@continueWithTask storageRef.downloadUrl
-                }?.addOnSuccessListener { uri ->
-                    strUri = uri.toString()
-                    setResult(Activity.RESULT_OK)
-                    finish()
-                }
-        }
-
-        val hashMap: HashMap<String, Any> = HashMap()
-        hashMap.put("fName", strName)
-        if(strUri != null) { // 이미지 선택 안했을 때를 고려
-            hashMap.put("fImgUri", strUri!!)
-        }
-        else{
-            hashMap.put("fImgUri", "")
-        }
+        var hashMap: HashMap<String, Any> = HashMap()
+        hashMap.put("fName",strName)
         hashMap.put("fPhone", strPhone)
         hashMap.put("fId", strFid!!)
         hashMap.put("fBday", strBday)
@@ -178,6 +167,22 @@ class FriendAdd : AppCompatActivity() {
         hashMap.put("fStar", 1)
         hashMap.put("timstamp", timestamp)
 
-        mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").child(strFid!!).setValue(hashMap)
-         }
+
+        // Promise method
+        if(photoUri != null) { // 사진 선택했을 때
+            storageRef?.putFile(photoUri!!)
+                ?.continueWithTask { task: com.google.android.gms.tasks.Task<UploadTask.TaskSnapshot> ->
+                    return@continueWithTask storageRef.downloadUrl
+                }?.addOnSuccessListener { uri ->
+                    strUri = uri.toString()
+                    hashMap.put("fImgUri", strUri)
+                    mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").child(strFid!!).setValue(hashMap)
+                }
+        }
+        else{ // 사진 선택 안했을 때
+            hashMap.put("fImgUri",strUri)
+            mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").child(strFid!!).setValue(hashMap)
+        }
+
+    }
 }
