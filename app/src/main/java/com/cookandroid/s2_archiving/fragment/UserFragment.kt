@@ -38,7 +38,7 @@ class UserFragment : Fragment() {
     private lateinit var ivInfoimg : ImageView
 
     // context
-    private lateinit var activity: Activity
+    private lateinit var activitys: Activity
 
     companion object {
         const val TAG : String = "로그"
@@ -58,7 +58,7 @@ class UserFragment : Fragment() {
     // 프레그먼트를 안고 있는 액티비티에 붙었을 때(프래그먼트가 엑티비티에 올라온 순간)
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        activity = context as Activity
+        activitys = context as Activity
     }
 
     // 뷰가 생성되었을 때
@@ -89,6 +89,49 @@ class UserFragment : Fragment() {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
             .child("UserAccount").child(mFirebaseUser!!.uid)
 
+
+        var mFirebaseAuth : FirebaseAuth? = null //파이어베이스 인증
+
+        mFirebaseAuth = FirebaseAuth.getInstance()
+
+        //정보 수정 액티비티로 넘어가는 버튼
+        btnChangeinfo.setOnClickListener {
+
+            val intent = Intent(getActivity(), ModifyAccount::class.java)
+            startActivity(intent)
+        }
+
+        //로그아웃 버튼
+        btnLogout.setOnClickListener {
+
+            activity?.finish()
+            startActivity(Intent(activity,LoginActivity::class.java))
+            mFirebaseAuth!!.signOut()
+
+        }
+
+        //탈퇴 버튼
+        btnDrop.setOnClickListener {
+            activity?.finish()
+            val packageManager = requireContext().packageManager
+            val intent = packageManager.getLaunchIntentForPackage(requireContext().packageName)
+            val componentName = intent!!.component
+            val mainIntent = Intent.makeRestartActivityTask(componentName)
+            requireContext().startActivity(mainIntent)
+            Runtime.getRuntime().exit(0)
+            activity?.finishAffinity()
+            mDatabaseRef.removeValue()
+            mFirebaseAuth!!.currentUser!!.delete()
+
+
+        }
+
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         //화면에 사용자 프로필 이미지, 닉네임, 이메일 출력
         mDatabaseRef.addValueEventListener(object : ValueEventListener {
 
@@ -108,59 +151,14 @@ class UserFragment : Fragment() {
                     ivInfoimg.setImageResource(R.drawable.user)
                 }
                 else{ // userPhotoUri가 있으면 그 사진 로드하기
-                    Glide.with(activity)
+                    Glide.with(activitys)
                         .load(user!!.userPhotoUri)
                         .into(ivInfoimg)
                 }
             }
         })
 
-
-        var mFirebaseAuth : FirebaseAuth? = null //파이어베이스 인증
-
-        mFirebaseAuth = FirebaseAuth.getInstance()
-
-        //정보 수정 액티비티로 넘어가는 버튼
-        btnChangeinfo.setOnClickListener {
-
-            val intent = Intent(getActivity(), ModifyAccount::class.java)
-            startActivity(intent)
-        }
-
-        //로그아웃 버튼
-        btnLogout.setOnClickListener {
-
-            mFirebaseAuth!!.signOut()
-            getActivity()?.finishAffinity()
-            val packageManager = requireContext().packageManager
-            val intent = packageManager.getLaunchIntentForPackage(requireContext().packageName)
-            val componentName = intent!!.component
-            val mainIntent = Intent.makeRestartActivityTask(componentName)
-            requireContext().startActivity(mainIntent)
-            Runtime.getRuntime().exit(0)
-        }
-
-        //탈퇴 버튼
-        btnDrop.setOnClickListener {
-            Log.e("UserFragment", "listner remove")
-            mDatabaseRef.removeValue()
-            mFirebaseAuth!!.currentUser!!.delete()
-            getActivity()?.finishAffinity()
-            Log.e("UserFragment", "MainActivity Destory")
-            val packageManager = requireContext().packageManager
-            val intent = packageManager.getLaunchIntentForPackage(requireContext().packageName)
-            val componentName = intent!!.component
-            val mainIntent = Intent.makeRestartActivityTask(componentName)
-            requireContext().startActivity(mainIntent)
-            Runtime.getRuntime().exit(0)
-
-        }
-
-
-        return view
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
