@@ -26,7 +26,7 @@ class UserFragment : Fragment() {
     //파이어베이스에서 인스턴스 가져오기
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance()
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")
-    private lateinit var listener: ValueEventListener
+
 
 
     // xml 요소들
@@ -49,22 +49,15 @@ class UserFragment : Fragment() {
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-    }
-
     // 메모리에 올라갔을때
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "UserFragement - onCreate() called")
 
     }
 
     // 프레그먼트를 안고 있는 액티비티에 붙었을 때(프래그먼트가 엑티비티에 올라온 순간)
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d(TAG, "UserFragement - onAttach() called")
         activity = context as Activity
     }
 
@@ -97,7 +90,7 @@ class UserFragment : Fragment() {
             .child("UserAccount").child(mFirebaseUser!!.uid)
 
         //화면에 사용자 프로필 이미지, 닉네임, 이메일 출력
-        listener=mDatabaseRef.addValueEventListener(object : ValueEventListener {
+        mDatabaseRef.addValueEventListener(object : ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
 
@@ -115,7 +108,7 @@ class UserFragment : Fragment() {
                     ivInfoimg.setImageResource(R.drawable.user)
                 }
                 else{ // userPhotoUri가 있으면 그 사진 로드하기
-                    Glide.with(this@UserFragment)
+                    Glide.with(activity)
                         .load(user!!.userPhotoUri)
                         .into(ivInfoimg)
                 }
@@ -149,7 +142,6 @@ class UserFragment : Fragment() {
 
         //탈퇴 버튼
         btnDrop.setOnClickListener {
-            mDatabaseRef.removeEventListener(listener)
             Log.e("UserFragment", "listner remove")
             mDatabaseRef.removeValue()
             mFirebaseAuth!!.currentUser!!.delete()
@@ -177,7 +169,6 @@ class UserFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mDatabaseRef.removeEventListener(listener)
         Log.e("UserFragment", "유저프래그먼트 파괴됨")
     }
 

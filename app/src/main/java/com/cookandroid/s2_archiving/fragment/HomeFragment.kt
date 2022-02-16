@@ -1,5 +1,6 @@
 package com.cookandroid.s2_archiving.fragment
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -29,22 +30,18 @@ class HomeFragment : Fragment() {
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var friendDataList: ArrayList<FriendData>
 
-
-    //프레그먼트를 위한 변수들
-    private lateinit var homeFragment: HomeFragment
-    private lateinit var likeFragment: LikeFragment
-    private lateinit var userFragment: UserFragment
-
     //파이어베이스
     private lateinit var database : FirebaseDatabase
     private lateinit var mDatabaseRef : DatabaseReference
     private var mFirebaseAuth: FirebaseAuth? = null //파이어베이스 인증
-    private lateinit var listener: ValueEventListener
-    private lateinit var listener1: ValueEventListener
 
     // xml
     private lateinit var userNickname : TextView
     private lateinit var ivProfile:ImageView
+
+    // context
+    private lateinit var activity: Activity
+
 
 
     //정적으로 사용되는 부분
@@ -53,6 +50,20 @@ class HomeFragment : Fragment() {
             return HomeFragment()
         }
     }
+
+    //메모리에 올라갔을때
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
+    //프레그먼트를 안고 있는 엑티비티에 붙었을 때
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = context as Activity
+    }
+
 
     //뷰가 생성되었을때
     //프레그먼트와 레이아웃 연결시켜줌
@@ -67,6 +78,7 @@ class HomeFragment : Fragment() {
 
         userNickname = view.findViewById(R.id.tvName)
         ivProfile = view.findViewById(R.id.ivProfile)
+
 
 
         return view
@@ -95,10 +107,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) { // <-- 리사이클러뷰 넣어보기
         super.onViewCreated(view, savedInstanceState)
-        Log.e("HomeFragment","onViewCreated")
-
+        //리사이클러뷰에 담을 데이터 가져오기(selectedItem 태그를 통해서 보여줄 게시글 구분)
         // 사용자의 닉네임, 사진 로드
-        listener =mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object : ValueEventListener {
+        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object : ValueEventListener {
 
             override fun onCancelled(error: DatabaseError) {
 
@@ -106,24 +117,22 @@ class HomeFragment : Fragment() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-                var nickName = "${user!!.userNickname}"
-                //var nickName = "${user?.userNickname}"
+                var nickName = user!!.userNickname
+
                 userNickname.text = nickName
                 // 사진 url 추가 후 load하는 코드 넣을 자리
                 if("${user!!.userPhotoUri}"==""){
                     ivProfile.setImageResource(R.drawable.user)
                 }
                 else{ // userPhotoUri가 있으면 그 사진 로드하기
-                    Glide.with(this@HomeFragment)
+                    Glide.with(activity)
                         .load(user!!.userPhotoUri)
                         .into(ivProfile)
                 }
             }
         })
 
-
-        //리사이클러뷰에 담을 데이터 가져오기(selectedItem 태그를 통해서 보여줄 게시글 구분)
-        listener1 = mDatabaseRef.child("UserFriends")
+        mDatabaseRef.child("UserFriends")
             .child("${mFirebaseAuth!!.currentUser!!.uid}")
             .orderByChild("fStar")
             .addValueEventListener(object : ValueEventListener {
@@ -146,40 +155,20 @@ class HomeFragment : Fragment() {
                 }
             })
 
-        adapter = FriendDataAdapter(friendDataList, this.requireContext(), this)
+        adapter = FriendDataAdapter(friendDataList, activity, this)
         rvProfile.adapter= adapter
 
     }
 
-
-    //메모리에 올라갔을때
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        super.onCreate(savedInstanceState)
-
-    }
-
-    //프레그먼트를 안고 있는 엑티비티에 붙었을 때
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
-
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.e("HomeFragment","홈프레그먼트 사라짐")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e("HomeFragment","홈프래그먼트 파괴됨")
-        mDatabaseRef.removeEventListener(listener)
-        mDatabaseRef.removeEventListener(listener1)
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.e("HomeFragment","홈프래그먼트 분리")
     }
 }

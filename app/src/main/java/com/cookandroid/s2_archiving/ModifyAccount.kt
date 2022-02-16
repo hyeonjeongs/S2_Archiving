@@ -8,17 +8,13 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.cookandroid.s2_archiving.fragment.UserFragment
-import com.cookandroid.s2_archiving.fragment.ViewpageFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_modify_account.*
-import java.lang.System.load
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,14 +34,17 @@ class ModifyAccount : AppCompatActivity() {
     private lateinit var mEtAfterPwd: EditText
     private lateinit var  btnGAl:Button
     private lateinit var btnModify: Button
+    private lateinit var btnEditMyDataback:Button
     private lateinit var ivProfile: ImageView
 
-    var photoUri : Uri? = null // 프로필 이미지 uri
+    private var photoUri : Uri? = null // 프로필 이미지 uri
 
     // 정보 저장에 쓸 변수
     private lateinit var strNickName: String
     private lateinit var strAfterPwd: String
-    private var strPhotoUri: String? = null
+    private lateinit var strPhotoUri: String
+
+    private var activity:Activity = this@ModifyAccount
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +59,7 @@ class ModifyAccount : AppCompatActivity() {
         btnGAl = findViewById(R.id.imageEditMyData)
         btnModify = findViewById(R.id.btnEditEditMyData)
         ivProfile = findViewById(R.id.ivEditImageMydata)
+        btnEditMyDataback = findViewById(R.id.btnEditMyDataback)
 
         // 사용자의 닉네임, 이메일 출력(이메일은 수정 불가능)
         mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object :
@@ -78,15 +78,19 @@ class ModifyAccount : AppCompatActivity() {
                 // 원래 정보 담아두기
                 strNickName = user!!.userNickname
                 strAfterPwd = user!!.userPwd
+                strPhotoUri = user!!.userPhotoUri
 
 
-                if("${user!!.userPhotoUri}"==""){
+                if(strPhotoUri==""){
                     ivProfile.setImageResource(R.drawable.user)
                 }
                 else{ // userPhotoUri가 있으면 그 사진 로드하기
-                    Glide.with(this@ModifyAccount)
-                        .load(user!!.userPhotoUri)
-                        .into(ivProfile)
+                    if(activity.isFinishing) return;
+                    else {
+                        Glide.with(activity)
+                            .load(strPhotoUri)
+                            .into(ivProfile)
+                    }
                 }
 
             }
@@ -125,6 +129,7 @@ class ModifyAccount : AppCompatActivity() {
              }
 
             modifyAccount()
+            finish()
         }
 
     }
@@ -140,7 +145,6 @@ class ModifyAccount : AppCompatActivity() {
             }
             else{
                 // Exit the addPhotoActivity if you leave the album without selecting it
-                finish()
             }
         }
     }
@@ -149,37 +153,36 @@ class ModifyAccount : AppCompatActivity() {
     private fun modifyAccount() {
         Log.e("정보업데이트","되는거니..?")
         // Make filename
-        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        var imageFileName = "IMAGE_" + timestamp + "_.png"
-        var storageRef = storage?.reference?.child("images")?.child(imageFileName)
+        var imageFileName = "IMAGE_" + "${mFirebaseAuth?.currentUser!!.uid}"+ "_profile_.png"
+        var storageRef = storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)
+        var hashMap: HashMap<String, Any> = HashMap()
+
+        hashMap.put("userNickname", strNickName)
+        hashMap.put("userPwd", strAfterPwd)
 
         // Promise method
-        if(photoUri != null) {
+        if(photoUri != null) { // 사진 선택한 경우
             storageRef?.putFile(photoUri!!)
                 ?.continueWithTask { task: com.google.android.gms.tasks.Task<UploadTask.TaskSnapshot> ->
                     return@continueWithTask storageRef.downloadUrl
                 }?.addOnSuccessListener { uri ->
+                    Log.e("이놈 왜 안돼","이놈 왜 안돼")
                     strPhotoUri = uri.toString()
-                    setResult(Activity.RESULT_OK)
-                    finish()
+                    hashMap.put("userPhotoUri", strPhotoUri)
+                    mDatabaseRef.child("UserAccount")
+                        .child("${mFirebaseAuth?.currentUser!!.uid}")
+                        .updateChildren(hashMap)
+                        .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
+
                 }
         }
-
-        val hashMap: HashMap<String, String> = HashMap()
-        hashMap.put("userBirth", "")
-        if(strPhotoUri!=null){
-            hashMap.put("userPhotoUri", strPhotoUri!!)
+        else{ // 사진 선택 안한 경우
+            hashMap.put("userPhotoUri", strPhotoUri)
+            mDatabaseRef.child("UserAccount")
+                .child("${mFirebaseAuth?.currentUser!!.uid}")
+                .updateChildren(hashMap)
+                .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
         }
-        else{
-            hashMap.put("userPhotoUri", "")
-        }
-        hashMap.put("userNickname", strNickName)
-        hashMap.put("userPwd", strAfterPwd)
-        mDatabaseRef.child("UserAccount")
-            .child("${mFirebaseAuth?.currentUser!!.uid}")
-            .updateChildren(hashMap as Map<String, Any>)
-            .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
-            .addOnFailureListener { Log.e("changepw", "정보 변경 실패") }
     }
 
     // 비밀번호 변경 메소드

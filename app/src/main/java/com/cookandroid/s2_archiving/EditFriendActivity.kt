@@ -9,19 +9,12 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import com.bumptech.glide.Glide
-import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_edit_friend.*
-
-//import com.example.recyclerviewkt.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.add_friend.*
-import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -37,6 +30,7 @@ class EditFriendActivity : AppCompatActivity() {
     private lateinit var etRel: EditText
     private lateinit var etAdd: EditText
     private lateinit var btnGal: Button
+    private lateinit var btnEditAddFriend:Button
     private lateinit var ivProfile:ImageView
 
     // firebase
@@ -45,15 +39,17 @@ class EditFriendActivity : AppCompatActivity() {
     var storage : FirebaseStorage? = FirebaseStorage.getInstance()
 
     // 정보 저장에 쓸 변수
-    private lateinit var strName:String
-    private lateinit var strPhone:String
-    private lateinit var strBday:String
-    private lateinit var strRel:String
-    private lateinit var strAdd:String
-    private lateinit var strUri:String
+    private var strName:String = ""
+    private var strPhone:String = ""
+    private var strBday:String = ""
+    private var strRel:String = ""
+    private var strAdd:String = ""
+    private var strUri:String = ""
 
     // Intent로 넘어오는 정보
     private lateinit var friendId:String
+
+    private var activity:Activity = this@EditFriendActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -72,6 +68,8 @@ class EditFriendActivity : AppCompatActivity() {
         etRel = findViewById(R.id.etEditRel)
         etAdd = findViewById(R.id.etEditAdd)
         ivProfile = findViewById(R.id.ivEditProfileImage)
+        btnGal = findViewById(R.id.btnEditGal)
+        btnEditAddFriend = findViewById(R.id.btnEditAddFriend)
 
         mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId!!)
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -89,6 +87,20 @@ class EditFriendActivity : AppCompatActivity() {
                     strRel = friend.fRel
                     strAdd = friend.fAdd
                     strUri = friend.fImgUri
+                    strBday = friend.fBday
+
+                    // 이미지 셋팅
+                    if("${friend!!.fImgUri}"==""){
+                        ivProfile.setImageResource(R.drawable.woman)
+                    }
+                    else{ // userPhotoUri가 있으면 그 사진 로드하기
+                        if(activity.isFinishing) return;
+                        else{
+                            Glide.with(activity)
+                                .load(friend!!.fImgUri)
+                                .into(ivProfile)
+                        }
+                    }
 
                     Log.d("택", "${friend?.fName}")
                 }
@@ -116,7 +128,7 @@ class EditFriendActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                strBday = strBday + edit_year_spinner.selectedItem.toString()+"년"
+                strBday = edit_year_spinner.selectedItem.toString()+"년"
             }
         }
 
@@ -137,19 +149,12 @@ class EditFriendActivity : AppCompatActivity() {
             }
         }
 
-        if(strUri.isNotBlank()){
-            Glide.with(this)
-                .load(strUri)
-                .into(ivProfile)
-        }
-
         btnGal.setOnClickListener{
             // open the album
             val photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type="image/*"
             startActivityForResult(photoPickerIntent,PICK_IMAGE_FROM_ALBUM)
         }
-
 
         btnEditAddFriend.setOnClickListener{
             // 변경된 정보 확인
@@ -165,16 +170,39 @@ class EditFriendActivity : AppCompatActivity() {
             if(etAdd.text.isNotEmpty()){
                 strAdd = etAdd.text.toString()
             }
+
             editFriend()
+            finish()
         }
 
     }
 
+    // onActivityResult
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == PICK_IMAGE_FROM_ALBUM){
+            if(resultCode== Activity.RESULT_OK){
+                // This is path to the selected image
+                photoUri = data?.data
+                ivProfile.setImageURI(photoUri)
+            }
+            else{
+                // Exit the addPhotoActivity if you leave the album without selecting it
+            }
+        }
+    }
+
     private fun editFriend() {
         // Make filename
-        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        var imageFileName = "IMAGE_" + timestamp + "_.png"
-        var storageRef = storage?.reference?.child("images")?.child(imageFileName)
+        var imageFileName = "IMAGE_" + friendId + "_friendProfile_.png"
+        var storageRef = storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)
+
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap.put("fName",strName)
+        hashMap.put("fPhone", strPhone)
+        hashMap.put("fBday", strBday)
+        hashMap.put("fRel", strRel)
+        hashMap.put("fAdd", strAdd)
 
         // Promise method
         if(photoUri != null) {
@@ -183,23 +211,19 @@ class EditFriendActivity : AppCompatActivity() {
                     return@continueWithTask storageRef.downloadUrl
                 }?.addOnSuccessListener { uri ->
                     strUri = uri.toString()
-                    setResult(Activity.RESULT_OK)
-                    finish()
+                    hashMap.put("fImgUri", strUri)
+                    mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId!!)
+                        .updateChildren(hashMap)
+                        .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
                 }
         }
+        else{
+            hashMap.put("fImgUri",strUri)
+            mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId!!)
+                .updateChildren(hashMap)
+                .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
+        }
 
-        // hashmap data
-        val hashMap: HashMap<String, Any> = HashMap()
-        hashMap.put("fPhone", strPhone)
-        hashMap.put("fBday", strBday)
-        hashMap.put("fRel", strRel)
-        hashMap.put("fAdd", strAdd)
-        hashMap.put("fImgUri", strUri!!)
-
-        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId!!)
-            .updateChildren(hashMap)
-            .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
-            .addOnFailureListener { Log.e("changepw", "정보 변경 실패") }
     }
 }
 
