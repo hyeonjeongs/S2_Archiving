@@ -10,3 +10,4 @@ data class PostData(
         var heart:Int = 0,
         var timestamp: Long? = null
 )
+
