@@ -9,7 +9,7 @@
     android:orientation="horizontal">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivProfile"
         android:layout_width="0dp"
         android:layout_weight="1"

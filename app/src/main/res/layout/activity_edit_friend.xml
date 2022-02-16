@@ -42,7 +42,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivEditProfileImage"
         android:layout_width="130dp"
         android:layout_height="130dp"

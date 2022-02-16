@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivProf"
             android:layout_width="140dp"
             android:layout_height="120dp"

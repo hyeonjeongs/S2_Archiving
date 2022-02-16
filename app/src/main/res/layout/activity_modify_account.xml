@@ -42,15 +42,14 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <ImageView
-        android:id="@+id/ivEditImageMydata"
-        android:layout_width="130dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivEditImageMydata" android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="70dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/round_image"
         android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/user" />
+
     <Button
         android:id="@+id/imageEditMyData"
         android:layout_width="30dp"
