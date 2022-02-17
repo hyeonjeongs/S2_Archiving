@@ -144,7 +144,7 @@ class UserFragment : Fragment() {
                     mTvEmail.text = "${user?.userEmail}"
 
                     // 사진 url 추가 후 load하는 코드 넣을 자리
-                    if ("${user!!.userPhotoUri}" == "") {
+                    if (user!!.userPhotoUri == "") {
                         ivInfoimg.setImageResource(R.drawable.user)
                     } else { // userPhotoUri가 있으면 그 사진 로드하기
                         Glide.with(activitys)
