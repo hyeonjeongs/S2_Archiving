@@ -35,7 +35,6 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         val special = itemView.findViewById<TextView>(R.id.post_special)
         val heart = itemView.findViewById<ImageView>(R.id.post_heart)
         val postCardView = itemView.findViewById<CardView>(R.id.post_cardview)
-
     }
 
     override fun getItemCount(): Int {
@@ -64,27 +63,12 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         holder.heart.setImageResource(R.drawable.heart)
 
 
-//        holder.fName.setOnClickListener {
-//            Log.d("FriendpageFragment", "이동 성공!")
-//            var fragment:Fragment = FriendpageFragment()
-//            var bundle: Bundle = Bundle()
-//            bundle.putString("friend_name",holder?.fName.text.toString())
-//            bundle.putString("friend_id",holder?.fId)
-//
-//            fragment.arguments=bundle
-//            activity = fragment_s.activity as MainActivity?
-//            activity?.fragmentChange_for_adapter(fragment)
-//
-//        }
-
 
         holder.postCardView.setOnClickListener {
             Log.d("ViewpageFragment", "이동 성공!")
             var fragment: Fragment = ViewpageFragment()
-            var bundle: Bundle = Bundle()
-//            bundle.putString("friend_name",holder?.fName.text.toString())
-//            bundle.putString("friend_id",holder?.fId)
-            fragment.arguments = bundle
+            var bundle2: Bundle = Bundle()
+            fragment.arguments = bundle2
             activity = fragment_s.activity as MainActivity?
             activity?.fragemtChage_for_adapter_view(fragment)
 
