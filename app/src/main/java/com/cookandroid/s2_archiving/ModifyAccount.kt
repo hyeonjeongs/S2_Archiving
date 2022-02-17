@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -14,7 +15,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
+import kotlinx.android.synthetic.main.activity_edit_friend.*
 import kotlinx.android.synthetic.main.activity_modify_account.*
+import kotlinx.android.synthetic.main.add_friend.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,6 +39,9 @@ class ModifyAccount : AppCompatActivity() {
     private lateinit var btnModify: Button
     private lateinit var btnEditMyDataback:Button
     private lateinit var ivProfile: ImageView
+    private lateinit var etYearSpinner: Spinner
+    private lateinit var etMonthSpinner: Spinner
+    private lateinit var etDaySpinner: Spinner
 
     private var photoUri : Uri? = null // 프로필 이미지 uri
 
@@ -43,6 +49,10 @@ class ModifyAccount : AppCompatActivity() {
     private lateinit var strNickName: String
     private lateinit var strAfterPwd: String
     private lateinit var strPhotoUri: String
+    private var strBday:String = ""
+    private var strYear: String = ""
+    private var strMonth: String =""
+    private var strDate: String = ""
 
     private var activity:Activity = this@ModifyAccount
 
@@ -60,6 +70,9 @@ class ModifyAccount : AppCompatActivity() {
         btnModify = findViewById(R.id.btnEditEditMyData)
         ivProfile = findViewById(R.id.ivEditImageMydata)
         btnEditMyDataback = findViewById(R.id.btnEditMyDataback)
+        etYearSpinner = findViewById(R.id.edit_my_year_spinner)
+        etMonthSpinner = findViewById(R.id.edit_my_month_spinner)
+        etDaySpinner = findViewById(R.id.edit_my_day_spinner)
 
         // 사용자의 닉네임, 이메일 출력(이메일은 수정 불가능)
         mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object :
@@ -79,7 +92,14 @@ class ModifyAccount : AppCompatActivity() {
                 strNickName = user!!.userNickname
                 strAfterPwd = user!!.userPwd
                 strPhotoUri = user!!.userPhotoUri
-
+//                strBday = if (user!!.userBirth == null){
+//                    "1990년01월01일"
+//                } else{
+//                    user!!.userBirth
+//                }
+//                etYearSpinner.setSelection((((strBday).substring(0,4)).toInt())-1990)
+//                etMonthSpinner.setSelection((((strBday).substring(5,7)).toInt())-1)
+//                etDaySpinner.setSelection((((strBday).substring(8,10)).toInt())-1)
 
                 if(strPhotoUri==""){
                     ivProfile.setImageResource(R.drawable.user)
@@ -95,6 +115,49 @@ class ModifyAccount : AppCompatActivity() {
 
             }
         })
+
+
+        //생년원일 스피너
+        var yData = resources.getStringArray(R.array.yearItemList)
+        var adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,yData)
+        edit_my_year_spinner.adapter=adapter
+
+        var mData = resources.getStringArray(R.array.monthItemList)
+        var madapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,mData)
+        edit_my_month_spinner.adapter=madapter
+
+        var dData = resources.getStringArray(R.array.dayItemList)
+        var dadapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,dData)
+        edit_my_day_spinner.adapter=dadapter
+
+        //생년원일 스피너 아이템 선택했을때
+        edit_my_year_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                strYear = ""
+                strYear =  edit_my_year_spinner.selectedItem.toString()+"년"
+            }
+
+        }
+
+        edit_my_month_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                strMonth = ""
+                strMonth = edit_my_month_spinner.selectedItem.toString()+"월"
+            }
+        }
+
+        edit_my_day_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                strDate = ""
+                strDate = edit_my_day_spinner.selectedItem.toString()+"일"
+            }
+        }
 
         btnEditMyDataback.setOnClickListener {
             super.onBackPressed()
@@ -127,6 +190,7 @@ class ModifyAccount : AppCompatActivity() {
                     Toast.makeText(this@ModifyAccount, "현재 비밀번호를 확인해주세요", Toast.LENGTH_SHORT) // 원래 비밀번호로 update
                 }
              }
+            strBday = strYear + strMonth +strDate
 
             modifyAccount()
             finish()
@@ -159,6 +223,7 @@ class ModifyAccount : AppCompatActivity() {
 
         hashMap.put("userNickname", strNickName)
         hashMap.put("userPwd", strAfterPwd)
+        hashMap.put("userBirth", strBday)
 
         // Promise method
         if(photoUri != null) { // 사진 선택한 경우

@@ -49,6 +49,9 @@ class FriendAdd : AppCompatActivity() {
     var strName: String =""
     var strPhone: String =""
     var strBday: String =""
+    var strYear: String = ""
+    var strMonth: String =""
+    var strDate: String = ""
     var strRelationship: String =""
     var strAdd: String =""
     var strFid:String =""
@@ -89,15 +92,18 @@ class FriendAdd : AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                strBday =  year_spinner.selectedItem.toString()+"년"
-             }
+                strYear = ""
+                strYear =  year_spinner.selectedItem.toString()+"년"
+            }
+
         }
 
         month_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                strBday = strBday + month_spinner.selectedItem.toString()+"월"
+                strMonth = ""
+                strMonth = month_spinner.selectedItem.toString()+"월"
             }
         }
 
@@ -105,7 +111,8 @@ class FriendAdd : AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                strBday = strBday + day_spinner.selectedItem.toString()+"일"
+                strDate = ""
+                strDate = day_spinner.selectedItem.toString()+"일"
             }
         }
 
@@ -121,10 +128,10 @@ class FriendAdd : AppCompatActivity() {
             strName = etName.text.toString()
             strPhone = etPhone.text.toString()
             strRelationship = etRel.text.toString()
+            strBday = strYear + strMonth +strDate
             strAdd = etAdd.text.toString()
             strFid = mDatabaseRef.ref.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}").push().key.toString()
             strUri = ""
-
             if(strName.isNotBlank()){
                 friendAdd()
                 finish()
