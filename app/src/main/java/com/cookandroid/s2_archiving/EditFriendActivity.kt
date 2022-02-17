@@ -32,6 +32,9 @@ class EditFriendActivity : AppCompatActivity() {
     private lateinit var btnGal: Button
     private lateinit var btnEditAddFriend:Button
     private lateinit var ivProfile:ImageView
+    private lateinit var etYearSpinner: Spinner
+    private lateinit var etMonthSpinner: Spinner
+    private lateinit var etDaySpinner: Spinner
 
     // firebase
     private var mFirebaseAuth: FirebaseAuth? = null //파이어베이스 인증
@@ -42,6 +45,9 @@ class EditFriendActivity : AppCompatActivity() {
     private var strName:String = ""
     private var strPhone:String = ""
     private var strBday:String = ""
+    private var strYear: String = ""
+    private var strMonth: String =""
+    private var strDate: String = ""
     private var strRel:String = ""
     private var strAdd:String = ""
     private var strUri:String = ""
@@ -68,6 +74,9 @@ class EditFriendActivity : AppCompatActivity() {
         etRel = findViewById(R.id.etEditRel)
         etAdd = findViewById(R.id.etEditAdd)
         ivProfile = findViewById(R.id.ivEditProfileImage)
+        etYearSpinner = findViewById(R.id.edit_year_spinner)
+        etMonthSpinner = findViewById(R.id.edit_month_spinner)
+        etDaySpinner = findViewById(R.id.edit_day_spinner)
         btnGal = findViewById(R.id.btnEditGal)
         btnEditAddFriend = findViewById(R.id.btnEditAddFriend)
 
@@ -78,7 +87,10 @@ class EditFriendActivity : AppCompatActivity() {
                     var friend: FriendData? = snapshot.getValue(FriendData::class.java)
                     etName.setText(friend!!.fName)
                     etPhone.setText(friend!!.fPhone)
-                    etRel.setText(friend!!.fBday)
+                    etYearSpinner.setSelection((((friend!!.fBday).substring(0,4)).toInt())-1990)
+                    etMonthSpinner.setSelection((((friend!!.fBday).substring(5,7)).toInt())-1)
+                    etDaySpinner.setSelection((((friend!!.fBday).substring(8,10)).toInt())-1)
+                    etRel.setText(friend!!.fRel)
                     etAdd.setText(friend!!.fAdd)
 
                     // 원래 정보 가져오기
@@ -109,6 +121,7 @@ class EditFriendActivity : AppCompatActivity() {
                 }
             })
 
+
         //생년원일 스피너
         var yData = resources.getStringArray(R.array.yearItemList)
         var adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,yData)
@@ -126,18 +139,19 @@ class EditFriendActivity : AppCompatActivity() {
         edit_year_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
-
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                strBday = edit_year_spinner.selectedItem.toString()+"년"
+                strYear = ""
+                strYear =  edit_year_spinner.selectedItem.toString()+"년"
             }
+
         }
 
         edit_month_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
-
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                strBday = strBday + edit_month_spinner.selectedItem.toString()+"월"
+                strMonth = ""
+                strMonth = edit_month_spinner.selectedItem.toString()+"월"
             }
         }
 
@@ -145,7 +159,8 @@ class EditFriendActivity : AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                strBday = strBday + edit_day_spinner.selectedItem.toString()+"일"
+                strDate = ""
+                strDate = edit_day_spinner.selectedItem.toString()+"일"
             }
         }
 
@@ -170,7 +185,7 @@ class EditFriendActivity : AppCompatActivity() {
             if(etAdd.text.isNotEmpty()){
                 strAdd = etAdd.text.toString()
             }
-
+            strBday = strYear + strMonth +strDate
             editFriend()
             finish()
         }
