@@ -41,8 +41,8 @@ class LoginActivity : AppCompatActivity() {
 
         mFirebaseAuth = FirebaseAuth.getInstance()
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
-        mEtEmail = findViewById<EditText>(R.id.etEmail)
-        mEtPwd = findViewById<EditText>(R.id.etPwd)
+        mEtEmail = findViewById(R.id.etEmail)
+        mEtPwd = findViewById(R.id.etPwd)
 
 
 
@@ -69,7 +69,6 @@ class LoginActivity : AppCompatActivity() {
 
             val intent = Intent(this, ResisterActivity::class.java)
             startActivity(intent)
-            finish()
 
 
         })
