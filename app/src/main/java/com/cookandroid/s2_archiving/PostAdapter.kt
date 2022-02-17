@@ -28,7 +28,7 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
 
     private var activity: MainActivity? = null//메인에 함수 부르기 위해 선언하기
 
-    // 위젲 연결할 변수 선언
+    // 위젯 연결할 변수 선언
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val postimage = itemView.findViewById<ImageView>(R.id.post_img)
         val date = itemView.findViewById<TextView>(R.id.post_date)
@@ -51,15 +51,15 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
     }
 
     override fun onBindViewHolder(holder: PostAdapter.CustomViewHolder, position: Int) {
-        if (postDataList.get(position).postPhotoUri == "") {
+        if (postDataList[position].postPhotoUri == "") {
             holder.postimage.setImageResource(R.drawable.man)
         } else {
             Glide.with(holder.itemView)
-                .load(postDataList.get(position).postPhotoUri)
+                .load(postDataList[position].postPhotoUri)
                 .into(holder.postimage)
         }
-        holder.date.text = postDataList.get(position).postDate
-        holder.special.text = postDataList.get(position).postDateName
+        holder.date.text = postDataList[position].postDate
+        holder.special.text = postDataList[position].postDateName
         holder.heart.setImageResource(R.drawable.heart)
 
 
@@ -68,8 +68,9 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         holder.postCardView.setOnClickListener {
             Log.d("ViewpageFragment", "이동 성공!")
             var fragment: Fragment = ViewpageFragment()
-            var bundle2: Bundle = Bundle()
-            fragment.arguments = bundle2
+            var bundle: Bundle = Bundle()
+            fragment.arguments = bundle
+            bundle.putString("friend_id", postDataList[position].postFriendId)
             activity = fragment_s.activity as MainActivity?
             activity?.fragemtChage_for_adapter_view(fragment)
 

@@ -10,5 +10,5 @@ data class FriendData(
         var fImgUri : String = "",
         var fStar : Int = 1,
         var fAdd : String = "",
-        var timestamp: Long? = null
+        var timestamp: String? = null
 )
