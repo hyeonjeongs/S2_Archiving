@@ -92,15 +92,14 @@ class ModifyAccount : AppCompatActivity() {
                 strNickName = user!!.userNickname
                 strAfterPwd = user!!.userPwd
                 strPhotoUri = user!!.userPhotoUri
-//                strBday = if (user!!.userBirth == null){
-//                    "1990년01월01일"
-//                } else{
-//                    user!!.userBirth
-//                }
-//                etYearSpinner.setSelection((((strBday).substring(0,4)).toInt())-1990)
-//                etMonthSpinner.setSelection((((strBday).substring(5,7)).toInt())-1)
-//                etDaySpinner.setSelection((((strBday).substring(8,10)).toInt())-1)
+                strBday = user!!.userBirth
+                if(strBday==""){
 
+                }else{
+                    etYearSpinner.setSelection((((strBday).substring(0,4)).toInt())-1990)
+                    etMonthSpinner.setSelection((((strBday).substring(5,7)).toInt())-1)
+                    etDaySpinner.setSelection((((strBday).substring(8,10)).toInt())-1)
+                }
                 if(strPhotoUri==""){
                     ivProfile.setImageResource(R.drawable.user)
                 }
