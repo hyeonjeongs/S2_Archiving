@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 
 class ViewAdapter(
-    val viewDataList: ArrayList<PostData>,
+    val vDataList: ArrayList<PostData>,
     val context: Context,
     val fragmet_s: Fragment
 ) : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>() {
@@ -33,29 +33,30 @@ class ViewAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ViewAdapter.CustomViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_list,parent,false)
+    ): CustomViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_list, parent, false)
         return CustomViewHolder(view)
-}
+    }
 
 
-override fun onBindViewHolder(holder: ViewAdapter.CustomViewHolder, position: Int) {
-        if (viewDataList.get(position).postPhotoUri == ""){
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        if (vDataList.get(position).postPhotoUri == "") {
             holder.viewImage.setImageResource(R.drawable.camera)  //수정 필요
         } else {
             Glide.with(holder.itemView)
-                .load(viewDataList.get(position).postPhotoUri)
+                .load(vDataList.get(position).postPhotoUri)
                 .into(holder.viewImage)
         }
-    holder.viewDate.text = viewDataList.get(position).postDate
-    holder.viewSpecial.text = viewDataList.get(position).postDateName
-    holder.viewHeart.setImageResource(R.drawable.heart)
-    holder.viewStory.text = viewDataList.get(position).post
-}
+        holder.viewDate.text = vDataList.get(position).postDate
+        holder.viewSpecial.text = vDataList.get(position).postDateName
+        holder.viewHeart.setImageResource(R.drawable.heart)
+        holder.viewStory.text = vDataList.get(position).post
+    }
 
-override fun getItemCount(): Int {
-    return viewDataList.size
-}
+    override fun getItemCount(): Int {
+        return vDataList.size
+    }
+
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val viewImage = itemView.findViewById<ImageView>(R.id.view_img)
         val viewDate = itemView.findViewById<TextView>(R.id.view_date)

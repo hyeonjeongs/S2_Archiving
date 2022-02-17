@@ -136,6 +136,9 @@ class FriendpageFragment : Fragment() {
                     starImg.setImageResource(R.drawable.star_full)
                 }
                 starCount = friend.fStar
+
+
+
             }
         })
 
@@ -143,6 +146,13 @@ class FriendpageFragment : Fragment() {
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     postDataList.clear()
+                    Log.e("친구 아이디 ", friendId)
+
+
+                    var fragment:Fragment = ViewpageFragment()
+                    var bundle: Bundle = Bundle()
+                    bundle.putString("friend_id",friendId)
+                    fragment.arguments=bundle
 
                     for (data: DataSnapshot in snapshot.getChildren()) {
                         var postData: PostData? = data.getValue(PostData::class.java)
