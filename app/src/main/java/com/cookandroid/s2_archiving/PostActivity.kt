@@ -5,14 +5,12 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Gallery
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_post.*
 import kotlinx.android.synthetic.main.add_friend.*
 
 
@@ -38,7 +36,7 @@ class PostActivity : AppCompatActivity() {
     private lateinit var mEtDateName: EditText // 기념일 이름
     private lateinit var mEtPost: EditText // 글 내용
     private lateinit var mBtnPostRegister: Button // 게시글 업로드 버튼
-
+    private lateinit var mBtnPostClose: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +50,7 @@ class PostActivity : AppCompatActivity() {
         mEtDateName = findViewById<EditText>(R.id.etPostName)
         mEtPost = findViewById<EditText>(R.id.etWritePost)
         mBtnPostRegister = findViewById<Button>(R.id.btnPostRegister)
-
+        mBtnPostClose = findViewById<ImageView>(R.id.ivPostClose)
 
         var friendId = getIntent().getStringExtra("fPostId")
         postId = mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child("${friendId!!}").push().key.toString()
@@ -81,6 +79,11 @@ class PostActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
 
+        }
+
+        mBtnPostClose.setOnClickListener {
+            super.onBackPressed()
+            finish()
         }
 
         // onActivityResult
