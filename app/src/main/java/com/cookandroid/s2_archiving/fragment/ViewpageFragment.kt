@@ -94,9 +94,9 @@ class ViewpageFragment: Fragment() {
 
 
     //삭제, 수정 다이얼로그
-//    fun onDialogBtnClicked(view: View){
-//        val myCustomDialog = MyCustomDialog(this.requireContext())
-//        myCustomDialog.show()
-//    }
+    fun onDialogBtnClicked(view: View){
+        val myCustomDialog = MyCustomDialog(this.requireContext())
+        myCustomDialog.show()
+    }
 
 }
