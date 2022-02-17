@@ -1,14 +1,19 @@
 package com.cookandroid.s2_archiving.fragment
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
 import com.google.firebase.auth.FirebaseAuth
@@ -24,6 +29,13 @@ class ViewpageFragment: Fragment() {
     lateinit var viewDataList: ArrayList<PostData>
     lateinit var friendId:String
 
+    //xml 연결
+    lateinit var ivFriendpProfile:ImageView
+    lateinit var tvFriendName : TextView
+
+    // context
+    private lateinit var activitys: Activity
+
 
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
@@ -33,13 +45,20 @@ class ViewpageFragment: Fragment() {
         const val TAG : String = "로그"
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        friendId = requireArguments().getString("friend_id").toString()
-        viewDataList = ArrayList()
-        Log.e("친구 아이디 ", friendId)
+    // 프레그먼트를 안고 있는 액티비티에 붙었을 때(프래그먼트가 엑티비티에 올라온 순간)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activitys = context as Activity
+    }
 
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_view,container, false)
         view?.rv_view?.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.VERTICAL, false)
+        friendId = requireArguments().getString("friend_id").toString()
+        viewDataList = ArrayList()
+        ivFriendpProfile = view.findViewById(R.id.ivViewProfileImage)
+        tvFriendName = view.findViewById(R.id.tvViewName)
 
 
         return view
@@ -49,17 +68,35 @@ class ViewpageFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId)
+            .addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var friend:FriendData? = snapshot.getValue(FriendData::class.java)
+                    tvFriendName.text = friend!!.fName
+                    if (friend!!.fImgUri == "") {
+                        ivFriendpProfile.setImageResource(R.drawable.user)
+                    } else { // Uri가 있으면 그 사진 로드하기
+                        Glide.with(activitys)
+                            .load(friend!!.fImgUri)
+                            .into(ivFriendpProfile)
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
+
         mDatabaseRef.child("UserPosts").child("${mFirebaseAuth?.currentUser!!.uid}")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    Log.e("태그", "여기까지는 됨")
                     viewDataList.clear()
 
                     for (data: DataSnapshot in snapshot.children) {
                         var post:PostData? = data.getValue(PostData::class.java)
-                        Log.e("for문으로 들어와","for문아 어디갔어")
                         if(post!!.postFriendId == friendId) {
-                            Log.e("post추가","추가되는 놈이 있는가?")
                             viewDataList.add(post!!)
                         }
                     }
