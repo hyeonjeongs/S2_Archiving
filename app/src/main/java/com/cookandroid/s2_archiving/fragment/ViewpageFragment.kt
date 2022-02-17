@@ -29,8 +29,6 @@ class ViewpageFragment: Fragment() {
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
     private lateinit var fbStorage: FirebaseStorage
 
-    private lateinit var listener: ValueEventListener
-
     companion object {
         const val TAG : String = "로그"
     }
@@ -51,17 +49,19 @@ class ViewpageFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        friendId = requireArguments().getString("friend_id").toString()
-
-        mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child("${friendId!!}")
+        mDatabaseRef.child("UserPosts").child("${mFirebaseAuth?.currentUser!!.uid}")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     Log.e("태그", "여기까지는 됨")
                     viewDataList.clear()
 
-                    for (data in snapshot.children) {
-                        val item = data.getValue<PostData>()
-                        viewDataList.add(item!!)
+                    for (data: DataSnapshot in snapshot.children) {
+                        var post:PostData? = data.getValue(PostData::class.java)
+                        Log.e("for문으로 들어와","for문아 어디갔어")
+                        if(post!!.postFriendId == friendId) {
+                            Log.e("post추가","추가되는 놈이 있는가?")
+                            viewDataList.add(post!!)
+                        }
                     }
                     adapterV.notifyDataSetChanged() //리스트 저장 및 새로고침
 

@@ -12,6 +12,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_post.*
 import kotlinx.android.synthetic.main.add_friend.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class PostActivity : AppCompatActivity() {
@@ -28,6 +31,7 @@ class PostActivity : AppCompatActivity() {
 
     var imgUrl: String = ""
     private var postId: String = ""
+    private lateinit var friendId:String
 
     private lateinit var mFirebaseAuth: FirebaseAuth // 파이어베이스 인증 처리
     private lateinit var mDatabaseRef: DatabaseReference // 실시간 데이터 베이스
@@ -52,22 +56,27 @@ class PostActivity : AppCompatActivity() {
         mBtnPostRegister = findViewById<Button>(R.id.btnPostRegister)
         mBtnPostClose = findViewById<ImageView>(R.id.ivPostClose)
 
-        var friendId = getIntent().getStringExtra("fPostId")
-        postId = mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child("${friendId!!}").push().key.toString()
+        friendId = intent.getStringExtra("fPostId").toString()
+        postId = mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").push().key.toString()
 
         mBtnPostRegister.setOnClickListener {
-            val hashMap: HashMap<String, String> = HashMap()
+            var hashMap: HashMap<String, Any> = HashMap()
             var strDate: String = mEtDate.text.toString()
             var strDateName: String = mEtDateName.text.toString()
             var strPost: String = mEtPost.text.toString()
             var strPostId: String = postId
+            var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
 
-            hashMap.put("postDate", strDate)
-            hashMap.put("postDateName", strDateName)
+
             hashMap.put("postId", strPostId)
             hashMap.put("post", strPost)
+            hashMap.put("postDate", strDate)
+            hashMap.put("postDateName", strDateName)
+            hashMap.put("postFriendId", friendId)
+            hashMap.put("timestamp",timestamp)
 
-            mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child("$friendId").push().setValue(hashMap)
+
+            mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").push().setValue(hashMap)
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             Toast.makeText(this, "등록완료", Toast.LENGTH_SHORT).show()
@@ -75,8 +84,6 @@ class PostActivity : AppCompatActivity() {
                     }
 
             Toast.makeText(this, "게시글 추가 완료", Toast.LENGTH_SHORT).show()
-            var intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
             finish()
 
         }

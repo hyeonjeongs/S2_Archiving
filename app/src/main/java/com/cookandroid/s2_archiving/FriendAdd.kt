@@ -177,7 +177,7 @@ class FriendAdd : AppCompatActivity() {
         hashMap.put("fRel", strRelationship)
         hashMap.put("fAdd", strAdd)
         hashMap.put("fStar", 1)
-        hashMap.put("timstamp", timestamp)
+        hashMap.put("timestamp", timestamp)
 
 
         // Promise method
