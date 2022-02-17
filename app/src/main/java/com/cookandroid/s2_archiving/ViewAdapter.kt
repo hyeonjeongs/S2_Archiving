@@ -51,6 +51,10 @@ class ViewAdapter(
         holder.viewSpecial.text = vDataList.get(position).postDateName
         holder.viewHeart.setImageResource(R.drawable.heart)
         holder.viewStory.text = vDataList.get(position).post
+        holder.viewEtc.setOnClickListener{
+            val myCustomDialog = MyCustomDialog(context)
+            myCustomDialog.show()
+        }
     }
 
     override fun getItemCount(): Int {
@@ -63,6 +67,7 @@ class ViewAdapter(
         val viewSpecial = itemView.findViewById<TextView>(R.id.view_special)
         val viewHeart = itemView.findViewById<ImageView>(R.id.view_heart)
         val viewStory = itemView.findViewById<TextView>(R.id.view_story)
+        val viewEtc = itemView.findViewById<ImageView>(R.id.ivEtc)
     }
 
 }

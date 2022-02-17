@@ -64,6 +64,7 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
 
 
 
+
         holder.postCardView.setOnClickListener {
             Log.d("ViewpageFragment", "이동 성공!")
             var fragment: Fragment = ViewpageFragment()

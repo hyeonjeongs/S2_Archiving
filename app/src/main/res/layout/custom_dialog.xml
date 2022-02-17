@@ -10,7 +10,7 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnCustomEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -20,7 +20,7 @@
         tools:layout_editor_absoluteY="132dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnCustomRemove"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
