@@ -46,6 +46,7 @@ class EditFriendActivity : AppCompatActivity() {
     private lateinit var etPhone: EditText
     private lateinit var etRel: EditText
     private lateinit var etAdd: EditText
+    private lateinit var backBtn : Button
 
     var imgUrl : String = ""
 
@@ -74,6 +75,7 @@ class EditFriendActivity : AppCompatActivity() {
         etPhone = findViewById<EditText>(R.id.etEditPhone)
         etRel = findViewById<EditText>(R.id.etEditRel)
         etAdd = findViewById<EditText>(R.id.etEditAdd)
+        backBtn = findViewById<Button>(R.id.btnEditfriendback)
 
         mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId!!)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -236,6 +238,9 @@ class EditFriendActivity : AppCompatActivity() {
             }
         }
 
+        backBtn.setOnClickListener {
+
+        }
 
     }
 
