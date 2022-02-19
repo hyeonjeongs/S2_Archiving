@@ -8,7 +8,7 @@ data class FriendData(
         var fBday : String = "",
         var fRel : String = "",
         var fImgUri : String = "",
-        var fStar : String = "",
+        var fStar : Int = 1,
         var fAdd : String = "",
-        var timestamp: String = ""
+        var timestamp: String? = null
 )

@@ -24,7 +24,6 @@ class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: 
 
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
-    private lateinit var fbStorage: FirebaseStorage
 
     private var activity : MainActivity? = null//메인에 함수 부르기 위해 선언하기
 
@@ -63,126 +62,54 @@ class FriendDataAdapter(val friendDataList: ArrayList<FriendData>, val context: 
         holder.fName.text = friendDataList.get(position).fName
         holder.fId = friendDataList.get(position).fId
 
-        if (friendDataList.get(position).fStar == "0") {
-            holder.star.setImageResource(R.drawable.star_empty)
-        } else if (friendDataList.get(position).fStar == "1") {
-            holder.star.setImageResource(R.drawable.star_full)
-        }
-
-
         holder.fName.setOnClickListener {
             Log.d("FriendpageFragment", "이동 성공!")
             var fragment:Fragment = FriendpageFragment()
+            var fragment2:Fragment = ViewpageFragment()
+
             var bundle: Bundle = Bundle()
             bundle.putString("friend_name",holder?.fName.text.toString())
             bundle.putString("friend_id",holder?.fId)
 
             fragment.arguments=bundle
+            fragment2.arguments=bundle
             activity = fragment_s.activity as MainActivity?
             activity?.fragmentChange_for_adapter(fragment)
 
         }
 
+        holder.star.setOnClickListener {
+            starAction(position)
+        }
+
+        if (friendDataList.get(position).fStar == 1) {
+            holder.star.setImageResource(R.drawable.star_empty)
+        } else if (friendDataList.get(position).fStar == 0) {
+            holder.star.setImageResource(R.drawable.star_full)
+        }
+
+    }
+
+    private fun starAction(position: Int) {
+        var friendData:FriendData = friendDataList.get(position)
+        var star:Int?
+
+        if(friendData.fStar==1){
+            star = 0
+        }
+        else{
+            star= 1
+        }
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap.put("fStar", star!!)
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendData.fId).updateChildren(hashMap)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
-        return CustomViewHolder(view).apply {
-
-            var i = 0
-            star.setOnClickListener {
-
-                val curPos: Int = adapterPosition
-                Log.e("위치", curPos.toString())
-
-                val friendData: FriendData = friendDataList.get(curPos)
-                val fId = friendData.fId
-
-                if (i == 0) { // full star로 바꿀 때
-                    star.setImageResource(R.drawable.star_full)
-                    i = 1
-                    mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child("${fId}")
-                        .addValueEventListener(object : ValueEventListener {
-
-                            override fun onCancelled(error: DatabaseError) {
-
-                            }
-
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                val fAdd = friendData.fAdd
-                                val fBday = friendData.fBday
-                                val fId = friendData.fId
-                                val fName = friendData.fName
-                                val fPhone = friendData.fPhone
-                                val fRel = friendData.fRel
-                                val timestamp = friendData.timestamp
-                                var fStar = "1" // 값을 1로 변경
-
-                                val hashMap: HashMap<String, String> = HashMap()
-                                hashMap.put("fAdd", fAdd)
-                                hashMap.put("fBday", fBday)
-                                hashMap.put("fId", fId)
-                                hashMap.put("fImgurl", "")
-                                hashMap.put("fName", fName)
-                                hashMap.put("fPhone", fPhone)
-                                hashMap.put("fRel", fRel)
-                                hashMap.put("fStar", fStar)
-                                hashMap.put("timstamp", timestamp)
-
-                                mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child("${fId}").setValue(hashMap)
-
-                            }
-                        })
-                } else if (i == 1) { // empty_star로 바꿀 때
-                    star.setImageResource(R.drawable.star_empty)
-                    i = 0
-                    mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child("${fId}")
-                        .addValueEventListener(object : ValueEventListener {
-
-                            override fun onCancelled(error: DatabaseError) {
-
-                            }
-
-                            override fun onDataChange(snapshot: DataSnapshot) {
-
-                                val fAdd = friendData.fAdd
-                                val fBday = friendData.fBday
-                                val fId = friendData.fId
-                                val fName = friendData.fName
-                                val fPhone = friendData.fPhone
-                                val fRel = friendData.fRel
-                                val timestamp = friendData.timestamp
-                                val fStar = "0" // 값을 다시 0으로 변경함
-
-
-                                val hashMap: HashMap<String, String> = HashMap()
-                                hashMap.put("fAdd", fAdd)
-                                hashMap.put("fBday", fBday)
-                                hashMap.put("fId", fId)
-                                hashMap.put("fImgurl", "")
-                                hashMap.put("fName", fName)
-                                hashMap.put("fPhone", fPhone)
-                                hashMap.put("fRel", fRel)
-                                hashMap.put("fStar", fStar)
-                                hashMap.put("timstamp", timestamp)
-
-                                mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child("${fId}").setValue(hashMap)
-
-                            }
-                        })
-                }
-
-
-                //val friendData : FriendData = friendDataList.get(curPos)
-                //if(curPos != RecyclerView.NO_POSITION){
-                //var intent = Intent(context, FriendActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                //intent.putExtra("IMGURL", friendData.fImgurl)
-                //intent.putExtra("FNAME", friendData.fName)
-                //intent.putExtra("STAR", friendData.fStar)
-                //context.startActivity(intent)
-                // }
-            }
-        }
+        return CustomViewHolder(view)
     }
 }
+
 

@@ -1,5 +1,6 @@
 package com.cookandroid.s2_archiving.fragment
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -29,32 +30,19 @@ class HomeFragment : Fragment() {
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var friendDataList: ArrayList<FriendData>
 
-
-    //프레그먼트를 위한 변수들
-    private lateinit var homeFragment: HomeFragment
-    private lateinit var likeFragment: LikeFragment
-    private lateinit var userFragment: UserFragment
-
     //파이어베이스
     private lateinit var database : FirebaseDatabase
     private lateinit var mDatabaseRef : DatabaseReference
-    private var mFirebaseAuth: FirebaseAuth? = null //파이어베이스 인증
-    private lateinit var listener: ValueEventListener
-    private lateinit var listener1: ValueEventListener
+    private var mFirebaseAuth: FirebaseAuth? = null
 
     // xml
     private lateinit var userNickname : TextView
     private lateinit var ivProfile:ImageView
 
-    //
-    var photoUri: Uri? = null
+    // context
+    private lateinit var activity: Activity
 
 
-    lateinit var cameraPermission: ActivityResultLauncher<String>
-    lateinit var storagePermission : ActivityResultLauncher<String>
-
-    lateinit var cameraLauncher: ActivityResultLauncher<Uri>
-    lateinit var galleryLauncher: ActivityResultLauncher<String>
 
     //정적으로 사용되는 부분
     companion object {
@@ -63,19 +51,34 @@ class HomeFragment : Fragment() {
         }
     }
 
+    //메모리에 올라갔을때
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
+    //프레그먼트를 안고 있는 엑티비티에 붙었을 때
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = context as Activity
+    }
+
+
     //뷰가 생성되었을때
     //프레그먼트와 레이아웃 연결시켜줌
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home,container,false) //홈프레그먼트 xml파일이랑 연결
         //파이어베이스 계정, 리얼타임 데이터베이스
         mFirebaseAuth = FirebaseAuth.getInstance()
-        friendDataList = ArrayList<FriendData>() //FriendData 객체를 담을 ArrayList
+        friendDataList = ArrayList() //FriendData 객체를 담을 ArrayList
 
         database = FirebaseDatabase.getInstance() //파이어베이스 데이터베이스 연동
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
 
         userNickname = view.findViewById(R.id.tvName)
         ivProfile = view.findViewById(R.id.ivProfile)
+
 
 
         return view
@@ -104,94 +107,79 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) { // <-- 리사이클러뷰 넣어보기
         super.onViewCreated(view, savedInstanceState)
-        Log.e("HomeFragment","onViewCreated")
-
-        // 사용자의 닉네임, 사진 로드
-        listener =mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}").addValueEventListener(object : ValueEventListener {
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-                var nickName = "${user!!.userNickname}"
-                //var nickName = "${user?.userNickname}"
-                userNickname.text = nickName
-                // 사진 url 추가 후 load하는 코드 넣을 자리
-                if("${user!!.userPhotoUri}"==""){
-                    ivProfile.setImageResource(R.drawable.user)
-                }
-                else{ // userPhotoUri가 있으면 그 사진 로드하기
-                    Glide.with(this@HomeFragment)
-                        .load(user!!.userPhotoUri)
-                        .into(ivProfile)
-                }
-            }
-        })
-
         //리사이클러뷰에 담을 데이터 가져오기(selectedItem 태그를 통해서 보여줄 게시글 구분)
-        listener1 = mDatabaseRef.child("UserFriends").child("${mFirebaseAuth!!.currentUser!!.uid}")
-            .orderByChild("timestamp").addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    friendDataList.clear()
+        // 사용자의 닉네임, 사진 로드
+            mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}")
+                .addValueEventListener(object : ValueEventListener {
 
-                    for (data : DataSnapshot in snapshot.getChildren()) {
-                        var friendData : FriendData? = data.getValue(FriendData::class.java)
+                    override fun onCancelled(error: DatabaseError) {
 
-                        friendDataList.add(friendData!!) //담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
-
-                        Log.d("태그", "$friendDataList")
                     }
-                    adapter.notifyDataSetChanged() //리스트 저장 및 새로고침
 
-                }
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if(snapshot.value ==null){ // 널이면 아무것도하지마
 
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
+                        }
+                        else {
+                            var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
+                            var nickName = user!!.userNickname
 
-        adapter = FriendDataAdapter(friendDataList, this.requireContext(), this)
-        rvProfile.adapter= adapter
+                            userNickname.text = nickName
+                            // 사진 url 추가 후 load하는 코드 넣을 자리
+                            if ("${user!!.userPhotoUri}" == "") {
+                                ivProfile.setImageResource(R.drawable.user)
+                            } else { // userPhotoUri가 있으면 그 사진 로드하기
+                                Glide.with(activity)
+                                    .load(user!!.userPhotoUri)
+                                    .into(ivProfile)
+                            }
+                        }
+                    }
+                })
 
+            mDatabaseRef.child("UserFriends")
+                .child("${mFirebaseAuth!!.currentUser!!.uid}")
+                .orderByChild("fStar")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.value == null) { // 널이면 아무것도하지마
 
-//        rvProfile.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-//        //layoutManager = LinearLayoutManager(this.context)
-//        rvProfile.setHasFixedSize(true)//리사이클러뷰 성능 강화
-//        rvProfile.adapter = FriendDataAdapter(friendDataList)
+                        } else {
 
+                            friendDataList.clear()
+
+                            for (data: DataSnapshot in snapshot.children) {
+                                var friendData: FriendData? = data.getValue(FriendData::class.java)
+
+                                friendDataList.add(friendData!!) //담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
+
+                                Log.d("태그", "$friendDataList")
+                            }
+                            adapter.notifyDataSetChanged() //리스트 저장 및 새로고침
+
+                        }
+                    }
+
+                        override fun onCancelled(error: DatabaseError) {
+
+                        }
+
+                })
+
+            adapter = FriendDataAdapter(friendDataList, activity, this)
+            rvProfile.adapter = adapter
 
     }
-
-
-    //메모리에 올라갔을때
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        super.onCreate(savedInstanceState)
-
-    }
-
-    //프레그먼트를 안고 있는 엑티비티에 붙었을 때
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.e("HomeFragment","홈프레그먼트 사라짐")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e("HomeFragment","홈프래그먼트 파괴됨")
-        mDatabaseRef.removeEventListener(listener)
-        mDatabaseRef.removeEventListener(listener1)
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.e("HomeFragment","홈프래그먼트 분리")
     }
 }

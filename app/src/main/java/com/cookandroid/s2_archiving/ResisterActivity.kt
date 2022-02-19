@@ -98,6 +98,8 @@ class ResisterActivity : AppCompatActivity() {
                                 account.userEmail = firebaseUser?.email.toString()
                                 account.userNickname = strNickname
                                 account.userPwd = strPwd
+                                account.userBirth=""
+                                account.userPhotoUri=""
 
                                 // setValue : database에 insert (삽입) 행위
                                 mDatabaseRef.child(firebaseUser?.uid.toString())

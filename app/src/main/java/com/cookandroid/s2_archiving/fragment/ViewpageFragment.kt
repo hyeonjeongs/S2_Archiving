@@ -1,35 +1,64 @@
 package com.cookandroid.s2_archiving.fragment
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cookandroid.s2_archiving.MyCustomDialog
+import com.bumptech.glide.Glide
+import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
-import com.cookandroid.s2_archiving.adapter.MainRecyclerAdapter
-import com.cookandroid.s2_archiving.model.AllCategory
-import com.cookandroid.s2_archiving.model.CategoryItem
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_view.*
+import kotlinx.android.synthetic.main.activity_view.view.*
 
 class ViewpageFragment: Fragment() {
 
-//    private var mainCategoryRecycler: RecyclerView? =null
-//    private var mainRecyclerAdapter: MainRecyclerAdapter? = null
+    lateinit var adapterV : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>
+    lateinit var viewDataList: ArrayList<PostData>
+    lateinit var friendId:String
+
+    //xml 연결
+    lateinit var ivFriendpProfile:ImageView
+    lateinit var tvFriendName : TextView
+
+    // context
+    private lateinit var activitys: Activity
+
+
+    private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
+    private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
+    private lateinit var fbStorage: FirebaseStorage
 
     companion object {
         const val TAG : String = "로그"
-
-        fun newInstance() : FriendpageFragment{
-            return FriendpageFragment()
-        }
-
     }
+
+    // 프레그먼트를 안고 있는 액티비티에 붙었을 때(프래그먼트가 엑티비티에 올라온 순간)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activitys = context as Activity
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_view,container, false)
+        view?.rv_view?.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.VERTICAL, false)
+        friendId = requireArguments().getString("friend_id").toString()
+        viewDataList = ArrayList()
+        ivFriendpProfile = view.findViewById(R.id.ivViewProfileImage)
+        tvFriendName = view.findViewById(R.id.tvViewName)
 
 
         return view
@@ -38,51 +67,68 @@ class ViewpageFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //add images 내부
-        //첫번째 카테고리 리스트
-        val categoryItemList:MutableList<CategoryItem> = ArrayList()
-        categoryItemList.add(CategoryItem(1,R.drawable.food))
-        categoryItemList.add(CategoryItem(1,R.drawable.food2))
-        categoryItemList.add(CategoryItem(1,R.drawable.food3))
-        categoryItemList.add(CategoryItem(1,R.drawable.food4))
 
-        //두번째 카테고리 리스트
-        val categoryItemList2:MutableList<CategoryItem> = ArrayList()
-        categoryItemList2.add(CategoryItem(1,R.drawable.food4))
-        categoryItemList2.add(CategoryItem(1,R.drawable.food3))
-        categoryItemList2.add(CategoryItem(1,R.drawable.food2))
-        categoryItemList2.add(CategoryItem(1,R.drawable.food))
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId)
+            .addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var friend:FriendData? = snapshot.getValue(FriendData::class.java)
+                    tvFriendName.text = friend!!.fName
+                    if (friend!!.fImgUri == "") {
+                        ivFriendpProfile.setImageResource(R.drawable.user)
+                    } else { // Uri가 있으면 그 사진 로드하기
+                        Glide.with(activitys)
+                            .load(friend!!.fImgUri)
+                            .into(ivFriendpProfile)
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
+
+        mDatabaseRef.child("UserPosts").child("${mFirebaseAuth?.currentUser!!.uid}")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    viewDataList.clear()
+
+                    for (data: DataSnapshot in snapshot.children) {
+                        var post:PostData? = data.getValue(PostData::class.java)
+                        if(post!!.postFriendId == friendId) {
+                            viewDataList.add(post!!)
+                        }
+                    }
+                    adapterV.notifyDataSetChanged() //리스트 저장 및 새로고침
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
 
 
 
-        //add data to model class
+        adapterV = ViewAdapter(viewDataList,this.requireContext(),this)
+        rv_view.adapter = adapterV
 
-        val allCategory:MutableList<AllCategory> = ArrayList()
-        allCategory.add(AllCategory("<첫번째글>\n은수가 이번 생일에 손편지를 써줬다.\n 너무 감동받았다.\n 꽃도 트렌디하게 올해의 펜톤 컬러로 줬다. \n너무 예쁘다~!",categoryItemList))
-        allCategory.add(AllCategory("<두번째글>\n~~~~!~!~!~~\n!~!~!!!!!!!~~~~~~\n~~~~~~~~~~~~~!!!!!!",categoryItemList2))
-        allCategory.add(AllCategory("<세번째글>\n가나다라마바사아자차카타파하\n어쩌구 ~~~~~~",categoryItemList))
-        allCategory.add(AllCategory("<네번째글> ~~~~~~~~",categoryItemList2))
-        allCategory.add(AllCategory("<다섯번째글> ~~~~~~~~~~~",categoryItemList2))
 
-        //setMainCategoryRecycler(allCategory)
 
-        var mainCategoryRecycler: RecyclerView? =null
-        //var mainRecyclerAdapter: MainRecyclerAdapter
+//        adapter = ViewAdapter(viewDataList)
+//        rv_view.adapter=adapter
 
-        val layoutManager: RecyclerView.LayoutManager=LinearLayoutManager(this.requireContext())
-        main_recycler!!.layoutManager = layoutManager
-        var mainRecyclerAdapter= MainRecyclerAdapter(this.requireContext(),allCategory)
-       // mainCategoryRecycler!!.adapter=mainRecyclerAdapter
+//        val viewList = arrayListOf(
+//            PostData("이미지","ㅈ대ㅑ랴","아아아","하...","이름",0,0),
+//            PostData("이미지","ㅈ대ㅑ랴","아아아","하...","이름",0,0),
+//            PostData("이미지","ㅈ대ㅑ랴","아아아","하...","이름",0,0),
+//            PostData("이미지","ㅈ대ㅑ랴","아아아","하...","이름",0,0),
+//            )
 
 
     }
 
-//    private fun setMainCategoryRecycler(allCategory: List<AllCategory>){
-//        val layoutManager: RecyclerView.LayoutManager=LinearLayoutManager(this.requireContext())
-//        main_recycler!!.layoutManager = layoutManager
-//        mainRecyclerAdapter= MainRecyclerAdapter(this.requireContext(),allCategory)
-//        mainCategoryRecycler!!.adapter=mainRecyclerAdapter
-//    }
 
     //삭제, 수정 다이얼로그
     fun onDialogBtnClicked(view: View){

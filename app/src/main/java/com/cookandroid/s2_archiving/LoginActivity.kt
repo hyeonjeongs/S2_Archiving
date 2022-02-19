@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.commit
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -20,6 +21,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mDatabaseRef: DatabaseReference // 실시간 데이터 베이스
     private lateinit var mEtEmail: EditText // 로그인 입력 필드(이메일)
     private lateinit var mEtPwd: EditText // 로그인 입력 필드(비밀번호)
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +41,8 @@ class LoginActivity : AppCompatActivity() {
 
         mFirebaseAuth = FirebaseAuth.getInstance()
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
-        mEtEmail = findViewById<EditText>(R.id.etEmail)
-        mEtPwd = findViewById<EditText>(R.id.etPwd)
+        mEtEmail = findViewById(R.id.etEmail)
+        mEtPwd = findViewById(R.id.etPwd)
 
 
 
@@ -53,9 +56,7 @@ class LoginActivity : AppCompatActivity() {
                 ?.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         // 로그인 성공
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish() // 현재 액티비티 파괴
+                        moveMainPage(task.result?.user)
 
                     } else {
                         Toast.makeText(this, "로그인 실패..!", Toast.LENGTH_SHORT).show()
@@ -68,9 +69,20 @@ class LoginActivity : AppCompatActivity() {
 
             val intent = Intent(this, ResisterActivity::class.java)
             startActivity(intent)
-            finish()
 
 
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        moveMainPage(mFirebaseAuth?.currentUser)
+    }
+
+    fun moveMainPage(user: FirebaseUser?){
+        if(user != null){
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 }

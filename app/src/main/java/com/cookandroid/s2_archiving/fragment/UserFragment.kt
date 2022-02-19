@@ -13,10 +13,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.cookandroid.s2_archiving.LoginActivity
-import com.cookandroid.s2_archiving.ModifyAccount
+import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
-import com.cookandroid.s2_archiving.UserAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -26,7 +24,7 @@ class UserFragment : Fragment() {
     //파이어베이스에서 인스턴스 가져오기
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance()
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")
-    private lateinit var listener: ValueEventListener
+
 
 
     // xml 요소들
@@ -38,7 +36,7 @@ class UserFragment : Fragment() {
     private lateinit var ivInfoimg : ImageView
 
     // context
-    private lateinit var activity: Activity
+    private lateinit var activitys: Activity
 
     companion object {
         const val TAG : String = "로그"
@@ -49,23 +47,16 @@ class UserFragment : Fragment() {
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-    }
-
     // 메모리에 올라갔을때
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "UserFragement - onCreate() called")
 
     }
 
     // 프레그먼트를 안고 있는 액티비티에 붙었을 때(프래그먼트가 엑티비티에 올라온 순간)
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d(TAG, "UserFragement - onAttach() called")
-        activity = context as Activity
+        activitys = context as Activity
     }
 
     // 뷰가 생성되었을 때
@@ -92,83 +83,79 @@ class UserFragment : Fragment() {
         mTvEmail = view.findViewById(R.id.tvEmail)
 
         val mFirebaseUser : FirebaseUser? = mFirebaseAuth?.currentUser
+        val userId:String = mFirebaseUser!!.uid
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
-            .child("UserAccount").child(mFirebaseUser!!.uid)
-
-        //화면에 사용자 프로필 이미지, 닉네임, 이메일 출력
-        listener=mDatabaseRef.addValueEventListener(object : ValueEventListener {
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-
-                mTvNickName.text = "${user?.userNickname}"
-
-                mTvEmail.text = "${user?.userEmail}"
-
-                // 사진 url 추가 후 load하는 코드 넣을 자리
-                if("${user!!.userPhotoUri}"==""){
-                    ivInfoimg.setImageResource(R.drawable.user)
-                }
-                else{ // userPhotoUri가 있으면 그 사진 로드하기
-                    Glide.with(this@UserFragment)
-                        .load(user!!.userPhotoUri)
-                        .into(ivInfoimg)
-                }
-            }
-        })
-
-
-        var mFirebaseAuth : FirebaseAuth? = null //파이어베이스 인증
+            .child("UserAccount").child(userId)
 
         mFirebaseAuth = FirebaseAuth.getInstance()
 
         //정보 수정 액티비티로 넘어가는 버튼
         btnChangeinfo.setOnClickListener {
 
-            val intent = Intent(getActivity(), ModifyAccount::class.java)
+            val intent = Intent(activity, ModifyAccount::class.java)
             startActivity(intent)
         }
 
         //로그아웃 버튼
         btnLogout.setOnClickListener {
 
+            activity?.finish()
+            startActivity(Intent(activity,LoginActivity::class.java))
             mFirebaseAuth!!.signOut()
-            getActivity()?.finishAffinity()
-            val packageManager = requireContext().packageManager
-            val intent = packageManager.getLaunchIntentForPackage(requireContext().packageName)
-            val componentName = intent!!.component
-            val mainIntent = Intent.makeRestartActivityTask(componentName)
-            requireContext().startActivity(mainIntent)
-            Runtime.getRuntime().exit(0)
+
         }
 
         //탈퇴 버튼
         btnDrop.setOnClickListener {
-            mDatabaseRef.removeEventListener(listener)
-            Log.e("UserFragment", "listner remove")
-            mDatabaseRef.removeValue()
-            mFirebaseAuth!!.currentUser!!.delete()
-            getActivity()?.finishAffinity()
-            Log.e("UserFragment", "MainActivity Destory")
-            val packageManager = requireContext().packageManager
-            val intent = packageManager.getLaunchIntentForPackage(requireContext().packageName)
-            val componentName = intent!!.component
-            val mainIntent = Intent.makeRestartActivityTask(componentName)
-            requireContext().startActivity(mainIntent)
-            Runtime.getRuntime().exit(0)
+
+            mFirebaseUser.delete().addOnCompleteListener { task ->
+                if(task.isSuccessful){
+                    mDatabaseRef.removeValue()
+                    mFirebaseAuth!!.signOut()
+                    startActivity(Intent(activity,LoginActivity::class.java))
+                }
+            }
+
 
         }
-
 
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //화면에 사용자 프로필 이미지, 닉네임, 이메일 출력
+        mDatabaseRef.addValueEventListener(object : ValueEventListener {
 
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.value ==null){ // 널이면 아무것도하지마
+
+                }
+                else {
+                    var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
+
+                    mTvNickName.text = "${user?.userNickname}"
+
+                    mTvEmail.text = "${user?.userEmail}"
+
+                    // 사진 url 추가 후 load하는 코드 넣을 자리
+                    if (user!!.userPhotoUri == "") {
+                        ivInfoimg.setImageResource(R.drawable.user)
+                    } else { // userPhotoUri가 있으면 그 사진 로드하기
+                        Glide.with(activitys)
+                            .load(user!!.userPhotoUri)
+                            .into(ivInfoimg)
+                    }
+                }
+            }
+        })
+
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -177,7 +164,6 @@ class UserFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mDatabaseRef.removeEventListener(listener)
         Log.e("UserFragment", "유저프래그먼트 파괴됨")
     }
 

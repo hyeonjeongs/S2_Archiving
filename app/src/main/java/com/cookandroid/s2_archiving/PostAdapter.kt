@@ -28,14 +28,13 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
 
     private var activity: MainActivity? = null//메인에 함수 부르기 위해 선언하기
 
-    // 위젲 연결할 변수 선언
+    // 위젯 연결할 변수 선언
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val postimage = itemView.findViewById<ImageView>(R.id.post_img)
         val date = itemView.findViewById<TextView>(R.id.post_date)
         val special = itemView.findViewById<TextView>(R.id.post_special)
         val heart = itemView.findViewById<ImageView>(R.id.post_heart)
         val postCardView = itemView.findViewById<CardView>(R.id.post_cardview)
-
     }
 
     override fun getItemCount(): Int {
@@ -52,39 +51,26 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
     }
 
     override fun onBindViewHolder(holder: PostAdapter.CustomViewHolder, position: Int) {
-        if (postDataList.get(position).postPhotoUri == "") {
+        if (postDataList[position].postPhotoUri == "") {
             holder.postimage.setImageResource(R.drawable.man)
         } else {
             Glide.with(holder.itemView)
-                .load(postDataList.get(position).postPhotoUri)
+                .load(postDataList[position].postPhotoUri)
                 .into(holder.postimage)
         }
-        holder.date.text = postDataList.get(position).postDate
-        holder.special.text = postDataList.get(position).postDateName
+        holder.date.text = postDataList[position].postDate
+        holder.special.text = postDataList[position].postDateName
         holder.heart.setImageResource(R.drawable.heart)
 
 
-//        holder.fName.setOnClickListener {
-//            Log.d("FriendpageFragment", "이동 성공!")
-//            var fragment:Fragment = FriendpageFragment()
-//            var bundle: Bundle = Bundle()
-//            bundle.putString("friend_name",holder?.fName.text.toString())
-//            bundle.putString("friend_id",holder?.fId)
-//
-//            fragment.arguments=bundle
-//            activity = fragment_s.activity as MainActivity?
-//            activity?.fragmentChange_for_adapter(fragment)
-//
-//        }
 
 
         holder.postCardView.setOnClickListener {
             Log.d("ViewpageFragment", "이동 성공!")
             var fragment: Fragment = ViewpageFragment()
             var bundle: Bundle = Bundle()
-//            bundle.putString("friend_name",holder?.fName.text.toString())
-//            bundle.putString("friend_id",holder?.fId)
             fragment.arguments = bundle
+            bundle.putString("friend_id", postDataList[position].postFriendId)
             activity = fragment_s.activity as MainActivity?
             activity?.fragemtChage_for_adapter_view(fragment)
 

@@ -7,5 +7,8 @@ data class PostData(
         var post : String = "",
         var postDate : String = "",
         var postDateName : String = "",
-        var heart:Int = 0
+        var postFriendId:String="",
+        var heart:Int = 1,
+        var timestamp: String = ""
 )
+

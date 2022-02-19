@@ -42,15 +42,14 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <ImageView
-        android:id="@+id/ivEditImageMydata"
-        android:layout_width="130dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivEditImageMydata" android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="70dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/round_image"
         android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/user" />
+
     <Button
         android:id="@+id/imageEditMyData"
         android:layout_width="30dp"
@@ -217,7 +216,7 @@
                 android:textSize="20dp" />
 
             <Spinner
-                android:id="@+id/edit_year_spinner"
+                android:id="@+id/edit_my_year_spinner"
                 android:layout_weight="2"
                 android:padding="20dp"
                 android:layout_width="wrap_content"
@@ -231,7 +230,7 @@
                 android:text="년" />
 
             <Spinner
-                android:id="@+id/edit_month_spinner"
+                android:id="@+id/edit_my_month_spinner"
                 android:layout_weight="2"
                 android:padding="20dp"
                 android:layout_width="wrap_content"
@@ -245,7 +244,7 @@
                 android:text="월" />
 
             <Spinner
-                android:id="@+id/edit_day_spinner"
+                android:id="@+id/edit_my_day_spinner"
                 android:layout_weight="2"
                 android:layout_width="wrap_content"
                 android:padding="20dp"
