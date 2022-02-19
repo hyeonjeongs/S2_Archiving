@@ -9,6 +9,6 @@ data class PostData(
         var postDateName : String = "",
         var postFriendId:String="",
         var heart:Int = 1,
-        var timestamp: String? = null
+        var timestamp: String = ""
 )
 

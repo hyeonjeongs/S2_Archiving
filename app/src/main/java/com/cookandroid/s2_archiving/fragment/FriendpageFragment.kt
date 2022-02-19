@@ -151,8 +151,7 @@ class FriendpageFragment : Fragment() {
                     for (data: DataSnapshot in snapshot.children) {
                         var postData: PostData? = data.getValue(PostData::class.java)
                         if(postData!!.postFriendId==friendId){ // 해당 게시글이 현재 친구의 아이디를 포함하고 있다면
-                        postDataList.add(postData!!) // 리스트에 넣기
-
+                            postDataList.add(postData!!) // 리스트에 넣기
                         }
                     }
                     adapter.notifyDataSetChanged() // 리스트 저장 및 새로 고침
