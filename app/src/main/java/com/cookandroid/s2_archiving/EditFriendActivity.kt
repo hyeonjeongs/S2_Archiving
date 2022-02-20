@@ -80,6 +80,7 @@ class EditFriendActivity : AppCompatActivity() {
         btnGal = findViewById(R.id.btnEditGal)
         btnEditAddFriend = findViewById(R.id.btnEditAddFriend)
 
+
         mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId!!)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -205,6 +206,8 @@ class EditFriendActivity : AppCompatActivity() {
                 // Exit the addPhotoActivity if you leave the album without selecting it
             }
         }
+
+
     }
 
     private fun editFriend() {

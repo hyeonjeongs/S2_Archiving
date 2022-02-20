@@ -41,10 +41,7 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         return postDataList.size
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): PostAdapter.CustomViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostAdapter.CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.post_list, parent, false)
 
         return CustomViewHolder(view)
@@ -60,12 +57,9 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         }
         holder.date.text = postDataList[position].postDate
         holder.special.text = postDataList[position].postDateName
-        holder.heart.setImageResource(R.drawable.heart)
+        holder.heart.setImageResource(R.drawable.heart_empty)
 
-
-
-
-        holder.postCardView.setOnClickListener {
+        holder.postimage.setOnClickListener {
             Log.d("ViewpageFragment", "이동 성공!")
             var fragment: Fragment = ViewpageFragment()
             var bundle: Bundle = Bundle()
@@ -73,7 +67,35 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
             bundle.putString("friend_id", postDataList[position].postFriendId)
             activity = fragment_s.activity as MainActivity?
             activity?.fragemtChage_for_adapter_view(fragment)
+        }
 
+        holder.heart.setOnClickListener {
+            Log.d("FriendHeart","클릭성공!!!!!!!!!!!!")
+            heartEvent(position)
+        }
+
+        if (postDataList.get(position).heart == 1) {
+            holder.heart.setImageResource(R.drawable.heart_empty)
+        } else if (postDataList.get(position).heart == 0) {
+            holder.heart.setImageResource(R.drawable.heart_full_line)
         }
     }
+
+    /**
+     * 게시글에 좋아요버튼 클릭시
+     */
+    private fun heartEvent(position: Int){
+        var postdata:PostData = postDataList.get(position)
+        var heart:Int?
+
+        if(postdata.heart==1){//하트가 비어있는데 클릭된경우
+            heart=0
+        }else{
+            heart=1
+        }
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap.put("heart", heart!!)
+        mDatabaseRef.child("UserPosts").child("${mFirebaseAuth?.currentUser!!.uid}").child(postdata.postId).updateChildren(hashMap)
+    }
+
 }
