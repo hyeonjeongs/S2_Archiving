@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.cookandroid.s2_archiving.fragment.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -45,6 +46,10 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.like -> {
                 likeFragment = LikeFragment.newInstance()
+                var bundle = Bundle()
+                var uid = FirebaseAuth.getInstance().currentUser?.uid
+                bundle.putString("favoriteUid",uid)
+                likeFragment.arguments = bundle
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, likeFragment,"like").commit()
             }
             R.id.user -> {

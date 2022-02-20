@@ -46,13 +46,13 @@ class LikeFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? { //like_fragment xml파일이랑 연결
-        val fragmentView = LayoutInflater.from(activity).inflate(R.layout.fragment_like,container, false)
+        fragmentView = LayoutInflater.from(activity).inflate(R.layout.fragment_like,container, false)
         //파이어베이스 계정, 리얼타임 데이터베이스
         mFirebaseAuth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance() //파이어베이스 데이터베이스 연동
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
         auth = FirebaseAuth.getInstance()
-        uid = arguments?.getString("favoriteUid")
+        //uid = arguments?.getString("favoriteUid")
 
 
         fragmentView?.fragmentlike_rv?.adapter = FavoriteAdapter(activity,this)
