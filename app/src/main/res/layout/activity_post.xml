@@ -41,6 +41,7 @@
             android:id="@+id/btnPostRegister"
             android:layout_width="70dp"
             android:layout_height="30dp"
+            android:fontFamily="@font/applesdgothic_regular"
             android:background="@drawable/finish"
             android:textSize="30sp"
             android:gravity="center_horizontal"/>

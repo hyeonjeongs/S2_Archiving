@@ -31,6 +31,7 @@
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:background="@drawable/finish"
+            android:fontFamily="@font/applesdgothic_regular"
             android:clickable="true"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -56,6 +57,7 @@
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
+            android:fontFamily="@font/applesdgothic_regular"
             android:background="@drawable/edit_photo"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/ivProfileImage" />
@@ -83,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="10dp"
+                android:fontFamily="@font/applesdgothic_thin"
                 android:text="이름"
                 android:textColor="#000000"
                 android:textSize="20dp" />
@@ -111,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="10dp"
+                android:fontFamily="@font/applesdgothic_thin"
                 android:text="전화번호"
                 android:textColor="#000000"
                 android:textSize="20dp" />
@@ -143,6 +147,7 @@
                 android:padding="10dp"
                 android:text="생일"
                 android:textColor="#000000"
+                android:fontFamily="@font/applesdgothic_thin"
                 android:textSize="20dp"
                 android:layout_width="80dp" />
 
@@ -211,6 +216,7 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/applesdgothic_thin"
                 android:padding="10dp"
                 android:text="관계"
                 android:textColor="#000000"
@@ -240,6 +246,7 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="추가정보"
+                android:fontFamily="@font/applesdgothic_thin"
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
