@@ -15,8 +15,8 @@
 
         <Button
             android:id="@+id/btnfriendback"
-            android:layout_width="60dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:clickable="true"
             android:background="@drawable/backspace_btn"
             android:textSize="18sp"
@@ -25,12 +25,12 @@
 
         <Button
             android:id="@+id/btnAddFriend"
-            android:layout_width="100dp"
-            android:layout_height="35dp"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:gravity="center"
-            android:background="@drawable/join_btn_red"
+            android:background="@drawable/finish"
             android:clickable="true"
             android:textColor="#000000"
             android:textSize="18sp"

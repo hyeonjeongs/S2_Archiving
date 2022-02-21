@@ -16,10 +16,10 @@
 
         <Button
             android:id="@+id/btnEditMyDataback"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:clickable="true"
-            android:background="@drawable/back_btn"
+            android:background="@drawable/backspace_btn"
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -27,10 +27,10 @@
 
         <Button
             android:id="@+id/btnEditEditMyData"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
             android:clickable="true"
-            android:background="@drawable/join_btn_red"
+            android:background="@drawable/finish"
             android:textColor="#000000"
             android:textSize="18sp"
             android:layout_alignParentRight="true"
