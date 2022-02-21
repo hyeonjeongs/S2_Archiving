@@ -96,7 +96,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/account_email"
+                    android:id="@+id/imgBtnSendMsg"
                     android:layout_width="50dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -118,7 +118,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/account_call"
+                    android:id="@+id/imgBtnPhoneCall"
                     android:layout_width="30dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
