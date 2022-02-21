@@ -18,12 +18,11 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 
-class FavoriteAdapter(val context: Context, val fragment_s: Fragment):RecyclerView.Adapter<FavoriteAdapter.CustomViewHolder>() {
+class FavoriteAdapter(val postDataList: ArrayList<PostData>, val context: Context, val fragment_s: Fragment):RecyclerView.Adapter<FavoriteAdapter.CustomViewHolder>() {
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
     private var heartRef : DatabaseReference = mDatabaseRef.child("UserPosts").child("${mFirebaseAuth?.currentUser!!.uid}") //게시글정보 불러오기
     private lateinit var fbStorage: FirebaseStorage
-    var postDataList : ArrayList<PostData> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.post_list,parent,false)
@@ -32,14 +31,10 @@ class FavoriteAdapter(val context: Context, val fragment_s: Fragment):RecyclerVi
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        if (postDataList[position].heart == 0) { //좋아하는 페이지만 나오도록
-            Glide.with(holder.itemView).load(postDataList[position].postPhotoUri).into(holder.postimage)
-            holder.date.text = postDataList[position].postDate
-            holder.special.text = postDataList[position].postDateName
-            holder.heart.setImageResource(R.drawable.heart_full)
-        } else {
-            Log.d("likepage_null","나오면 안됨!!!!!")
-        }
+        Glide.with(holder.itemView).load(postDataList[position].postPhotoUri).into(holder.postimage)
+        holder.date.text = postDataList[position].postDate
+        holder.special.text = postDataList[position].postDateName
+        holder.heart.setImageResource(R.drawable.heart_full)
     }
 
     override fun getItemCount(): Int {

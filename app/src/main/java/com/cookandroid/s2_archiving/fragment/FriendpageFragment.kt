@@ -3,6 +3,7 @@ package com.cookandroid.s2_archiving.fragment
 import android.app.Activity
 import android.content.Intent
 import android.media.Image
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -32,6 +33,8 @@ class FriendpageFragment : Fragment(), onBackPressedListener {
     lateinit var friendpageName:TextView
     lateinit var ivfriendimg:ImageView
     lateinit var starImg:ImageView
+    lateinit var imgBtnPhonecall : ImageView
+    lateinit var imgBtnSendMsg : ImageView
     var starCount:Int = 0
 
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
@@ -66,8 +69,10 @@ class FriendpageFragment : Fragment(), onBackPressedListener {
         friendpageName = view.findViewById(R.id.friendpage_name)
         ivfriendimg = view.findViewById(R.id.account_profile)
         starImg = view.findViewById(R.id.account_star)
+        imgBtnPhonecall = view.findViewById(R.id.imgBtnPhoneCall)
+        imgBtnSendMsg = view.findViewById(R.id.imgBtnSendMsg)
 
-
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
 
         var btnGoWrite = view.findViewById<Button>(R.id.btnGoWrite)
         var btnEditFriend = view.findViewById<Button>(R.id.friendpage_edit_btn)
@@ -91,9 +96,12 @@ class FriendpageFragment : Fragment(), onBackPressedListener {
             startActivity(intent)
         }
 
+
         friendbackbtn.setOnClickListener {
             onBackPressed()
         }
+
+
 
         return view
 
@@ -166,6 +174,32 @@ class FriendpageFragment : Fragment(), onBackPressedListener {
             })
         adapter = PostAdapter(postDataList,this.requireContext(),this)
         rv_post.adapter = adapter
+
+        lateinit var friendPhone : String
+
+        //파이어베이스에서 데이터를 가져와서 상대방 전화번호 저장
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var friend:FriendData? = snapshot.getValue(FriendData::class.java)
+
+                    friendPhone = friend!!.fPhone.toString()
+
+                }
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+
+        //전화하기 버튼을 눌렀을 때 상대방에게 전화 거는 화면으로 연결
+        imgBtnPhonecall.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$friendPhone"))
+            startActivity(intent)
+        }
+        //문자하기 버튼을 눌렀을 때 문자 전송 화면으로 연결
+        imgBtnSendMsg.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + "$friendPhone"))
+            startActivity(intent)
+        }
 
     }
 
