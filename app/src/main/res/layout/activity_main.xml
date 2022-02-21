@@ -23,7 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#1BB6A8"
+        android:background="@color/lightgray"
+        app:itemTextColor="@drawable/bottom_icon_color"
+        app:itemIconTint="@drawable/bottom_icon_color"
         android:layout_centerHorizontal="true">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
