@@ -71,7 +71,7 @@ class FriendpageFragment : Fragment(), onBackPressedListener {
 
         var btnGoWrite = view.findViewById<Button>(R.id.btnGoWrite)
         var btnEditFriend = view.findViewById<Button>(R.id.friendpage_edit_btn)
-
+        var friendbackbtn = view.findViewById<Button>(R.id.friendpage_back_btn)
 
         starImg.setOnClickListener {
             starAction(friendId)
@@ -89,6 +89,10 @@ class FriendpageFragment : Fragment(), onBackPressedListener {
             val intent = Intent(activity, PostActivity::class.java)
             intent.putExtra("fPostId",friendId)
             startActivity(intent)
+        }
+
+        friendbackbtn.setOnClickListener {
+            onBackPressed()
         }
 
         return view

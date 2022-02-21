@@ -34,6 +34,8 @@ class UserFragment : Fragment() {
     private lateinit var mTvEmail:TextView
     private lateinit var mTvNickName:TextView
     private lateinit var ivInfoimg : ImageView
+    private lateinit var muserfragLogobtn :Button
+
 
     // context
     private lateinit var activitys: Activity
@@ -61,11 +63,7 @@ class UserFragment : Fragment() {
 
     // 뷰가 생성되었을 때
     // 프레그먼트와 레이아웃을 연결시켜주는 부분이다.
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         Log.d(TAG, "UserFragement - onCreateView() called")
 
@@ -81,6 +79,7 @@ class UserFragment : Fragment() {
         //닉네임과 이메일 받아오기
         mTvNickName = view.findViewById(R.id.tvNickName)
         mTvEmail = view.findViewById(R.id.tvEmail)
+        muserfragLogobtn = view.findViewById(R.id.userfragLogobtn)
 
         val mFirebaseUser : FirebaseUser? = mFirebaseAuth?.currentUser
         val userId:String = mFirebaseUser!!.uid
@@ -117,6 +116,15 @@ class UserFragment : Fragment() {
                 }
             }
 
+
+        }
+
+        //Logo 버튼
+        muserfragLogobtn.setOnClickListener {//버튼 클릭시 HomeFragment로 이동시켜줌
+            var fragment: Fragment = HomeFragment()
+            var activityH = this.activity as MainActivity?
+
+            activityH?.fragementChange_view(fragment)
 
         }
 

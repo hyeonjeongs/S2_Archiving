@@ -77,6 +77,12 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, viewpageFragment).commit()
     }
 
+    fun fragementChange_view(viewpageFragment: Fragment){
+        homeFragment = HomeFragment.newInstance()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, homeFragment,"home").commit()
+        bottom_navi.menu.getItem(0).isChecked = true //homefragment navigation 선택되도록 설정
+    }
+
     //뒤로가기 버튼
     override fun onBackPressed() {
         var fragmentList = supportFragmentManager.getFragments()
