@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_friendpage.*
 import kotlinx.android.synthetic.main.fragment_friendpage.view.*
 import org.w3c.dom.Text
 
-class FriendpageFragment : Fragment() {
+class FriendpageFragment : Fragment(), onBackPressedListener {
 
     lateinit var adapter : RecyclerView.Adapter<PostAdapter.CustomViewHolder>
     lateinit var postDataList: ArrayList<PostData>
@@ -163,5 +163,13 @@ class FriendpageFragment : Fragment() {
         adapter = PostAdapter(postDataList,this.requireContext(),this)
         rv_post.adapter = adapter
 
+    }
+
+    override fun onBackPressed() {  //휴대폰의 뒤로가기 버튼 클릭 시
+        if(this is FriendpageFragment){
+            var fragment: Fragment = HomeFragment()
+            var activityH = this.activity as MainActivity?
+            activityH?.fragmentChange_for_adapter(fragment)
+        }
     }
 }

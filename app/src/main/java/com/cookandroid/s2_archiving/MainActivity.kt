@@ -77,5 +77,17 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, viewpageFragment).commit()
     }
 
+    //뒤로가기 버튼
+    override fun onBackPressed() {
+        var fragmentList = supportFragmentManager.getFragments()
+        for ( fragment in fragmentList){
+            if(fragment is onBackPressedListener){
+                (fragment as onBackPressedListener).onBackPressed()
+                return
+            } else{
+                finish()
+            }
+        }
+    }
 
 }

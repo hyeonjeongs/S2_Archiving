@@ -2,6 +2,7 @@ package com.cookandroid.s2_archiving.fragment
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,8 +23,9 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_view.*
 import kotlinx.android.synthetic.main.activity_view.view.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
-class ViewpageFragment: Fragment() {
+class ViewpageFragment: Fragment(), onBackPressedListener {
 
     lateinit var adapterV : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>
     lateinit var viewDataList: ArrayList<PostData>
@@ -59,12 +61,11 @@ class ViewpageFragment: Fragment() {
         viewDataList = ArrayList()
         ivFriendpProfile = view.findViewById(R.id.ivViewProfileImage)
         tvFriendName = view.findViewById(R.id.tvViewName)
-
-
         return view
 
 
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -109,13 +110,29 @@ class ViewpageFragment: Fragment() {
                 }
             })
 
-
+        btnActivityViewBack.setOnClickListener{  //뒤로가기 버튼 클릭시 friendpagefragment로 이동
+            var fragment: Fragment = FriendpageFragment()
+            var activityH = this.activity as MainActivity?
+            var bundle: Bundle = Bundle()
+            fragment.arguments = bundle
+            bundle.putString("friend_id",friendId)
+            activityH?.fragmentChange_for_adapter(fragment)
+        }
 
         adapterV = ViewAdapter(viewDataList,this.requireContext(),this)
         rv_view.adapter = adapterV
 
     }
 
-
+    override fun onBackPressed() {  //휴대폰의 뒤로가기 버튼 클릭 시
+        if(this is ViewpageFragment){
+            var fragment: Fragment = FriendpageFragment()
+            var activityH = this.activity as MainActivity?
+            var bundle: Bundle = Bundle()
+            fragment.arguments = bundle
+            bundle.putString("friend_id",friendId)
+            activityH?.fragmentChange_for_adapter(fragment)
+        }
+    }
 
 }
