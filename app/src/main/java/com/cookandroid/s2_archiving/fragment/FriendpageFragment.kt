@@ -65,7 +65,7 @@ class FriendpageFragment : Fragment(), onBackPressedListener {
         postDataList = ArrayList() //PostData 객체를 담을 ArrayList
 
         val view = inflater.inflate(R.layout.fragment_friendpage,container, false)
-        view?.rv_post?.layoutManager = GridLayoutManager(activity,2)
+        view?.rv_post?.layoutManager = GridLayoutManager(this.requireContext(),2)
         friendpageName = view.findViewById(R.id.friendpage_name)
         ivfriendimg = view.findViewById(R.id.account_profile)
         starImg = view.findViewById(R.id.account_star)

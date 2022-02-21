@@ -39,9 +39,9 @@
 
         <Button
             android:id="@+id/btnPostRegister"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="30dp"
-            android:background="@drawable/join_btn_red"
+            android:background="@drawable/finish"
             android:textSize="30sp"
             android:gravity="center_horizontal"/>
 

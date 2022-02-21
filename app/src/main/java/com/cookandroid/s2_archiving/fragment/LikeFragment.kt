@@ -68,7 +68,7 @@ class LikeFragment : Fragment() {
         mDatabaseRef.child("UserPosts").child("${mFirebaseAuth?.currentUser!!.uid}")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    postDataList.clear()
+                    postDataList.clear() //없으면 비어주기
                     for (data: DataSnapshot in snapshot.children) {
                         var post: PostData? = data.getValue(PostData::class.java)
                         if(post!!.heart==0){
