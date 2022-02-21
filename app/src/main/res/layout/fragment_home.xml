@@ -21,8 +21,7 @@
             android:layout_height="50dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="#050505"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:src="@drawable/logo" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -70,9 +69,8 @@
                 android:layout_margin="16dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="#FFC71F"
-                app:cardCornerRadius="20dp"
+                android:foreground="@drawable/cardview"
+                app:cardCornerRadius="13dp"
 
                 app:cardElevation="10dp" >
 
