@@ -50,12 +50,14 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_design" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_gravity="center_vertical">
+                android:layout_marginEnd="20dp">
+
                 <EditText
                     android:id="@+id/etEmail"
                     android:layout_width="250dp"
@@ -65,10 +67,11 @@
                     android:hint="이메일을 입력하세요"
 
                     android:inputType="textEmailAddress" />
+
                 <Button
                     android:id="@+id/btnConfirmID"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="35dp"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/confirm_btn" />
             </LinearLayout>
@@ -158,14 +161,14 @@
             <Button
                 android:id="@+id/btnBack"
                 android:layout_width="130dp"
-                android:layout_height="35dp"
+                android:layout_height="40dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/back_btn" />
 
             <Button
                 android:id="@+id/btnRegister"
                 android:layout_width="130dp"
-                android:layout_height="35dp"
+                android:layout_height="40dp"
                 android:background="@drawable/join_btn_red" />
         </LinearLayout>
     </LinearLayout>

@@ -80,7 +80,7 @@
                 <ImageView
                     android:id="@+id/btnLogin"
                     android:layout_width="150dp"
-                    android:layout_height="40dp"
+                    android:layout_height="45dp"
                     android:layout_marginEnd="25dp"
                     android:layout_weight="1"
                     android:background="@drawable/login_btn_red"
@@ -93,7 +93,7 @@
                 <ImageView
                     android:id="@+id/btnRegister"
                     android:layout_width="150dp"
-                    android:layout_height="40dp"
+                    android:layout_height="45dp"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/join_btn_green"
