@@ -117,17 +117,40 @@ class ModifyAccount : AppCompatActivity() {
 
 
         //생년원일 스피너
-        var yData = resources.getStringArray(R.array.yearItemList)
-        var adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,yData)
-        edit_my_year_spinner.adapter=adapter
+        var adapterY = ArrayAdapter.createFromResource(
+            this,
+            R.array.yearItemList,
+            R.layout.spinner_item
+        ).also{ adapterY ->
+            adapterY.setDropDownViewResource(android.R.layout.simple_list_item_1)
+            edit_my_year_spinner.adapter=adapterY
+        }
 
-        var mData = resources.getStringArray(R.array.monthItemList)
-        var madapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,mData)
-        edit_my_month_spinner.adapter=madapter
+        var adapterM = ArrayAdapter.createFromResource(
+            this,
+            R.array.monthItemList,
+            R.layout.spinner_item
+        ).also{ adapterM ->
+            adapterM.setDropDownViewResource(android.R.layout.simple_list_item_1)
+            edit_my_month_spinner.adapter=adapterM
+        }
 
-        var dData = resources.getStringArray(R.array.dayItemList)
-        var dadapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,dData)
-        edit_my_day_spinner.adapter=dadapter
+        var adapterD = ArrayAdapter.createFromResource(
+            this,
+            R.array.dayItemList,
+            R.layout.spinner_item
+        ).also{ adapterD ->
+            adapterD.setDropDownViewResource(android.R.layout.simple_list_item_1)
+            edit_my_day_spinner.adapter=adapterD
+        }
+
+//        var mData = resources.getStringArray(R.array.monthItemList)
+//        var madapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,mData)
+//        edit_my_month_spinner.adapter=madapter
+
+//        var dData = resources.getStringArray(R.array.dayItemList)
+//        var dadapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,dData)
+//        edit_my_day_spinner.adapter=dadapter
 
         //생년원일 스피너 아이템 선택했을때
         edit_my_year_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
