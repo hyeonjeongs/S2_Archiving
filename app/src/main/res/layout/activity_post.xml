@@ -78,12 +78,11 @@
         android:background="@drawable/edge"
         android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/ivPostCamera"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:srcCompat="@drawable/camera"
-            tools:srcCompat="@drawable/camera" />
+            android:src="@drawable/camera"/>
 
         <TextView
             android:id="@+id/tvWriteImage"
