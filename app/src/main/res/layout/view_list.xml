@@ -40,14 +40,26 @@
 
 
         </LinearLayout>
+
+
         <ImageView
             android:id="@+id/ivEtc"
-            android:layout_width="50dp"
-            android:layout_height="38dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignEnd="@id/ivDelete"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            app:srcCompat="@drawable/pencil" />
+
+        <ImageView
+            android:id="@+id/ivDelete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignEnd="@id/linearLayout2"
             android:layout_margin="20dp"
-            android:onClick="onDialogBtnClicked"
-            app:srcCompat="@drawable/menu_btn" />
+            app:srcCompat="@drawable/trash" />
 
     </RelativeLayout>
 

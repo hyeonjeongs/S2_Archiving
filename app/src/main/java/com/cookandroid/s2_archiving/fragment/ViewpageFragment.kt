@@ -114,26 +114,8 @@ class ViewpageFragment: Fragment() {
         adapterV = ViewAdapter(viewDataList,this.requireContext(),this)
         rv_view.adapter = adapterV
 
-
-
-//        adapter = ViewAdapter(viewDataList)
-//        rv_view.adapter=adapter
-
-//        val viewList = arrayListOf(
-//            PostData("이미지","ㅈ대ㅑ랴","아아아","하...","이름",0,0),
-//            PostData("이미지","ㅈ대ㅑ랴","아아아","하...","이름",0,0),
-//            PostData("이미지","ㅈ대ㅑ랴","아아아","하...","이름",0,0),
-//            PostData("이미지","ㅈ대ㅑ랴","아아아","하...","이름",0,0),
-//            )
-
-
     }
 
 
-    //삭제, 수정 다이얼로그
-    fun onDialogBtnClicked(view: View){
-        val myCustomDialog = MyCustomDialog(this.requireContext())
-        myCustomDialog.show()
-    }
 
 }
