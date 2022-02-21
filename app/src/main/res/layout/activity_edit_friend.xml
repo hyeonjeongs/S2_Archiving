@@ -14,28 +14,26 @@
 
         <Button
             android:id="@+id/btnEditfriendback"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/backspace_btn"
             android:clickable="true"
-            android:background="@drawable/back_btn"
-            android:textSize="18sp"
-            android:layout_marginLeft="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
 
         <Button
             android:id="@+id/btnEditAddFriend"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="4dp"
-            android:background="@drawable/button_design"
+            android:background="@drawable/finish"
             android:clickable="true"
-            android:fontFamily="@font/applesdgothic_regular"
-            android:text="완료"
-            android:textColor="#000000"
-            android:textSize="16sp"
             app:layout_constraintRight_toRightOf="parent"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteY="0dp" />
@@ -47,20 +45,18 @@
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="70dp"
-        android:background="@drawable/woman"
+        android:background="@drawable/man"
         android:layout_centerHorizontal="true" />
 
 
     <android.widget.Button
         android:id="@+id/btnEditGal"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_width="90dp"
+        android:layout_height="32dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:textSize="16sp"
-        android:background="@drawable/button_design"
-        android:fontFamily="@font/applesdgothic_regular"
-        android:text="사진 추가"
+        android:background="@drawable/edit_photo"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/ivEditProfileImage" />
 
