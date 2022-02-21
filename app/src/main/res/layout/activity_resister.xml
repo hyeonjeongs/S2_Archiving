@@ -64,8 +64,9 @@
                     android:layout_height="35dp"
                     android:background="@drawable/edge"
                     android:ems="10"
+                    android:paddingStart="10dp"
                     android:hint="이메일을 입력하세요"
-
+                    android:fontFamily="@font/applesdgothic_thin"
                     android:inputType="textEmailAddress" />
 
                 <Button
@@ -103,8 +104,9 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:ems="15"
-
+                android:fontFamily="@font/applesdgothic_thin"
                 android:hint="닉네임을 입력하세요"
+                android:paddingStart="10dp"
                 android:inputType="textEmailAddress" />
         </LinearLayout>
 
@@ -134,6 +136,8 @@
                 android:background="@drawable/edge"
                 android:ems="15"
                 android:hint="비밀번호를 입력하세요"
+                android:paddingStart="10dp"
+                android:fontFamily="@font/applesdgothic_thin"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
@@ -148,6 +152,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:hint="비밀번호를 한번 더 입력하세요"
+                android:paddingStart="10dp"
+                android:fontFamily="@font/applesdgothic_thin"
                 android:inputType="textPassword" />
         </LinearLayout>
 
