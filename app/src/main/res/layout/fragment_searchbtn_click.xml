@@ -14,7 +14,7 @@
         android:weightSum="3">
         <Button
             android:id="@+id/searchclick_backbtn"
-            android:layout_width="30dp"
+            android:layout_width="25dp"
             android:layout_height="30dp"
             android:layout_weight="0.1"
             android:layout_marginTop="4dp"
@@ -30,7 +30,7 @@
             android:textSize="24dp"
             android:text="20220202"/>
         <Button
-            android:layout_width="20dp"
+            android:layout_width="40dp"
             android:layout_height="10dp"
             android:background="@drawable/menu_btn"
             android:layout_marginRight="10dp"
