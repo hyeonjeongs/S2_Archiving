@@ -93,13 +93,6 @@
                 android:layout_weight="10"
                 android:ems="10"
                 android:inputType="textPersonName" />
-
-            <Button
-                android:id="@+id/dupliCheckMyData"
-                android:layout_width="70dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/confirm_btn" />
         </LinearLayout>
 
 
