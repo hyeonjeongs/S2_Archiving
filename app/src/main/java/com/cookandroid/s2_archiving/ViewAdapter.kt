@@ -1,11 +1,15 @@
 package com.cookandroid.s2_archiving
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -13,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import java.security.AccessController.getContext
 
 class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, val fragmet_s: Fragment) : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>() {
 
@@ -30,6 +35,7 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
         val viewHeart = itemView.findViewById<ImageView>(R.id.view_heart)
         val viewStory = itemView.findViewById<TextView>(R.id.view_story)
         val viewEtc = itemView.findViewById<ImageView>(R.id.ivEtc)
+        val viewDelete = itemView.findViewById<ImageView>(R.id.ivDelete)
     }
 
 
@@ -51,6 +57,15 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
         holder.viewSpecial.text = viewDataList[position].postDateName
         holder.viewHeart.setImageResource(R.drawable.heart)
         holder.viewStory.text = viewDataList[position].post
+        holder.viewEtc.setOnClickListener{   //게시글 수정 (PostActivity로 이동)
+            val intent = Intent(context,PostActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            this.context.startActivity(intent)
+        }
+        holder.viewDelete.setOnClickListener {    //게시글 삭제
+            Toast.makeText(context,"게시글 삭제 완료",Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun getItemCount(): Int {
