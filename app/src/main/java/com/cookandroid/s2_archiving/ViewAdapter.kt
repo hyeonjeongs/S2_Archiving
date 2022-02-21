@@ -62,8 +62,13 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             this.context.startActivity(intent)
         }
+
+        Log.e("aa",viewDataList!!.toString()) // 삭제 정상작동 되면 지우기
         holder.viewDelete.setOnClickListener {    //게시글 삭제
-            Toast.makeText(context,"게시글 삭제 완료",Toast.LENGTH_SHORT).show()
+            mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").removeValue().addOnSuccessListener {
+                Toast.makeText(context,"게시글 삭제 완료",Toast.LENGTH_SHORT).show()
+            }
+
         }
 
     }
