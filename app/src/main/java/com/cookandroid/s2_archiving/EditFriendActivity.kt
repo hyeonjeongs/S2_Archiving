@@ -31,6 +31,7 @@ class EditFriendActivity : AppCompatActivity() {
     private lateinit var etAdd: EditText
     private lateinit var btnGal: Button
     private lateinit var btnEditAddFriend:Button
+    private lateinit var btnEditFriendback:Button
     private lateinit var ivProfile:ImageView
     private lateinit var etYearSpinner: Spinner
     private lateinit var etMonthSpinner: Spinner
@@ -79,7 +80,7 @@ class EditFriendActivity : AppCompatActivity() {
         etDaySpinner = findViewById(R.id.edit_day_spinner)
         btnGal = findViewById(R.id.btnEditGal)
         btnEditAddFriend = findViewById(R.id.btnEditAddFriend)
-
+        btnEditFriendback = findViewById(R.id.btnEditfriendback)
 
         mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId!!)
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -188,6 +189,12 @@ class EditFriendActivity : AppCompatActivity() {
             }
             strBday = strYear + strMonth +strDate
             editFriend()
+            finish()
+        }
+
+        //뒤로가기버튼 클릭
+        btnEditFriendback.setOnClickListener {
+            super.onBackPressed()
             finish()
         }
 
