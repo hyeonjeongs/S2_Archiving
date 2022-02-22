@@ -27,6 +27,7 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
     private lateinit var fbStorage: FirebaseStorage
 
     private var activity: MainActivity? = null//메인에 함수 부르기 위해 선언하기
+    private var storage : FirebaseStorage? = FirebaseStorage.getInstance()
 
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val viewImage = itemView.findViewById<ImageView>(R.id.view_img)
@@ -63,11 +64,19 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
             this.context.startActivity(intent)
         }
 
-        Log.e("aa",viewDataList!!.toString()) // 삭제 정상작동 되면 지우기
         holder.viewDelete.setOnClickListener {    //게시글 삭제
-            mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").removeValue().addOnSuccessListener {
+            val postId = viewDataList[position].postId
+            val friendId = viewDataList[position].postFriendId
+            val imageFileName = "IMAGE_" + postId + "_postImage_by"+friendId+".png"
+
+            storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)?.delete()?.addOnSuccessListener {
+                //Log.d("storage","삭제완료")
+            }
+
+            mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child(postId).removeValue().addOnSuccessListener {
                 Toast.makeText(context,"게시글 삭제 완료",Toast.LENGTH_SHORT).show()
             }
+
 
         }
 

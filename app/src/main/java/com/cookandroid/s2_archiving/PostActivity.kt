@@ -68,7 +68,12 @@ class PostActivity : AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 var friend:FriendData? = snapshot.getValue(FriendData::class.java)
-                mEtFriendName.text = friend!!.fName
+                try{
+                    mEtFriendName.text = friend!!.fName
+                } catch(e:NullPointerException){
+                    mEtFriendName.text = ""
+                }
+
                 // 사진 url 추가 후 load하는 코드 넣을 자리
 
             }

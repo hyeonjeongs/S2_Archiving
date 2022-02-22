@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="250dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/cv_in_img"
+            android:id="@+id/cvImge"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/cardview"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="18dp"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/fProfile"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/man"
+                    android:paddingRight="10dp"/>
+                <TextView
+                    android:id="@+id/fName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="친구 이름"
+                    android:paddingRight="10dp"/>
+                <TextView
+                    android:id="@+id/dayNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#220216"
+                    android:paddingRight="10dp"/>
+                <TextView
+                    android:id="@+id/dayName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#집들이"
+                    android:paddingRight="10dp"/>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
 
 </LinearLayout>

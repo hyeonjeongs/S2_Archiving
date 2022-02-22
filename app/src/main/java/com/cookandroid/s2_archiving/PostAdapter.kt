@@ -65,6 +65,7 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
             var bundle: Bundle = Bundle()
             fragment.arguments = bundle
             bundle.putString("friend_id", postDataList[position].postFriendId)
+            bundle.putString("post_id",postDataList[position].postId)
             activity = fragment_s.activity as MainActivity?
             activity?.fragemtChage_for_adapter_view(fragment)
         }
