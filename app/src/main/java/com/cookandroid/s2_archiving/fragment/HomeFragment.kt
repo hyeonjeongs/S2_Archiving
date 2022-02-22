@@ -119,61 +119,61 @@ class HomeFragment : Fragment() {
 
         //리사이클러뷰에 담을 데이터 가져오기(selectedItem 태그를 통해서 보여줄 게시글 구분)
         // 사용자의 닉네임, 사진 로드
-            mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}")
-                .addValueEventListener(object : ValueEventListener {
+        mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}")
+            .addValueEventListener(object : ValueEventListener {
 
-                    override fun onCancelled(error: DatabaseError) {
+                override fun onCancelled(error: DatabaseError) {
 
-                    }
+                }
 
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.value == null) { // 널이면 아무것도하지마
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.value == null) { // 널이면 아무것도하지마
 
-                        } else {
-                            var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
-                            var nickName = user!!.userNickname
+                    } else {
+                        var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
+                        var nickName = user!!.userNickname
 
-                            userNickname.text = nickName
-                            // 사진 url 추가 후 load하는 코드 넣을 자리
-                            if ("${user!!.userPhotoUri}" == "") {
-                                ivProfile.setImageResource(R.drawable.man)
-                            } else { // userPhotoUri가 있으면 그 사진 로드하기
-                                Glide.with(activity)
-                                    .load(user!!.userPhotoUri)
-                                    .into(ivProfile)
-                            }
+                        userNickname.text = nickName
+                        // 사진 url 추가 후 load하는 코드 넣을 자리
+                        if ("${user!!.userPhotoUri}" == "") {
+                            ivProfile.setImageResource(R.drawable.man)
+                        } else { // userPhotoUri가 있으면 그 사진 로드하기
+                            Glide.with(activity)
+                                .load(user!!.userPhotoUri)
+                                .into(ivProfile)
                         }
                     }
-                })
+                }
+            })
 
-            mDatabaseRef.child("UserFriends")
-                .child("${mFirebaseAuth!!.currentUser!!.uid}")
-                .orderByChild("fStar")
-                .addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.value == null) { // 널이면 아무것도하지마
+        mDatabaseRef.child("UserFriends")
+            .child("${mFirebaseAuth!!.currentUser!!.uid}")
+            .orderByChild("fStar")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.value == null) { // 널이면 아무것도하지마
 
-                        } else {
+                    } else {
 
-                            friendDataList.clear()
+                        friendDataList.clear()
 
-                            for (data: DataSnapshot in snapshot.children) {
-                                var friendData: FriendData? = data.getValue(FriendData::class.java)
+                        for (data: DataSnapshot in snapshot.children) {
+                            var friendData: FriendData? = data.getValue(FriendData::class.java)
 
-                                friendDataList.add(friendData!!) //담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
+                            friendDataList.add(friendData!!) //담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
 
-                                Log.d("태그", "$friendDataList")
-                            }
-                            adapter.notifyDataSetChanged() //리스트 저장 및 새로고침
-
+                            Log.d("태그", "$friendDataList")
                         }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
+                        adapter.notifyDataSetChanged() //리스트 저장 및 새로고침
 
                     }
+                }
 
-                })
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
 
         mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}")
             .addValueEventListener(object : ValueEventListener {
@@ -182,7 +182,7 @@ class HomeFragment : Fragment() {
 
                     for (data: DataSnapshot in snapshot.children) {
                         var postData: PostData? = data.getValue(PostData::class.java)
-                            cardDataList.add(postData!!) // 리스트에 넣기
+                        cardDataList.add(postData!!) // 리스트에 넣기
 
                     }
                     cardAdapter.notifyDataSetChanged() // 리스트 저장 및 새로 고침
@@ -195,11 +195,11 @@ class HomeFragment : Fragment() {
 
 
 
-            adapter = FriendDataAdapter(friendDataList, activity, this)
-            rvProfile.adapter = adapter
+        adapter = FriendDataAdapter(friendDataList, activity, this)
+        rvProfile.adapter = adapter
 
-            cardAdapter = CardAdapter(cardDataList, this.requireContext(), this)
-            cardrv.adapter = cardAdapter
+        cardAdapter = CardAdapter(cardDataList, this.requireContext(), this)
+        cardrv.adapter = cardAdapter
 
 
 
