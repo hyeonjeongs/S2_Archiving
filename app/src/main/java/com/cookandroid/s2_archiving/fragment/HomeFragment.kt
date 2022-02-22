@@ -86,6 +86,7 @@ class HomeFragment : Fragment() {
         fragmentview?.cardrv?.layoutManager = LinearLayoutManager(this.requireContext(),LinearLayoutManager.HORIZONTAL, true)
 
 
+
         //cardrv.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.HORIZONTAL, true) //가로 리사이클러뷰
 
         return fragmentview
@@ -186,6 +187,7 @@ class HomeFragment : Fragment() {
 
                     }
                     cardAdapter.notifyDataSetChanged() // 리스트 저장 및 새로 고침
+                    cardrv.scrollToPosition(cardDataList.size - 1)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -198,7 +200,9 @@ class HomeFragment : Fragment() {
         adapter = FriendDataAdapter(friendDataList, activity, this)
         rvProfile.adapter = adapter
 
+
         cardAdapter = CardAdapter(cardDataList, this.requireContext(), this)
+
         cardrv.adapter = cardAdapter
 
 
