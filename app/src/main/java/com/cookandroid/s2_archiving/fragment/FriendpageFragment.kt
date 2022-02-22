@@ -92,7 +92,7 @@ class FriendpageFragment : Fragment(), onBackPressedListener {
         //플러스 버튼 클릭 시 게시글 쓰기 페이지로 이동
         btnGoWrite.setOnClickListener{
             val intent = Intent(activity, PostActivity::class.java)
-            intent.putExtra("fPostId",friendId)
+            intent.putExtra("fId",friendId)
             startActivity(intent)
         }
 

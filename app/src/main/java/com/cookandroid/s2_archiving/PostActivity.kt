@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_post.*
@@ -32,6 +32,7 @@ class PostActivity : AppCompatActivity() {
     private lateinit var mDatabaseRef: DatabaseReference // 실시간 데이터 베이스
     private var storage : FirebaseStorage? = FirebaseStorage.getInstance()
 
+    private lateinit var mEtFriendName: TextView
     private lateinit var mEtDate: EditText // 날짜
     private lateinit var mEtDateName: EditText // 기념일 이름
     private lateinit var mEtPost: EditText // 글 내용
@@ -47,6 +48,7 @@ class PostActivity : AppCompatActivity() {
         mFirebaseAuth = FirebaseAuth.getInstance()
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
 
+        mEtFriendName = findViewById(R.id.tvPostName)
         mEtDate = findViewById(R.id.etPostDate)
         mEtDateName = findViewById(R.id.etPostName)
         mEtPost = findViewById(R.id.etWritePost)
@@ -54,8 +56,23 @@ class PostActivity : AppCompatActivity() {
         mBtnPostClose = findViewById(R.id.ivPostClose)
         ivPostData = findViewById(R.id.ivPostCamera)
 
-        friendId = intent.getStringExtra("fPostId").toString()
+        friendId = intent.getStringExtra("fId").toString()
         postId = mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").push().key.toString()
+
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId).addValueEventListener(object :
+            ValueEventListener {
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var friend:FriendData? = snapshot.getValue(FriendData::class.java)
+                mEtFriendName.text = friend!!.fName
+                // 사진 url 추가 후 load하는 코드 넣을 자리
+
+            }
+        })
 
         ivPostData.setOnClickListener{
             // open the album
