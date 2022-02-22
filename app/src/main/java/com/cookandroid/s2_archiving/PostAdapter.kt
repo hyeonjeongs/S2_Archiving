@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cookandroid.s2_archiving.fragment.FriendpageFragment
+import com.cookandroid.s2_archiving.fragment.ViewoneFragment
 import com.cookandroid.s2_archiving.fragment.ViewpageFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -34,7 +35,7 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         val date = itemView.findViewById<TextView>(R.id.post_date)
         val special = itemView.findViewById<TextView>(R.id.post_special)
         val heart = itemView.findViewById<ImageView>(R.id.post_heart)
-        val postCardView = itemView.findViewById<CardView>(R.id.post_cardview)
+
     }
 
     override fun getItemCount(): Int {
@@ -43,7 +44,6 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostAdapter.CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.post_list, parent, false)
-
         return CustomViewHolder(view)
     }
 
@@ -58,14 +58,14 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         holder.date.text = postDataList[position].postDate
         holder.special.text = postDataList[position].postDateName
         holder.heart.setImageResource(R.drawable.heart_empty)
-
         holder.postimage.setOnClickListener {
             Log.d("ViewpageFragment", "이동 성공!")
-            var fragment: Fragment = ViewpageFragment()
+            var fragment: Fragment = ViewoneFragment()
             var bundle: Bundle = Bundle()
             fragment.arguments = bundle
             bundle.putString("friend_id", postDataList[position].postFriendId)
             bundle.putString("post_id",postDataList[position].postId)
+            bundle.putString("id","post_adapter")
             activity = fragment_s.activity as MainActivity?
             activity?.fragemtChage_for_adapter_view(fragment)
         }
