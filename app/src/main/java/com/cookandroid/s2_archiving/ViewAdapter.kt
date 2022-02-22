@@ -1,9 +1,8 @@
 package com.cookandroid.s2_archiving
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.DisplayMetrics
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -21,9 +20,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import java.security.AccessController.getContext
 
-
-class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, val fragmet_s: Fragment) : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>() {
+class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>() {
 
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference =
@@ -45,9 +44,6 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-//        val displaymetrics = DisplayMetrics()
-//        (context as Activity).windowManager.defaultDisplay.getMetrics(displaymetrics)
-
         val view = LayoutInflater.from(parent.context).inflate(R.layout.view_list, parent, false)
         return CustomViewHolder(view)
     }
@@ -61,40 +57,26 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
                 .load(viewDataList[position].postPhotoUri)
                 .into(holder.viewImage)
         }
-
-
-
         holder.viewDate.text = viewDataList[position].postDate
         holder.viewSpecial.text = viewDataList[position].postDateName
         holder.viewStory.text = viewDataList[position].post
 
+        if (viewDataList[position].heart == 1) {
+            holder.viewHeart.setImageResource(R.drawable.heart_empty)
+        } else if (viewDataList[position].heart == 0) {
+            holder.viewHeart.setImageResource(R.drawable.heart_full_line)
+        }
 
-
-
-//        //화면 크기에 따라 화면 맞추기
-//        val displaymetrics = DisplayMetrics()
-//        (holder.itemView.context as Activity).windowManager.defaultDisplay.getMetrics(displaymetrics)
-//
-//        val devicewidth = displaymetrics.widthPixels / 2
-//        holder.itemView.getLayoutParams().height = devicewidth
-//        holder.itemView.requestLayout()
-
-        holder.viewHeart.setImageResource(R.drawable.heart_empty)
         holder.viewEtc.setOnClickListener{   //게시글 수정 (PostActivity로 이동)
-            val intent = Intent(context, PostActivity::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            val intent = Intent(context,EditPostActivity::class.java)
+            intent.putExtra("friend_id",viewDataList[position].postFriendId)
+            intent.putExtra("post_id",viewDataList[position].postId)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             this.context.startActivity(intent)
         }
 
-
         holder.viewHeart.setOnClickListener {
             heartEvent(position)
-        }
-
-        if (viewDataList.get(position).heart == 1) {
-            holder.viewHeart.setImageResource(R.drawable.heart_empty)
-        } else if (viewDataList.get(position).heart == 0) {
-            holder.viewHeart.setImageResource(R.drawable.heart_full_line)
         }
 
         holder.viewDelete.setOnClickListener {    //게시글 삭제
@@ -103,12 +85,11 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
             val imageFileName = "IMAGE_" + postId + "_postImage_by"+friendId+".png"
 
             storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)?.delete()?.addOnSuccessListener {
-                //Log.d("storage","삭제완료")
+                Log.d("storage","이미지 삭제완료")
             }
 
-            mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child(postId).removeValue().addOnSuccessListener {
+            mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child(postId).removeValue().addOnSuccessListener {
                 Toast.makeText(context,"게시글 삭제 완료",Toast.LENGTH_SHORT).show()
-
             }
 
 
@@ -122,7 +103,7 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
     }
 
     private fun heartEvent(position: Int){
-        var viewdata:PostData = viewDataList.get(position)
+        var viewdata:PostData = viewDataList[position]
         var heart:Int?
 
         if(viewdata.heart==1){//하트가 비어있는데 클릭된경우

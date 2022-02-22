@@ -73,8 +73,8 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, friendpageFragment).commit()
     }
 
-    fun fragemtChage_for_adapter_view(viewpageFragment: Fragment){
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, viewpageFragment).commit()
+    fun fragemtChage_for_adapter_view(viewoneFragment: Fragment){
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_frame, viewoneFragment).commit()
     }
 
     fun fragementChange_view(viewpageFragment: Fragment){
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
     //뒤로가기 버튼
     override fun onBackPressed() {
-        var fragmentList = supportFragmentManager.getFragments()
+        var fragmentList = supportFragmentManager.fragments
         for ( fragment in fragmentList){
             if(fragment is onBackPressedListener){
                 (fragment as onBackPressedListener).onBackPressed()
@@ -95,5 +95,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
 }

@@ -2,15 +2,14 @@ package com.cookandroid.s2_archiving.fragment
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,24 +18,23 @@ import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_view.*
-import kotlinx.android.synthetic.main.activity_view.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_viewpage.view.*
 
 class ViewpageFragment: Fragment(), onBackPressedListener {
 
     lateinit var adapterV : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>
     lateinit var viewDataList: ArrayList<PostData>
-    lateinit var viewDataList2: ArrayList<PostData>
     lateinit var friendId:String
     lateinit var postId:String
-    var count:Int =0
+    private var rvIndex:Int = 0
 
     //xml 연결
     lateinit var ivFriendpProfile:ImageView
     lateinit var tvFriendName : TextView
+    lateinit var rvView:RecyclerView
+    lateinit var btnActivityViewBack: Button
 
     // context
     private lateinit var activitys: Activity
@@ -57,15 +55,26 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.activity_view,container, false)
-        view?.rv_view?.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.VERTICAL, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_viewpage, container, false)
+        view?.rv_view?.layoutManager = LinearLayoutManager(
+            this.requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+
         friendId = requireArguments().getString("friend_id").toString()
         postId = requireArguments().getString("post_id").toString()
         viewDataList = ArrayList()
-        viewDataList2 = ArrayList()
         ivFriendpProfile = view.findViewById(R.id.ivViewProfileImage)
         tvFriendName = view.findViewById(R.id.tvViewName)
+        rvView = view.findViewById(R.id.rv_view)
+        btnActivityViewBack = view.findViewById(R.id.btnActivityViewBack)
+
         return view
 
 
@@ -74,10 +83,12 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId)
-            .addValueEventListener(object: ValueEventListener{
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(
+            friendId
+        )
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    var friend:FriendData? = snapshot.getValue(FriendData::class.java)
+                    var friend: FriendData? = snapshot.getValue(FriendData::class.java)
                     tvFriendName.text = friend!!.fName
                     if (friend!!.fImgUri == "") {
                         ivFriendpProfile.setImageResource(R.drawable.man)
@@ -101,28 +112,22 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
                     viewDataList.clear()
 
                     for (data: DataSnapshot in snapshot.children) {
-                        var post:PostData? = data.getValue(PostData::class.java)
-                        if(post!!.postFriendId == friendId) {
+                        var post: PostData? = data.getValue(PostData::class.java)
+                        if (post!!.postFriendId == friendId) {
                             viewDataList.add(post!!)
                         }
                     }
 
-                    for (item in viewDataList){
-                        if(item.postId == postId){
-                            viewDataList2.add(item)
+                    for (i in 0 until viewDataList.size) {
+                        if (viewDataList[i]!!.postId == postId) {
                             break
-                        }
-                        else{
-                            count++
+                        } else {
+                            rvIndex++
                         }
                     }
+                    Log.e("rvIndex", rvIndex.toString())
 
-                    for (i in 0..(count-1)){
-                        viewDataList2.add(viewDataList[i])
-                    }
-                    for (i in (count+1)..(viewDataList.size-1)){
-                        viewDataList2.add(viewDataList[i])
-                    }
+
                     adapterV.notifyDataSetChanged() //리스트 저장 및 새로고침
                 }
 
@@ -131,17 +136,22 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
                 }
             })
 
+        adapterV = ViewAdapter(viewDataList, this.requireContext())
+        rvView.adapter = adapterV
+
+
+
+
+
+
         btnActivityViewBack.setOnClickListener{  //뒤로가기 버튼 클릭시 friendpagefragment로 이동
             var fragment: Fragment = FriendpageFragment()
             var activityH = this.activity as MainActivity?
             var bundle: Bundle = Bundle()
             fragment.arguments = bundle
-            bundle.putString("friend_id",friendId)
+            bundle.putString("friend_id", friendId)
             activityH?.fragmentChange_for_adapter(fragment)
         }
-
-        adapterV = ViewAdapter(viewDataList2,this.requireContext(),this)
-        rv_view.adapter = adapterV
 
     }
 
@@ -151,7 +161,7 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
             var activityH = this.activity as MainActivity?
             var bundle: Bundle = Bundle()
             fragment.arguments = bundle
-            bundle.putString("friend_id",friendId)
+            bundle.putString("friend_id", friendId)
             activityH?.fragmentChange_for_adapter(fragment)
         }
     }
