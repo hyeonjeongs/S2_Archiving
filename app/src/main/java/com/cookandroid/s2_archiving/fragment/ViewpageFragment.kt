@@ -29,7 +29,10 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
 
     lateinit var adapterV : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>
     lateinit var viewDataList: ArrayList<PostData>
+    lateinit var viewDataList2: ArrayList<PostData>
     lateinit var friendId:String
+    lateinit var postId:String
+    var count:Int =0
 
     //xml 연결
     lateinit var ivFriendpProfile:ImageView
@@ -58,7 +61,9 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
         val view = inflater.inflate(R.layout.activity_view,container, false)
         view?.rv_view?.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.VERTICAL, false)
         friendId = requireArguments().getString("friend_id").toString()
+        postId = requireArguments().getString("post_id").toString()
         viewDataList = ArrayList()
+        viewDataList2 = ArrayList()
         ivFriendpProfile = view.findViewById(R.id.ivViewProfileImage)
         tvFriendName = view.findViewById(R.id.tvViewName)
         return view
@@ -101,8 +106,24 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
                             viewDataList.add(post!!)
                         }
                     }
-                    adapterV.notifyDataSetChanged() //리스트 저장 및 새로고침
 
+                    for (item in viewDataList){
+                        if(item.postId == postId){
+                            viewDataList2.add(item)
+                            break
+                        }
+                        else{
+                            count++
+                        }
+                    }
+
+                    for (i in 0..(count-1)){
+                        viewDataList2.add(viewDataList[i])
+                    }
+                    for (i in (count+1)..(viewDataList.size-1)){
+                        viewDataList2.add(viewDataList[i])
+                    }
+                    adapterV.notifyDataSetChanged() //리스트 저장 및 새로고침
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -119,7 +140,7 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
             activityH?.fragmentChange_for_adapter(fragment)
         }
 
-        adapterV = ViewAdapter(viewDataList,this.requireContext(),this)
+        adapterV = ViewAdapter(viewDataList2,this.requireContext(),this)
         rv_view.adapter = adapterV
 
     }
