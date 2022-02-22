@@ -51,7 +51,7 @@ class FavoriteAdapter(val postDataList: ArrayList<PostData>, val context: Contex
     }
 
     private fun heartEvent(position: Int) {
-            var postdata:PostData = postDataList.get(position)
+            var postdata:PostData = postDataList[position]
             var heart:Int?
 
             if(postdata.heart==1){//하트가 비어있는데 클릭된경우
