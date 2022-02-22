@@ -80,25 +80,29 @@ class EditPostActivity : AppCompatActivity() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                var post:PostData? = snapshot.getValue(PostData::class.java)
-                mEtEditDate.setText(post!!.postDate)
-                mEtEditDateName.setText(post!!.postDateName)
-                mEtEditPost.setText(post!!.post)
-                if (post!!.postPhotoUri == "") {
-                    ivEditPostData.setImageResource(R.drawable.man)
-                } else { // userPhotoUri가 있으면 그 사진 로드하기
-                    var GlideRequestManager = Glide.with(applicationContext)
-                    GlideRequestManager
-                        .load(post!!.postPhotoUri)
-                        .into(ivEditPostData)
+                if (snapshot.value == null) { // 널이면 아무것도하지마
+
+                } else {
+                    var post: PostData? = snapshot.getValue(PostData::class.java)
+                    mEtEditDate.setText(post!!.postDate)
+                    mEtEditDateName.setText(post!!.postDateName)
+                    mEtEditPost.setText(post!!.post)
+                    if (post!!.postPhotoUri == "") {
+                        ivEditPostData.setImageResource(R.drawable.man)
+                    } else { // userPhotoUri가 있으면 그 사진 로드하기
+                        var GlideRequestManager = Glide.with(applicationContext)
+                        GlideRequestManager
+                            .load(post!!.postPhotoUri)
+                            .into(ivEditPostData)
+                    }
+
+                    // 원래 정보 담아두기
+                    strDate = post!!.postDate
+                    strDateName = post!!.postDateName
+                    strPost = post!!.post
+                    strUri = post!!.postPhotoUri
+
                 }
-
-                // 원래 정보 담아두기
-                strDate = post!!.postDate
-                strDateName = post!!.postDateName
-                strPost = post!!.post
-                strUri = post!!.postPhotoUri
-
             }
 
         })

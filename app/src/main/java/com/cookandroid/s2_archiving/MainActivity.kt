@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
     //뒤로가기 버튼
     override fun onBackPressed() {
-        var fragmentList = supportFragmentManager.getFragments()
+        var fragmentList = supportFragmentManager.fragments
         for ( fragment in fragmentList){
             if(fragment is onBackPressedListener){
                 (fragment as onBackPressedListener).onBackPressed()
@@ -95,5 +95,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
 }
