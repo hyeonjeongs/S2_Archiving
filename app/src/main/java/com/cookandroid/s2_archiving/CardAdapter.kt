@@ -65,7 +65,7 @@ class CardAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         })
 
 
-        holder.cvimage.setOnClickListener { // 카드뷰로 나중에 바꾸기
+        holder.cardView.setOnClickListener { // 카드뷰로 나중에 바꾸기
             var fragment: Fragment = ViewoneFragment()
             var bundle: Bundle = Bundle()
             fragment.arguments = bundle
@@ -87,6 +87,7 @@ class CardAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         val cvdate = itemView.findViewById<TextView>(R.id.dayNumber)
         val cvfriendname = itemView.findViewById<TextView>(R.id.fName)
         val cvspecial = itemView.findViewById<TextView>(R.id.dayName)
+        val cardView = itemView.findViewById<CardView>(R.id.cardView)
 
     }
 }
