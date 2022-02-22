@@ -65,8 +65,9 @@
 
     <ImageView
         android:id="@+id/view_img"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:scaleType="fitXY"
         android:background="@drawable/edge"
         android:src="@drawable/food3" />
 
