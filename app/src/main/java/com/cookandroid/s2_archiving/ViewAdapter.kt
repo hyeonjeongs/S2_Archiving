@@ -2,6 +2,7 @@ package com.cookandroid.s2_archiving
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import java.security.AccessController.getContext
 
-class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, val fragmet_s: Fragment) : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>() {
+class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>() {
 
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference =
@@ -59,21 +60,23 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
         holder.viewDate.text = viewDataList[position].postDate
         holder.viewSpecial.text = viewDataList[position].postDateName
         holder.viewStory.text = viewDataList[position].post
-        holder.viewHeart.setImageResource(R.drawable.heart_empty)
+
+        if (viewDataList[position].heart == 1) {
+            holder.viewHeart.setImageResource(R.drawable.heart_empty)
+        } else if (viewDataList[position].heart == 0) {
+            holder.viewHeart.setImageResource(R.drawable.heart_full_line)
+        }
+
         holder.viewEtc.setOnClickListener{   //게시글 수정 (PostActivity로 이동)
-            val intent = Intent(context,PostActivity::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            val intent = Intent(context,EditPostActivity::class.java)
+            intent.putExtra("friend_id",viewDataList[position].postFriendId)
+            intent.putExtra("post_id",viewDataList[position].postId)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             this.context.startActivity(intent)
         }
 
         holder.viewHeart.setOnClickListener {
             heartEvent(position)
-        }
-
-        if (viewDataList.get(position).heart == 1) {
-            holder.viewHeart.setImageResource(R.drawable.heart_empty)
-        } else if (viewDataList.get(position).heart == 0) {
-            holder.viewHeart.setImageResource(R.drawable.heart_full_line)
         }
 
         holder.viewDelete.setOnClickListener {    //게시글 삭제
@@ -82,10 +85,10 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
             val imageFileName = "IMAGE_" + postId + "_postImage_by"+friendId+".png"
 
             storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)?.delete()?.addOnSuccessListener {
-                //Log.d("storage","삭제완료")
+                Log.d("storage","이미지 삭제완료")
             }
 
-            mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child(postId).removeValue().addOnSuccessListener {
+            mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child(postId).removeValue().addOnSuccessListener {
                 Toast.makeText(context,"게시글 삭제 완료",Toast.LENGTH_SHORT).show()
             }
 
@@ -100,7 +103,7 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
     }
 
     private fun heartEvent(position: Int){
-        var viewdata:PostData = viewDataList.get(position)
+        var viewdata:PostData = viewDataList[position]
         var heart:Int?
 
         if(viewdata.heart==1){//하트가 비어있는데 클릭된경우

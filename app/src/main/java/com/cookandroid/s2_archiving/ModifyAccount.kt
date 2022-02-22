@@ -85,8 +85,8 @@ class ModifyAccount : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
                 // 사용자가 미리 볼 수 있도록 setText
-                mTvEmail.text = "${user!!.userEmail}"
-                mEtNickName.setText("${user!!.userNickname}")
+                mTvEmail.text = user!!.userEmail
+                mEtNickName.setText(user!!.userNickname)
 
                 // 원래 정보 담아두기
                 strNickName = user!!.userNickname
