@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +29,7 @@ class LikeFragment : Fragment() {
     private lateinit var database : FirebaseDatabase
     private lateinit var mDatabaseRef : DatabaseReference //실시간 데이터베이스 연결
     private var mFirebaseAuth: FirebaseAuth? = null
+    private lateinit var favoriteLogobtn : Button
     var uid : String? = null
     var auth : FirebaseAuth? = null
     lateinit var friendId:String
@@ -46,10 +48,11 @@ class LikeFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        activity = context as Activity
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? { //like_fragment xml파일이랑 연결
-        fragmentView = LayoutInflater.from(this.getActivity()).inflate(R.layout.fragment_like,container, false)
+        val fragmentView = LayoutInflater.from(this.getActivity()).inflate(R.layout.fragment_like,container, false)
         //파이어베이스 계정, 리얼타임 데이터베이스
         mFirebaseAuth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance() //파이어베이스 데이터베이스 연동
@@ -58,6 +61,15 @@ class LikeFragment : Fragment() {
         uid = arguments?.getString("favoriteUid")
         postDataList = ArrayList()
         fragmentView?.fragmentlike_rv?.layoutManager = GridLayoutManager(this.requireContext(),2)
+        favoriteLogobtn = fragmentView.findViewById(R.id.favorite_Logobtn)
+
+        //로고클릭시
+        favoriteLogobtn.setOnClickListener {
+            var fragment: Fragment = HomeFragment()
+            var activityH = this.activity as MainActivity?
+
+            activityH?.fragementChange_view(fragment)
+        }
 
         return fragmentView
     }
