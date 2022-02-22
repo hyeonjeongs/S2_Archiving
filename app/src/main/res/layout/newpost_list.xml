@@ -13,7 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/cvImge"
-            android:src="@drawable/logo"/>
+            android:src="@drawable/logo"
+            android:scaleType="fitXY" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -23,37 +24,55 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="18dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="15dp">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/fProfile"
                     android:layout_width="20dp"
                     android:layout_height="match_parent"
-                    app:srcCompat="@drawable/man"
-                    android:paddingRight="10dp"/>
+                    android:paddingRight="10dp"
+                    app:srcCompat="@drawable/man" />
+
                 <TextView
                     android:id="@+id/fName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="친구 이름"
-                    android:paddingRight="10dp"/>
+                    android:paddingRight="10dp"
+                    android:textColor="@color/black"
+                    android:text="친구 이름" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="#" />
                 <TextView
                     android:id="@+id/dayNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#220216"
-                    android:paddingRight="10dp"/>
+                    android:paddingRight="10dp"
+                    android:textColor="@color/black"
+                    android:text="#220216" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="#" />
                 <TextView
                     android:id="@+id/dayName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#집들이"
-                    android:paddingRight="10dp"/>
+                    android:paddingRight="10dp"
+                    android:textColor="@color/black"
+                    android:text="#집들이" />
 
             </LinearLayout>
 
