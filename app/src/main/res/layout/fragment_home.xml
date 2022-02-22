@@ -36,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:ems="10"
-                android:text="검색"
+                android:hint="검색"
                 android:background="@null"
                 android:gravity="center"/>
 
