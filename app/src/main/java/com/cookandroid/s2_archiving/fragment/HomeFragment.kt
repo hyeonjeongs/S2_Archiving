@@ -187,7 +187,7 @@ class HomeFragment : Fragment() {
 
                     }
                     cardAdapter.notifyDataSetChanged() // 리스트 저장 및 새로 고침
-                    cardrv.scrollToPosition(cardDataList.size - 1)
+                    cardrv?.scrollToPosition(cardDataList!!.size - 1)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
