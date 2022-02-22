@@ -142,7 +142,8 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
                 fragment.arguments = bundle
                 bundle.putString("friend_id", friendId)
                 activityH?.fragmentChange_for_adapter(fragment)
-            } else if (id == "favorite_adapter") {
+            }
+            else if (id == "favorite_adapter") {
                 var fragment: Fragment = LikeFragment()
                 var activityH = this.activity as MainActivity?
                 var bundle: Bundle = Bundle()
@@ -150,8 +151,13 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
                 bundle.putString("friend_id", friendId)
                 activityH?.fragmentChange_for_adapter(fragment)
             }
-
+            else if (id == "cardview_adapter") {
+                var fragment: Fragment = HomeFragment()
+                var activityH = this.activity as MainActivity?
+                activityH?.fragmentChange_for_adapter(fragment)
+            }
         }
+
     }
 
 
