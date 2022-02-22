@@ -20,17 +20,20 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_marginTop="30dp"
-        android:layout_height="wrap_content">
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:background="@drawable/edge_round">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:background="@drawable/edge"
             android:orientation="horizontal">
 
 
@@ -118,6 +121,7 @@
             android:id="@+id/view_one_img"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:scaleType="fitXY"
             android:background="@drawable/background"
             android:adjustViewBounds="true"
             android:src="@drawable/food3" />
@@ -125,7 +129,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edge"
             android:orientation="vertical"
             android:padding="20dp">
 
