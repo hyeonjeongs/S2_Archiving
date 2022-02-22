@@ -8,15 +8,17 @@
         android:layout_width="fill_parent"
         android:layout_height="250dp">
 
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/cv_in_img"
-            android:id="@+id/cvImge"/>
+            android:id="@+id/cvImge"
+            android:src="@drawable/logo"/>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/cardview"/>
+            android:background="@drawable/cardview"
+            />
 
         <RelativeLayout
             android:layout_width="match_parent"
