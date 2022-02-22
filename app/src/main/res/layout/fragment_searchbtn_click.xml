@@ -1,78 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    tools:context="com.cookandroid.s2_archiving.fragment.SearchbtnClickFragment">
 
     <LinearLayout
-        android:id="@+id/logo_Ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:weightSum="3">
-        <Button
-            android:id="@+id/searchclick_backbtn"
-            android:layout_width="25dp"
-            android:layout_height="30dp"
-            android:layout_weight="0.1"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/backspace_btn"/>
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="2.8"
-            android:fontFamily="@font/applesdgothic_bold"
-            android:textSize="24dp"
-            android:text="20220202"/>
         <Button
-            android:layout_width="40dp"
-            android:layout_height="10dp"
-            android:background="@drawable/menu_btn"
+            android:id="@+id/btnCategorySearchBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="0.1"/>
+            android:background="@drawable/backspace_btn"
+            android:backgroundTint="@color/black"
+            android:clickable="true"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/etCategorySearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edge_round"
+                android:gravity="center"
+                android:ems="10"
+                android:hint="날짜나 기념일 이름 검색"
+                android:textSize="15dp"
+                android:inputType="textPersonName" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:padding="5dp"
+                app:srcCompat="@drawable/search_img" />
+
+        </RelativeLayout>
 
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/boundary_line"
-        android:layout_below="@+id/logo_Ll"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:orientation="horizontal"></LinearLayout>
 
-    <TextView
-        android:id="@+id/searchbtn_click_specialtv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/boundary_line"
-        android:gravity="center"
-        android:textSize="24dp"
-        android:fontFamily="@font/applesdgothic_regular"
-        android:layout_marginTop="20dp"
-        android:text="크리스마스"/>
-    <TextView
-        android:id="@+id/searchbtn_click_presentNum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/searchbtn_click_specialtv"
-        android:text="12개"
-        android:layout_marginStart="14dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searchbtn_click_rv"
-        android:layout_below="@+id/searchbtn_click_presentNum"
-        android:layout_marginTop="7dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
+        android:id="@+id/rvSearchCategory"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true">
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        />
 
-    </androidx.recyclerview.widget.RecyclerView>
 
-</RelativeLayout>
+</LinearLayout>

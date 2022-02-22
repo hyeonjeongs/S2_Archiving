@@ -98,8 +98,9 @@ class HomeFragment : Fragment() {
 
         etSearch.setOnClickListener {
             activity?.let{
-                val intent = Intent(context, SearchCategory::class.java)
-                startActivity(intent)
+                var fragment: Fragment = SearchbtnClickFragment()
+                var activityH = this.activity as MainActivity
+                activityH?.fragemtChage_for_adapter_view(fragment)
             }
         }
 

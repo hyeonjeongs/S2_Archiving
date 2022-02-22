@@ -10,9 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cookandroid.s2_archiving.FavoriteAdapter
-import com.cookandroid.s2_archiving.FriendDataAdapter
-import com.cookandroid.s2_archiving.PostData
+import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
 import com.cookandroid.s2_archiving.model.MyFavorite
 import com.google.firebase.auth.FirebaseAuth

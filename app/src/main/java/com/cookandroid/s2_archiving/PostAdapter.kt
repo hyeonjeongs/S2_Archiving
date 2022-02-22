@@ -57,13 +57,7 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         }
         holder.date.text = postDataList[position].postDate
         holder.special.text = postDataList[position].postDateName
-
-        if(postDataList[position].heart==0){
-            holder.heart.setImageResource(R.drawable.heart_full)
-        }
-        else {
-            holder.heart.setImageResource(R.drawable.heart_empty)
-        }
+        holder.heart.setImageResource(R.drawable.heart_empty)
 
         holder.postimage.setOnClickListener {
             Log.d("ViewpageFragment", "이동 성공!")
@@ -80,6 +74,11 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
             heartEvent(position)
         }
 
+        if (postDataList.get(position).heart == 1) {
+            holder.heart.setImageResource(R.drawable.heart_empty)
+        } else if (postDataList.get(position).heart == 0) {
+            holder.heart.setImageResource(R.drawable.heart_full_line)
+        }
     }
 
     /**
