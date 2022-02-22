@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/viewlistxml"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:padding="20dp"
@@ -9,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="70dp"
         android:background="@drawable/edge_round_top"
         android:orientation="horizontal">
 
@@ -93,10 +94,10 @@
 
     <ImageView
         android:id="@+id/view_img"
-        android:layout_width="500dp"
-        android:layout_height="500dp"
-        android:scaleType="fitXY"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         android:background="@drawable/edge"
+        android:scaleType="fitXY"
         android:src="@drawable/food3" />
 
     <LinearLayout
