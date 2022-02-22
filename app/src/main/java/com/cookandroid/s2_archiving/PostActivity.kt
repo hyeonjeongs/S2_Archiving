@@ -51,7 +51,7 @@ class PostActivity : AppCompatActivity() {
         mEtFriendName = findViewById(R.id.tvPostName)
         mEtDate = findViewById(R.id.etPostDate)
         mEtDateName = findViewById(R.id.etPostName)
-        mEtPost = findViewById(R.id.etWritePost)
+        mEtPost = findViewById(R.id.etEditWritePost)
         mBtnPostRegister = findViewById(R.id.btnPostRegister)
         mBtnPostClose = findViewById(R.id.ivPostClose)
         ivPostData = findViewById(R.id.ivPostCamera)
@@ -68,14 +68,7 @@ class PostActivity : AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 var friend:FriendData? = snapshot.getValue(FriendData::class.java)
-                try{
                     mEtFriendName.text = friend!!.fName
-                } catch(e:NullPointerException){
-                    mEtFriendName.text = ""
-                }
-
-                // 사진 url 추가 후 load하는 코드 넣을 자리
-
             }
         })
 
