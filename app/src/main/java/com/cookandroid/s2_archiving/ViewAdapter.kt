@@ -1,7 +1,9 @@
 package com.cookandroid.s2_archiving
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,17 +11,21 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import java.security.AccessController.getContext
 
-class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, val fragmet_s: Fragment) : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>() {
+
+class ViewAdapter(
+    val viewDataList: ArrayList<PostData>,
+    val context: Context,
+    val fragmet_s: Fragment
+) : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>() {
 
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference =
@@ -40,6 +46,9 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
+        val displaymetrics = DisplayMetrics()
+        (context as Activity).windowManager.defaultDisplay.getMetrics(displaymetrics)
+
         val view = LayoutInflater.from(parent.context).inflate(R.layout.view_list, parent, false)
         return CustomViewHolder(view)
     }
@@ -53,20 +62,37 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
                 .load(viewDataList[position].postPhotoUri)
                 .into(holder.viewImage)
         }
+
+
+
         holder.viewDate.text = viewDataList[position].postDate
         holder.viewSpecial.text = viewDataList[position].postDateName
         holder.viewHeart.setImageResource(R.drawable.heart)
         holder.viewStory.text = viewDataList[position].post
+
+        var layoutParams = holder.itemView.getLayoutParams() as GridLayoutManager.LayoutParams
+        layoutParams.height = layoutParams.width
+        holder.itemView.requestLayout()
+
+
+//        //화면 크기에 따라 화면 맞추기
+//        val displaymetrics = DisplayMetrics()
+//        (holder.itemView.context as Activity).windowManager.defaultDisplay.getMetrics(displaymetrics)
+//
+//        val devicewidth = displaymetrics.widthPixels / 2
+//        holder.itemView.getLayoutParams().height = devicewidth
+//        holder.itemView.requestLayout()
+
         holder.viewEtc.setOnClickListener{   //게시글 수정 (PostActivity로 이동)
-            val intent = Intent(context,PostActivity::class.java)
+            val intent = Intent(context, PostActivity::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             this.context.startActivity(intent)
         }
 
-        Log.e("aa",viewDataList!!.toString()) // 삭제 정상작동 되면 지우기
+        Log.e("aa", viewDataList!!.toString()) // 삭제 정상작동 되면 지우기
         holder.viewDelete.setOnClickListener {    //게시글 삭제
             mDatabaseRef.ref.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").removeValue().addOnSuccessListener {
-                Toast.makeText(context,"게시글 삭제 완료",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "게시글 삭제 완료", Toast.LENGTH_SHORT).show()
             }
 
         }
