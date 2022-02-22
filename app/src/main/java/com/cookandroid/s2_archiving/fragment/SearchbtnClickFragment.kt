@@ -16,9 +16,10 @@ import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_searchbtn_click.*
 import kotlinx.android.synthetic.main.fragment_searchbtn_click.view.*
 
-class SearchbtnClickFragment : Fragment() {
+class SearchbtnClickFragment : Fragment(), onBackPressedListener {
 
     var fragmentView : View? = null
 
@@ -39,7 +40,7 @@ class SearchbtnClickFragment : Fragment() {
 
 
     // context
-    private lateinit var activity: Activity
+    //private lateinit var activity: Activity
 
     companion object{
         fun newInstance() : SearchbtnClickFragment{
@@ -91,6 +92,9 @@ class SearchbtnClickFragment : Fragment() {
 
         })
 
+        btnCategorySearchBack.setOnClickListener {
+            onBackPressed()
+        }
 
         adapter = PostAdapter(categoryList,this.requireContext(),this)
         rvSearchCategory?.adapter= adapter
@@ -136,6 +140,15 @@ class SearchbtnClickFragment : Fragment() {
                 })
 
 
+
+        }
+
+    }
+    override fun onBackPressed() {  //휴대폰의 뒤로가기 버튼 클릭 시
+        if (this is SearchbtnClickFragment) {
+            var fragment: Fragment = HomeFragment()
+            var activityH = this.activity as MainActivity?
+            activityH?.fragmentChange_for_adapter(fragment)
         }
     }
 

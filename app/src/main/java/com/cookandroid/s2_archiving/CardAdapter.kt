@@ -40,10 +40,8 @@ class CardAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         }
         holder.cvdate.text = postDataList[position].postDate
         holder.cvspecial.text = postDataList[position].postDateName
-        //holder.cvfriendname.text = postDataList[position].postFriendId //수정하기
-        /*Glide.with(holder.itemView).load(postDataList[position].postPhotoUri).into(holder.postimage)
-        holder.date.text = postDataList[position].postDate
-        holder.special.text = postDataList[position].postDateName*/
+        holder.cvfriendname.text = postDataList[position].postFriendId //수정하기
+
     }
 
     override fun getItemCount(): Int {
@@ -53,12 +51,7 @@ class CardAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cvimage = itemView.findViewById<ImageView>(R.id.cvImge)
         val cvdate = itemView.findViewById<TextView>(R.id.dayNumber)
-        //val cvfriendname = itemView.findViewById<TextView>(R.id.fName)
+        val cvfriendname = itemView.findViewById<TextView>(R.id.fName)
         val cvspecial = itemView.findViewById<TextView>(R.id.dayName)
-        /*
-        val postimage = itemView.findViewById<ImageView>(R.id.post_img)
-        val date = itemView.findViewById<TextView>(R.id.post_date)
-        val special = itemView.findViewById<TextView>(R.id.post_special)
-        val heart = itemView.findViewById<ImageView>(R.id.post_heart)*/
     }
 }

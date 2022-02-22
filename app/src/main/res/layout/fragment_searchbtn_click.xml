@@ -20,9 +20,7 @@
             android:layout_height="50dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/backspace_btn"
-            android:backgroundTint="@color/black"
             android:clickable="true"
-            android:textColor="#000000"
             android:textSize="18sp"
             tools:layout_editor_absoluteY="16dp" />
 
