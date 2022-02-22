@@ -3,7 +3,6 @@ package com.cookandroid.s2_archiving.fragment
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -22,13 +21,18 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.fragment_like.view.*
 
 class HomeFragment : Fragment() {
 
     //위젯 연결할 변수 선언
     lateinit var adapter : RecyclerView.Adapter<FriendDataAdapter.CustomViewHolder>
+    lateinit var cardAdapter : RecyclerView.Adapter<CardAdapter.CustomViewHolder>
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var friendDataList: ArrayList<FriendData>
+    lateinit var cardDataList : ArrayList<PostData>
+    lateinit var friendId:String
 
     //파이어베이스
     private lateinit var database : FirebaseDatabase
@@ -68,20 +72,23 @@ class HomeFragment : Fragment() {
     //뷰가 생성되었을때
     //프레그먼트와 레이아웃 연결시켜줌
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_home,container,false) //홈프레그먼트 xml파일이랑 연결
+        val fragmentview = inflater.inflate(R.layout.fragment_home, container, false) //홈프레그먼트 xml파일이랑 연결
         //파이어베이스 계정, 리얼타임 데이터베이스
         mFirebaseAuth = FirebaseAuth.getInstance()
         friendDataList = ArrayList() //FriendData 객체를 담을 ArrayList
+        cardDataList = ArrayList() //카드뷰에 실시간으로 올라오는 객체 담을 ArryaList
 
         database = FirebaseDatabase.getInstance() //파이어베이스 데이터베이스 연동
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
+        userNickname = fragmentview.findViewById(R.id.tvName)
+        ivProfile = fragmentview.findViewById(R.id.ivProfile)
 
-        userNickname = view.findViewById(R.id.tvName)
-        ivProfile = view.findViewById(R.id.ivProfile)
+        fragmentview?.cardrv?.layoutManager = LinearLayoutManager(this.requireContext(),LinearLayoutManager.HORIZONTAL, true)
 
 
+        //cardrv.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.HORIZONTAL, true) //가로 리사이클러뷰
 
-        return view
+        return fragmentview
     }
 
 
@@ -108,6 +115,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) { // <-- 리사이클러뷰 넣어보기
         super.onViewCreated(view, savedInstanceState)
+
+
         //리사이클러뷰에 담을 데이터 가져오기(selectedItem 태그를 통해서 보여줄 게시글 구분)
         // 사용자의 닉네임, 사진 로드
             mDatabaseRef.child("UserAccount").child("${mFirebaseAuth?.currentUser!!.uid}")
@@ -118,10 +127,9 @@ class HomeFragment : Fragment() {
                     }
 
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        if(snapshot.value ==null){ // 널이면 아무것도하지마
+                        if (snapshot.value == null) { // 널이면 아무것도하지마
 
-                        }
-                        else {
+                        } else {
                             var user: UserAccount? = snapshot.getValue(UserAccount::class.java)
                             var nickName = user!!.userNickname
 
@@ -161,14 +169,39 @@ class HomeFragment : Fragment() {
                         }
                     }
 
-                        override fun onCancelled(error: DatabaseError) {
+                    override fun onCancelled(error: DatabaseError) {
 
-                        }
+                    }
 
                 })
 
+        mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    cardDataList.clear()
+
+                    for (data: DataSnapshot in snapshot.children) {
+                        var postData: PostData? = data.getValue(PostData::class.java)
+                            cardDataList.add(postData!!) // 리스트에 넣기
+
+                    }
+                    cardAdapter.notifyDataSetChanged() // 리스트 저장 및 새로 고침
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+
+
+
+
             adapter = FriendDataAdapter(friendDataList, activity, this)
             rvProfile.adapter = adapter
+
+            cardAdapter = CardAdapter(cardDataList, this.requireContext(), this)
+            cardrv.adapter = cardAdapter
+
+
 
     }
 

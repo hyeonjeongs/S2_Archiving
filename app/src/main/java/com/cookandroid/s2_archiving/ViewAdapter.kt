@@ -23,11 +23,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 
 
-class ViewAdapter(
-    val viewDataList: ArrayList<PostData>,
-    val context: Context,
-    val fragmet_s: Fragment
-) : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>() {
+class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, val fragmet_s: Fragment) : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>() {
 
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference =
@@ -49,8 +45,8 @@ class ViewAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val displaymetrics = DisplayMetrics()
-        (context as Activity).windowManager.defaultDisplay.getMetrics(displaymetrics)
+//        val displaymetrics = DisplayMetrics()
+//        (context as Activity).windowManager.defaultDisplay.getMetrics(displaymetrics)
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.view_list, parent, false)
         return CustomViewHolder(view)
@@ -72,9 +68,7 @@ class ViewAdapter(
         holder.viewSpecial.text = viewDataList[position].postDateName
         holder.viewStory.text = viewDataList[position].post
 
-        var layoutParams = holder.itemView.getLayoutParams() as GridLayoutManager.LayoutParams
-        layoutParams.height = layoutParams.width
-        holder.itemView.requestLayout()
+
 
 
 //        //화면 크기에 따라 화면 맞추기
