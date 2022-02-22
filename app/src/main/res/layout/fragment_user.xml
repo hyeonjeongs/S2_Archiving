@@ -45,6 +45,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:layout_weight="2"
+            android:src="@drawable/man"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="140dp" />
 

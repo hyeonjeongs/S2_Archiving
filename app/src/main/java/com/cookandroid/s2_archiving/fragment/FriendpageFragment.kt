@@ -136,7 +136,7 @@ class FriendpageFragment : Fragment(), onBackPressedListener {
                 friendpageName.text = friend!!.fName
                 // 사진 url 추가 후 load하는 코드 넣을 자리
                 if (friend!!.fImgUri == "") {
-                    ivfriendimg.setImageResource(R.drawable.user)
+                    ivfriendimg.setImageResource(R.drawable.man)
                 } else { // userPhotoUri가 있으면 그 사진 로드하기
                     Glide.with(activitys)
                         .load(friend!!.fImgUri)
