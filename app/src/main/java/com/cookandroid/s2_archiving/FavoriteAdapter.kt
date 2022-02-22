@@ -34,7 +34,35 @@ class FavoriteAdapter(val postDataList: ArrayList<PostData>, val context: Contex
         Glide.with(holder.itemView).load(postDataList[position].postPhotoUri).into(holder.postimage)
         holder.date.text = postDataList[position].postDate
         holder.special.text = postDataList[position].postDateName
-        holder.heart.setImageResource(R.drawable.heart_full)
+
+        if(postDataList[position].heart==0){
+            holder.heart.setImageResource(R.drawable.heart_full)
+        }
+        else {
+            holder.heart.setImageResource(R.drawable.heart_empty)
+        }
+
+        holder.heart.setOnClickListener {
+            Log.d("FriendHeart","클릭성공!!!!!!!!!!!!")
+            heartEvent(position)
+        }
+
+
+    }
+
+    private fun heartEvent(position: Int) {
+            var postdata:PostData = postDataList.get(position)
+            var heart:Int?
+
+            if(postdata.heart==1){//하트가 비어있는데 클릭된경우
+                heart=0
+            }else{
+                heart=1
+            }
+            val hashMap: HashMap<String, Any> = HashMap()
+            hashMap.put("heart", heart!!)
+            mDatabaseRef.child("UserPosts").child("${mFirebaseAuth?.currentUser!!.uid}").child(postdata.postId).updateChildren(hashMap)
+
     }
 
     override fun getItemCount(): Int {
