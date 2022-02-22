@@ -101,7 +101,7 @@ class ModifyAccount : AppCompatActivity() {
                     etDaySpinner.setSelection((((strBday).substring(8,10)).toInt())-1)
                 }
                 if(strPhotoUri==""){
-                    ivProfile.setImageResource(R.drawable.user)
+                    ivProfile.setImageResource(R.drawable.man)
                 }
                 else{ // userPhotoUri가 있으면 그 사진 로드하기
                     if(activity.isFinishing) return;

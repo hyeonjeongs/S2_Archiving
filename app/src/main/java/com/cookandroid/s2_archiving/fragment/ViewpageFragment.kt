@@ -75,7 +75,7 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
                     var friend:FriendData? = snapshot.getValue(FriendData::class.java)
                     tvFriendName.text = friend!!.fName
                     if (friend!!.fImgUri == "") {
-                        ivFriendpProfile.setImageResource(R.drawable.user)
+                        ivFriendpProfile.setImageResource(R.drawable.man)
                     } else { // Uri가 있으면 그 사진 로드하기
                         Glide.with(activitys)
                             .load(friend!!.fImgUri)
