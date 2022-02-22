@@ -11,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -56,12 +58,22 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
         }
         holder.viewDate.text = viewDataList[position].postDate
         holder.viewSpecial.text = viewDataList[position].postDateName
-        holder.viewHeart.setImageResource(R.drawable.heart)
         holder.viewStory.text = viewDataList[position].post
+        holder.viewHeart.setImageResource(R.drawable.heart_empty)
         holder.viewEtc.setOnClickListener{   //게시글 수정 (PostActivity로 이동)
             val intent = Intent(context,PostActivity::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             this.context.startActivity(intent)
+        }
+
+        holder.viewHeart.setOnClickListener {
+            heartEvent(position)
+        }
+
+        if (viewDataList.get(position).heart == 1) {
+            holder.viewHeart.setImageResource(R.drawable.heart_empty)
+        } else if (viewDataList.get(position).heart == 0) {
+            holder.viewHeart.setImageResource(R.drawable.heart_full_line)
         }
 
         holder.viewDelete.setOnClickListener {    //게시글 삭제
@@ -80,10 +92,30 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context, v
 
         }
 
+
     }
 
     override fun getItemCount(): Int {
         return viewDataList.size
+    }
+
+    private fun heartEvent(position: Int){
+        var viewdata:PostData = viewDataList.get(position)
+        var heart:Int?
+
+        if(viewdata.heart==1){//하트가 비어있는데 클릭된경우
+            heart=0
+        }else{
+            heart=1
+        }
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap.put("heart", heart!!)
+        mDatabaseRef.child("UserPosts").child("${mFirebaseAuth?.currentUser!!.uid}").child(viewdata.postId).updateChildren(hashMap)
+    }
+
+    fun refreshFragment(fragment:Fragment,fragmentManager:FragmentManager){
+        var ft:FragmentTransaction = fragmentManager.beginTransaction()
+        ft.detach(fragment).attach(fragment).commit()
     }
 
 
