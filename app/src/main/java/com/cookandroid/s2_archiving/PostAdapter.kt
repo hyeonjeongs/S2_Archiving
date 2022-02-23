@@ -60,7 +60,7 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         holder.heart.setImageResource(R.drawable.heart_empty)
         holder.postimage.setOnClickListener {
             Log.d("ViewpageFragment", "이동 성공!")
-            var fragment: Fragment = ViewoneFragment()
+            var fragment: Fragment = ViewpageFragment()
             var bundle: Bundle = Bundle()
             fragment.arguments = bundle
             bundle.putString("friend_id", postDataList[position].postFriendId)

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cookandroid.s2_archiving.FavoriteAdapter.*
 import com.cookandroid.s2_archiving.fragment.ViewoneFragment
+import com.cookandroid.s2_archiving.fragment.ViewpageFragment
 import com.cookandroid.s2_archiving.model.MyFavorite
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -53,7 +54,7 @@ class FavoriteAdapter(val postDataList: ArrayList<PostData>, val context: Contex
         }
 
         holder.postimage.setOnClickListener {
-            var fragment: Fragment = ViewoneFragment()
+            var fragment: Fragment = ViewpageFragment()
             var bundle: Bundle = Bundle()
             fragment.arguments = bundle
             bundle.putString("friend_id", postDataList[position].postFriendId)

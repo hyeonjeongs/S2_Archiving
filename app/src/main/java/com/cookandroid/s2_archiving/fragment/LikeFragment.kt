@@ -31,6 +31,7 @@ class LikeFragment : Fragment() {
     var uid : String? = null
     var auth : FirebaseAuth? = null
     lateinit var friendId:String
+    lateinit var postId:String
 
     // context
     private lateinit var activity: Activity
@@ -73,6 +74,7 @@ class LikeFragment : Fragment() {
                             postDataList.add(post!!)
                         }
                     }
+
                     adapterL.notifyDataSetChanged() //리스트 저장 및 새로고침
                 }
 

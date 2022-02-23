@@ -28,6 +28,7 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
     lateinit var viewDataList: ArrayList<PostData>
     lateinit var friendId:String
     lateinit var postId:String
+    lateinit var id:String
     private var rvIndex:Int = 0
 
     //xml 연결
@@ -55,11 +56,7 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
     }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_viewpage, container, false)
         view?.rv_view?.layoutManager = LinearLayoutManager(
             this.requireContext(),
@@ -69,6 +66,8 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
 
         friendId = requireArguments().getString("friend_id").toString()
         postId = requireArguments().getString("post_id").toString()
+        id = requireArguments().getString("id").toString()
+
         viewDataList = ArrayList()
         ivFriendpProfile = view.findViewById(R.id.ivViewProfileImage)
         tvFriendName = view.findViewById(R.id.tvViewName)
@@ -129,6 +128,7 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
 
 
                     adapterV.notifyDataSetChanged() //리스트 저장 및 새로고침
+                    rvView?.scrollToPosition(rvIndex!!)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -156,13 +156,28 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
     }
 
     override fun onBackPressed() {  //휴대폰의 뒤로가기 버튼 클릭 시
-        if(this is ViewpageFragment){
-            var fragment: Fragment = FriendpageFragment()
-            var activityH = this.activity as MainActivity?
-            var bundle: Bundle = Bundle()
-            fragment.arguments = bundle
-            bundle.putString("friend_id", friendId)
-            activityH?.fragmentChange_for_adapter(fragment)
+        if (this is ViewpageFragment) {
+            if (id == "post_adapter") {
+                var fragment: Fragment = FriendpageFragment()
+                var activityH = this.activity as MainActivity?
+                var bundle: Bundle = Bundle()
+                fragment.arguments = bundle
+                bundle.putString("friend_id", friendId)
+                activityH?.fragmentChange_for_adapter(fragment)
+            }
+            else if (id == "favorite_adapter") {
+                var fragment: Fragment = LikeFragment()
+                var activityH = this.activity as MainActivity?
+                var bundle: Bundle = Bundle()
+                fragment.arguments = bundle
+                bundle.putString("friend_id", friendId)
+                activityH?.fragmentChange_for_adapter(fragment)
+            }
+            else if (id == "cardview_adapter") {
+                var fragment: Fragment = HomeFragment()
+                var activityH = this.activity as MainActivity?
+                activityH?.fragmentChange_for_adapter(fragment)
+            }
         }
     }
 
