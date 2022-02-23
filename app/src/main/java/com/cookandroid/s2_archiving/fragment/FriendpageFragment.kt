@@ -62,6 +62,7 @@ class FriendpageFragment : Fragment(), onBackPressedListener {
 
         friendId = requireArguments().getString("friend_id").toString()
 
+
         postDataList = ArrayList() //PostData 객체를 담을 ArrayList
 
         val view = inflater.inflate(R.layout.fragment_friendpage,container, false)
@@ -148,8 +149,6 @@ class FriendpageFragment : Fragment(), onBackPressedListener {
                     starImg.setImageResource(R.drawable.star_full)
                 }
                 starCount = friend.fStar
-
-
 
             }
         })
