@@ -51,7 +51,7 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         if (viewDataList[position].postPhotoUri == "") {
-            holder.viewImage.setImageResource(R.drawable.camera)  //수정 필요
+            holder.viewImage.setImageResource(R.drawable.camera_btn)  //수정 필요
         } else {
             Glide.with(holder.itemView)
                 .load(viewDataList[position].postPhotoUri)

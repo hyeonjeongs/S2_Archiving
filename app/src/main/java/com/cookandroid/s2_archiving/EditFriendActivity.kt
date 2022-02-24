@@ -105,7 +105,7 @@ class EditFriendActivity : AppCompatActivity() {
 
                     // 이미지 셋팅
                     if("${friend!!.fImgUri}"==""){
-                        ivProfile.setImageResource(R.drawable.woman)
+                        ivProfile.setImageResource(R.drawable.man)
                     }
                     else{ // userPhotoUri가 있으면 그 사진 로드하기
                         if(activity.isFinishing) return;

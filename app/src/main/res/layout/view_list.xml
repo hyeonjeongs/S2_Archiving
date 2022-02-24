@@ -113,7 +113,7 @@
         android:layout_height="40dp"
         android:layout_marginEnd="351dp"
         android:layout_marginBottom="8dp"
-        app:srcCompat="@drawable/heart" />
+        app:srcCompat="@drawable/heart_full" />
 
     <TextView
         android:id="@+id/view_story"
