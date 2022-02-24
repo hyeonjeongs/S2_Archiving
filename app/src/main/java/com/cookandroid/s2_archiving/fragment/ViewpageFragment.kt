@@ -58,11 +58,7 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_viewpage, container, false)
-        view?.rv_view?.layoutManager = LinearLayoutManager(
-            this.requireContext(),
-            LinearLayoutManager.VERTICAL,
-            false
-        )
+        view?.rv_view?.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.VERTICAL, false)
 
         friendId = requireArguments().getString("friend_id").toString()
         postId = requireArguments().getString("post_id").toString()
