@@ -62,7 +62,6 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
 
         friendId = requireArguments().getString("friend_id").toString()
         postId = requireArguments().getString("post_id").toString()
-        id = requireArguments().getString("id").toString()
 
         viewDataList = ArrayList()
         ivFriendpProfile = view.findViewById(R.id.ivViewProfileImage)
@@ -132,10 +131,9 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
                 }
             })
 
-        if(id == "post_adapter") {
             adapterV = ViewAdapter(viewDataList, this.requireContext())
             rvView.adapter = adapterV
-        }
+
 
         btnActivityViewBack.setOnClickListener{  //뒤로가기 버튼 클릭시 friendpagefragment로 이동
             onBackPressed()
@@ -145,14 +143,12 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
 
     override fun onBackPressed() {  //휴대폰의 뒤로가기 버튼 클릭 시
         if (this is ViewpageFragment) {
-            if (id == "post_adapter") {
-                var fragment: Fragment = FriendpageFragment()
-                var activityH = this.activity as MainActivity?
-                var bundle: Bundle = Bundle()
-                fragment.arguments = bundle
-                bundle.putString("friend_id", friendId)
-                activityH?.fragmentChange_for_adapter(fragment)
-            }
+            var fragment: Fragment = FriendpageFragment()
+            var activityH = this.activity as MainActivity?
+            var bundle: Bundle = Bundle()
+            fragment.arguments = bundle
+            bundle.putString("friend_id", friendId)
+            activityH?.fragmentChange_for_adapter(fragment)
         }
 
     }

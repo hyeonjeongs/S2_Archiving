@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_viewpage.view.*
 
 class ViewFavoritepageFragment: Fragment(), onBackPressedListener {
 
-    lateinit var adapterV : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>
+    lateinit var adapterV : RecyclerView.Adapter<ViewFavoriteAdapter.CustomViewHolder>
     lateinit var viewDataList: ArrayList<PostData>
     lateinit var friendId:String
     lateinit var postId:String
@@ -32,8 +32,6 @@ class ViewFavoritepageFragment: Fragment(), onBackPressedListener {
     private var rvIndex:Int = 0
 
     //xml 연결
-    lateinit var ivFriendpProfile:ImageView
-    lateinit var tvFriendName : TextView
     lateinit var rvView:RecyclerView
     lateinit var btnActivityViewBack: Button
 
@@ -57,25 +55,16 @@ class ViewFavoritepageFragment: Fragment(), onBackPressedListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_viewfavoritepage, container, false)
-        view?.rv_view?.layoutManager = LinearLayoutManager(
-            this.requireContext(),
-            LinearLayoutManager.VERTICAL,
-            false
-        )
 
         friendId = requireArguments().getString("friend_id").toString()
         postId = requireArguments().getString("post_id").toString()
-        id = requireArguments().getString("id").toString()
-
         viewDataList = ArrayList()
-//        ivFriendpProfile = view.findViewById(R.id.ivViewProfileImage)
-//        tvFriendName = view.findViewById(R.id.tvViewName)
-//        rvView = view.findViewById(R.id.rv_view)
-//        btnActivityViewBack = view.findViewById(R.id.btnActivityViewBack)
+        rvView = view.findViewById(R.id.viewfragmentlike_rv)
+        btnActivityViewBack = view.findViewById(R.id.btnViewFavoriteBack)
+        rvView.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.VERTICAL, false)
+
 
         return view
-
-
     }
 
 
@@ -112,10 +101,10 @@ class ViewFavoritepageFragment: Fragment(), onBackPressedListener {
                 }
             })
 
-        if(id == "post_adapter") {
-            //adapterV = ViewFavoriteAdapter(viewDataList, this.requireContext())
-//            rvView.adapter = adapterV
-        }
+
+            adapterV = ViewFavoriteAdapter(viewDataList, this.requireContext())
+            rvView.adapter = adapterV
+
 
         btnActivityViewBack.setOnClickListener{  //뒤로가기 버튼 클릭시 friendpagefragment로 이동
             onBackPressed()
@@ -125,14 +114,12 @@ class ViewFavoritepageFragment: Fragment(), onBackPressedListener {
 
     override fun onBackPressed() {  //휴대폰의 뒤로가기 버튼 클릭 시
         if (this is ViewFavoritepageFragment) {
-            if (id == "favorite_adapter") {
                 var fragment: Fragment = LikeFragment()
                 var activityH = this.activity as MainActivity?
                 var bundle: Bundle = Bundle()
                 fragment.arguments = bundle
                 bundle.putString("friend_id", friendId)
                 activityH?.fragmentChange_for_adapter(fragment)
-            }
         }
     }
 

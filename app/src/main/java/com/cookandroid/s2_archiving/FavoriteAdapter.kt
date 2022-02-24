@@ -11,7 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.cookandroid.s2_archiving.fragment.ViewpageFragment
+import com.cookandroid.s2_archiving.fragment.ViewFavoritepageFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -46,12 +46,11 @@ class FavoriteAdapter(val postDataList: ArrayList<PostData>, val context: Contex
         }
 
         holder.postCardView.setOnClickListener {
-            var fragment: Fragment = ViewpageFragment()
+            var fragment: Fragment = ViewFavoritepageFragment()
             var bundle: Bundle = Bundle()
             fragment.arguments = bundle
             bundle.putString("friend_id", postDataList[position].postFriendId)
             bundle.putString("post_id",postDataList[position].postId)
-            bundle.putString("id","favorite_adapter")
             activity = fragment_s.activity as MainActivity?
             activity?.fragemtChage_for_adapter_view(fragment)
         }

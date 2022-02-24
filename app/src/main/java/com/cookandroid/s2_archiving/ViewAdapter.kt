@@ -2,7 +2,6 @@ package com.cookandroid.s2_archiving
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -20,16 +18,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import java.security.AccessController.getContext
 
 class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>() {
 
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
-    private var mDatabaseRef: DatabaseReference =
-        FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
-    private lateinit var fbStorage: FirebaseStorage
+    private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
 
-    private var activity: MainActivity? = null//메인에 함수 부르기 위해 선언하기
     private var storage : FirebaseStorage? = FirebaseStorage.getInstance()
 
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
