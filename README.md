@@ -3,7 +3,7 @@ PLAS (Present Letter Archiving Service)
 ## 참여인원
 |맡은 업무|이름|
 |:------:|---|
-|팀장|[박시원](https://github.com/tldnjs324)|
+|Back-End(팀장)|[박시원](https://github.com/tldnjs324)|
 |Front-End|[박현정](https://github.com/hyeonjeongs)|
 |Front-End|[조윤진](https://github.com/cyjadela)|
 |Back-End|[김성은](https://github.com/EUNA-319)|
