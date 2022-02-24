@@ -1,6 +1,5 @@
 package com.cookandroid.s2_archiving
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -8,25 +7,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.cookandroid.s2_archiving.FavoriteAdapter.*
-import com.cookandroid.s2_archiving.fragment.ViewoneFragment
 import com.cookandroid.s2_archiving.fragment.ViewpageFragment
-import com.cookandroid.s2_archiving.model.MyFavorite
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
 
 class FavoriteAdapter(val postDataList: ArrayList<PostData>, val context: Context, val fragment_s: Fragment):RecyclerView.Adapter<FavoriteAdapter.CustomViewHolder>() {
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
-    private var heartRef : DatabaseReference = mDatabaseRef.child("UserPosts").child("${mFirebaseAuth?.currentUser!!.uid}") //게시글정보 불러오기
-    private lateinit var fbStorage: FirebaseStorage
     private var activity: MainActivity? = null//메인에 함수 부르기 위해 선언하기
 
 
@@ -53,7 +45,7 @@ class FavoriteAdapter(val postDataList: ArrayList<PostData>, val context: Contex
             heartEvent(position)
         }
 
-        holder.postimage.setOnClickListener {
+        holder.postCardView.setOnClickListener {
             var fragment: Fragment = ViewpageFragment()
             var bundle: Bundle = Bundle()
             fragment.arguments = bundle

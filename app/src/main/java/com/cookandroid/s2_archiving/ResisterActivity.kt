@@ -69,52 +69,7 @@ class ResisterActivity : AppCompatActivity() {
                     })
         }
         mBtnRegister.setOnClickListener(View.OnClickListener {
-            // 회원가입 처리 시작
-            var strEmail: String = mEtEmail.getText().toString()
-            var strNickname: String = mEtNickname.getText().toString()
-            var strPhone: String =""
-            var strPwd: String = mEtPwd.getText().toString()
-            var strPwdCheck: String = mEtPwdCheck.getText().toString()
-
-
-
-            if(strEmail.equals("")||strNickname.equals("")||strPwd.equals("")||strPwdCheck.equals("")){
-                Toast.makeText(this, "모든 항목을 입력해주세요", Toast.LENGTH_SHORT).show()
-            }
-            else if(!strPwd.equals(strPwdCheck)){
-                Toast.makeText(this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
-            }
-            else if(test==0){
-                Toast.makeText(this, "이메일 중복검사를 완료해주세요", Toast.LENGTH_SHORT).show()
-            }
-            else {
-
-                mFirebaseAuth?.createUserWithEmailAndPassword(strEmail, strPwd)
-                        ?.addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                var firebaseUser: FirebaseUser? = mFirebaseAuth.currentUser
-                                var account = UserAccount()
-                                account.userId = firebaseUser?.uid.toString()
-                                account.userEmail = firebaseUser?.email.toString()
-                                account.userNickname = strNickname
-                                account.userPwd = strPwd
-                                account.userBirth=""
-                                account.userPhotoUri=""
-
-                                // setValue : database에 insert (삽입) 행위
-                                mDatabaseRef.child(firebaseUser?.uid.toString())
-                                        .setValue(account)
-
-                                Toast.makeText(this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this, LoginActivity::class.java)
-                                startActivity(intent)
-                                finish() // 현재 액티비티 파괴
-
-                            } else {
-                                Toast.makeText(this, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-            }
+            startRegister()
         })
 
         mBtnBack.setOnClickListener{
@@ -122,6 +77,54 @@ class ResisterActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    private fun startRegister() {
+        // 회원가입 처리 시작
+        var strEmail: String = mEtEmail.getText().toString()
+        var strNickname: String = mEtNickname.getText().toString()
+        var strPwd: String = mEtPwd.getText().toString()
+        var strPwdCheck: String = mEtPwdCheck.getText().toString()
+
+
+
+        if(strEmail.equals("")||strNickname.equals("")||strPwd.equals("")||strPwdCheck.equals("")){
+            Toast.makeText(this, "모든 항목을 입력해주세요", Toast.LENGTH_SHORT).show()
+        }
+        else if(!strPwd.equals(strPwdCheck)){
+            Toast.makeText(this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
+        }
+        else if(test==0){
+            Toast.makeText(this, "이메일 중복검사를 완료해주세요", Toast.LENGTH_SHORT).show()
+        }
+        else {
+
+            mFirebaseAuth?.createUserWithEmailAndPassword(strEmail, strPwd)
+                ?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        var firebaseUser: FirebaseUser? = mFirebaseAuth.currentUser
+                        var account = UserAccount()
+                        account.userId = firebaseUser?.uid.toString()
+                        account.userEmail = firebaseUser?.email.toString()
+                        account.userNickname = strNickname
+                        account.userPwd = strPwd
+                        account.userBirth=""
+                        account.userPhotoUri=""
+
+                        // setValue : database에 insert (삽입) 행위
+                        mDatabaseRef.child(firebaseUser?.uid.toString())
+                            .setValue(account)
+
+                        Toast.makeText(this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish() // 현재 액티비티 파괴
+
+                    } else {
+                        Toast.makeText(this, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
     }
 
 }
