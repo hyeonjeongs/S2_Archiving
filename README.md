@@ -1,1 +1,5 @@
-# S2_Archiving
+PLAS (Present Letter Archiving Service)
+===================
+## 기획의도
+- 생일이나 기념일에 받은 많은 선물과 편지들을 기억하지 못하고 보관의 어려움을 해결하고자 서비스를 기획
+- 기획서
