@@ -19,6 +19,8 @@ class ResisterActivity : AppCompatActivity() {
 
     private lateinit var mFirebaseAuth: FirebaseAuth // 파이어베이스 인증 처리
     private lateinit var mDatabaseRef: DatabaseReference // 실시간 데이터 베이스
+    private var storage: FirebaseStorage? = FirebaseStorage.getInstance() // 사진 폴더 만들기
+
     private lateinit var mEtEmail: EditText // 회원 가입 입력 필드(이메일)
     private lateinit var mEtNickname:EditText // 닉네임 입력 필드
     private lateinit var mEtPwd: EditText // 회원 가입 입력 필드(비밀번호)
@@ -114,6 +116,9 @@ class ResisterActivity : AppCompatActivity() {
                         // setValue : database에 insert (삽입) 행위
                         mDatabaseRef.child(firebaseUser?.uid.toString())
                             .setValue(account)
+//                        storage?.reference?.child(account.userId).activeUploadTasks {
+//                            Log.d("storage", "이미지 삭제완료")
+//                        }
 
                         Toast.makeText(this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, LoginActivity::class.java)

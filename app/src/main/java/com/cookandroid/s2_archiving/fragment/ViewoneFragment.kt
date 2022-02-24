@@ -35,6 +35,8 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
 
 
     // xml
+    private lateinit var viewOneFriendName:TextView
+    private lateinit var viewOneFriendImg: ImageView
     private lateinit var viewOneImage: ImageView
     private lateinit var viewOneEditBtn: ImageView
     private lateinit var viewOneDeleteBtn: ImageView
@@ -105,9 +107,7 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
             })
 
         //친구 프로필 이미지
-        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(
-            friendId
-        )
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(friendId)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var friend: FriendData? = snapshot.getValue(FriendData::class.java)

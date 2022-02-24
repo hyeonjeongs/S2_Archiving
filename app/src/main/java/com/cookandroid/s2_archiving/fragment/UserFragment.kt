@@ -18,14 +18,14 @@ import com.cookandroid.s2_archiving.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 
 class UserFragment : Fragment() {
 
     //파이어베이스에서 인스턴스 가져오기
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance()
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")
-
-
+    private var storage: FirebaseStorage? = FirebaseStorage.getInstance()
 
     // xml 요소들
     private lateinit var btnChangeinfo : Button
@@ -35,7 +35,6 @@ class UserFragment : Fragment() {
     private lateinit var mTvNickName:TextView
     private lateinit var ivInfoimg : ImageView
     private lateinit var muserfragLogobtn :Button
-
 
     // context
     private lateinit var activitys: Activity
@@ -100,8 +99,8 @@ class UserFragment : Fragment() {
         btnLogout.setOnClickListener {
 
             activity?.finish()
-            startActivity(Intent(activity,LoginActivity::class.java))
             mFirebaseAuth!!.signOut()
+            startActivity(Intent(activity,LoginActivity::class.java))
 
         }
 
@@ -111,6 +110,10 @@ class UserFragment : Fragment() {
             mFirebaseUser.delete().addOnCompleteListener { task ->
                 if(task.isSuccessful){
                     mDatabaseRef.removeValue()
+                    storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.delete()?.addOnSuccessListener {
+                        Log.d("storage", "이미지 삭제완료")
+                    }
+
                     mFirebaseAuth!!.signOut()
                     startActivity(Intent(activity,LoginActivity::class.java))
                 }
