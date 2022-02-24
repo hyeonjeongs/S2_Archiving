@@ -3,7 +3,6 @@ package com.cookandroid.s2_archiving.fragment
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
-import com.cookandroid.s2_archiving.model.MyFavorite
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_like.*

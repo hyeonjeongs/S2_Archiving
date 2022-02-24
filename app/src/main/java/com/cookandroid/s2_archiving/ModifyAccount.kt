@@ -144,14 +144,6 @@ class ModifyAccount : AppCompatActivity() {
             edit_my_day_spinner.adapter=adapterD
         }
 
-//        var mData = resources.getStringArray(R.array.monthItemList)
-//        var madapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,mData)
-//        edit_my_month_spinner.adapter=madapter
-
-//        var dData = resources.getStringArray(R.array.dayItemList)
-//        var dadapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,dData)
-//        edit_my_day_spinner.adapter=dadapter
-
         //생년원일 스피너 아이템 선택했을때
         edit_my_year_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -237,7 +229,6 @@ class ModifyAccount : AppCompatActivity() {
 
     // 정보 업데이트
     private fun modifyAccount() {
-        Log.e("정보업데이트","되는거니..?")
         // Make filename
         var imageFileName = "IMAGE_" + "${mFirebaseAuth?.currentUser!!.uid}"+ "_profile_.png"
         var storageRef = storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)
@@ -253,13 +244,11 @@ class ModifyAccount : AppCompatActivity() {
                 ?.continueWithTask { task: com.google.android.gms.tasks.Task<UploadTask.TaskSnapshot> ->
                     return@continueWithTask storageRef.downloadUrl
                 }?.addOnSuccessListener { uri ->
-                    Log.e("이놈 왜 안돼","이놈 왜 안돼")
                     strPhotoUri = uri.toString()
                     hashMap.put("userPhotoUri", strPhotoUri)
                     mDatabaseRef.child("UserAccount")
                         .child("${mFirebaseAuth?.currentUser!!.uid}")
                         .updateChildren(hashMap)
-                        .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
 
                 }
         }
@@ -268,7 +257,6 @@ class ModifyAccount : AppCompatActivity() {
             mDatabaseRef.child("UserAccount")
                 .child("${mFirebaseAuth?.currentUser!!.uid}")
                 .updateChildren(hashMap)
-                .addOnSuccessListener { Log.e("changeinfo", "정보 변경 완료") }
         }
     }
 

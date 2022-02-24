@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/likeFragment"
     android:background="@drawable/background"
-    tools:context="com.cookandroid.s2_archiving.fragment.LikeFragment">
+    tools:context="com.cookandroid.s2_archiving.fragment.ViewFavoritepageFragment">
 
     <LinearLayout
         android:id="@+id/logo_Ll"
@@ -19,11 +19,14 @@
         android:weightSum="6">
 
         <Button
-            android:id="@+id/favorite_Logobtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/logo" />
+            android:id="@+id/btnViewFavoriteBack"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/backspace_btn"
+            android:clickable="true"
+            android:textColor="#000000"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -58,7 +61,7 @@
         android:orientation="horizontal"></LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragmentlike_rv"
+        android:id="@+id/viewfragmentlike_rv"
         android:layout_below="@+id/boundary_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -22,7 +22,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_viewpage.view.*
 
-class ViewpageFragment: Fragment(), onBackPressedListener {
+class ViewFavoritepageFragment: Fragment(), onBackPressedListener {
 
     lateinit var adapterV : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>
     lateinit var viewDataList: ArrayList<PostData>
@@ -43,7 +43,6 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
 
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
-    private lateinit var fbStorage: FirebaseStorage
 
     companion object {
         const val TAG : String = "로그"
@@ -57,7 +56,7 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_viewpage, container, false)
+        val view = inflater.inflate(R.layout.fragment_viewfavoritepage, container, false)
         view?.rv_view?.layoutManager = LinearLayoutManager(
             this.requireContext(),
             LinearLayoutManager.VERTICAL,
@@ -69,10 +68,10 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
         id = requireArguments().getString("id").toString()
 
         viewDataList = ArrayList()
-        ivFriendpProfile = view.findViewById(R.id.ivViewProfileImage)
-        tvFriendName = view.findViewById(R.id.tvViewName)
-        rvView = view.findViewById(R.id.rv_view)
-        btnActivityViewBack = view.findViewById(R.id.btnActivityViewBack)
+//        ivFriendpProfile = view.findViewById(R.id.ivViewProfileImage)
+//        tvFriendName = view.findViewById(R.id.tvViewName)
+//        rvView = view.findViewById(R.id.rv_view)
+//        btnActivityViewBack = view.findViewById(R.id.btnActivityViewBack)
 
         return view
 
@@ -81,29 +80,6 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(
-            friendId
-        )
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    var friend: FriendData? = snapshot.getValue(FriendData::class.java)
-                    tvFriendName.text = friend!!.fName
-                    if (friend!!.fImgUri == "") {
-                        ivFriendpProfile.setImageResource(R.drawable.man)
-                    } else { // Uri가 있으면 그 사진 로드하기
-                        Glide.with(activitys)
-                            .load(friend!!.fImgUri)
-                            .into(ivFriendpProfile)
-                    }
-
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-
-                }
-
-            })
 
         mDatabaseRef.child("UserPosts").child("${mFirebaseAuth?.currentUser!!.uid}")
             .addValueEventListener(object : ValueEventListener {
@@ -137,8 +113,8 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
             })
 
         if(id == "post_adapter") {
-            adapterV = ViewAdapter(viewDataList, this.requireContext())
-            rvView.adapter = adapterV
+            //adapterV = ViewFavoriteAdapter(viewDataList, this.requireContext())
+//            rvView.adapter = adapterV
         }
 
         btnActivityViewBack.setOnClickListener{  //뒤로가기 버튼 클릭시 friendpagefragment로 이동
@@ -148,9 +124,9 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
     }
 
     override fun onBackPressed() {  //휴대폰의 뒤로가기 버튼 클릭 시
-        if (this is ViewpageFragment) {
-            if (id == "post_adapter") {
-                var fragment: Fragment = FriendpageFragment()
+        if (this is ViewFavoritepageFragment) {
+            if (id == "favorite_adapter") {
+                var fragment: Fragment = LikeFragment()
                 var activityH = this.activity as MainActivity?
                 var bundle: Bundle = Bundle()
                 fragment.arguments = bundle
@@ -158,7 +134,6 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
                 activityH?.fragmentChange_for_adapter(fragment)
             }
         }
-
     }
 
 }

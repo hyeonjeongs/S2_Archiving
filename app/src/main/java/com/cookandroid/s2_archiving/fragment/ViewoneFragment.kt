@@ -135,29 +135,12 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
 
     override fun onBackPressed() {  //휴대폰의 뒤로가기 버튼 클릭 시
         if (this is ViewoneFragment) {
-            if (id == "post_adapter") {
-                var fragment: Fragment = FriendpageFragment()
-                var activityH = this.activity as MainActivity?
-                var bundle: Bundle = Bundle()
-                fragment.arguments = bundle
-                bundle.putString("friend_id", friendId)
-                activityH?.fragmentChange_for_adapter(fragment)
-            }
-            else if (id == "favorite_adapter") {
-                var fragment: Fragment = LikeFragment()
-                var activityH = this.activity as MainActivity?
-                var bundle: Bundle = Bundle()
-                fragment.arguments = bundle
-                bundle.putString("friend_id", friendId)
-                activityH?.fragmentChange_for_adapter(fragment)
-            }
-            else if (id == "cardview_adapter") {
+            if (id == "cardview_adapter") {
                 var fragment: Fragment = HomeFragment()
                 var activityH = this.activity as MainActivity?
                 activityH?.fragmentChange_for_adapter(fragment)
             }
         }
-
     }
 
 
