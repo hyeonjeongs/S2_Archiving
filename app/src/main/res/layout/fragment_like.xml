@@ -46,11 +46,6 @@
                 android:src="@drawable/ic_baseline_favorite_24" />
 
         </LinearLayout>
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="10dp"
-            />
 
     </LinearLayout>
     <LinearLayout
