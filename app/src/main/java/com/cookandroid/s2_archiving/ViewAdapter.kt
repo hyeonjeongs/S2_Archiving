@@ -26,6 +26,9 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) :
 
     private var storage : FirebaseStorage? = FirebaseStorage.getInstance()
 
+    // flag
+    private var flag:Int =0
+
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val viewImage = itemView.findViewById<ImageView>(R.id.view_img)
         val viewDate = itemView.findViewById<TextView>(R.id.view_date)
@@ -50,6 +53,7 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) :
             Glide.with(holder.itemView)
                 .load(viewDataList[position].postPhotoUri)
                 .into(holder.viewImage)
+            flag = 1
         }
         holder.viewDate.text = viewDataList[position].postDate
         holder.viewSpecial.text = viewDataList[position].postDateName
@@ -78,8 +82,10 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) :
             val friendId = viewDataList[position].postFriendId
             val imageFileName = "IMAGE_" + postId + "_postImage_by"+friendId+".png"
 
-            storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)?.delete()?.addOnSuccessListener {
-                Log.d("storage","이미지 삭제완료")
+            if(flag==1){ // 만약 이미지를 포함해서 저장했다면
+                storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)?.delete()?.addOnSuccessListener {
+                    Log.d("storage", "이미지 삭제완료")
+                }
             }
 
             mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child(postId).removeValue().addOnSuccessListener {

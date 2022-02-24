@@ -38,7 +38,6 @@ class ViewFavoritepageFragment: Fragment(), onBackPressedListener {
     // context
     private lateinit var activitys: Activity
 
-
     private var mFirebaseAuth: FirebaseAuth? = FirebaseAuth.getInstance() //파이어베이스 인증
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
 

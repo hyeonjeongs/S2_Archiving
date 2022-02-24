@@ -24,6 +24,9 @@ class ViewFavoriteAdapter (val viewDataList: ArrayList<PostData>, val context: C
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
     private var storage: FirebaseStorage? = FirebaseStorage.getInstance()
 
+    // flag
+    private var flag:Int =0
+
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val viewFavFriendImg = itemView.findViewById<ImageView>(R.id.view_fav_friendImg)
         val viewFavFriendName = itemView.findViewById<TextView>(R.id.view_fav_friendName)
@@ -77,6 +80,7 @@ class ViewFavoriteAdapter (val viewDataList: ArrayList<PostData>, val context: C
             Glide.with(holder.itemView)
                 .load(viewDataList[position].postPhotoUri)
                 .into(holder.viewFavImage)
+            flag = 1
         }
 
         holder.viewFavDate.text = viewDataList[position].postDate
@@ -106,9 +110,10 @@ class ViewFavoriteAdapter (val viewDataList: ArrayList<PostData>, val context: C
             val friendId = viewDataList[position].postFriendId
             val imageFileName = "IMAGE_" + postId + "_postImage_by" + friendId + ".png"
 
-            storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)
-                ?.delete()?.addOnSuccessListener {
-                Log.d("storage", "이미지 삭제완료")
+            if(flag==1){ // 만약 이미지를 포함해서 저장했다면
+                storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)?.delete()?.addOnSuccessListener {
+                    Log.d("storage", "이미지 삭제완료")
+                }
             }
 
             mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}")
