@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -37,6 +38,8 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
     private lateinit var viewOneImage: ImageView
     private lateinit var viewOneEditBtn: ImageView
     private lateinit var viewOneDeleteBtn: ImageView
+    private lateinit var viewoneprofileimage : ImageView
+    lateinit var viewoneName : TextView
 
     // flag
     private var flag:Int =0
@@ -49,8 +52,7 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
         activitys = context as Activity
     }
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_view_one, container, false)
         friendId = requireArguments().getString("friend_id").toString()
         postId = requireArguments().getString("post_id").toString()
@@ -58,6 +60,8 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
         viewOneImage=view.findViewById(R.id.view_one_img)
         viewOneEditBtn=view.findViewById(R.id.ivEtc)
         viewOneDeleteBtn=view.findViewById(R.id.ivDelete)
+        viewoneName = view.findViewById(R.id.viewonename)
+        viewoneprofileimage = view.findViewById(R.id.ViewOneProfileImage)
 
         return view
     }
@@ -99,6 +103,32 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
 
                 }
             })
+
+        //친구 프로필 이미지
+        mDatabaseRef.child("UserFriends").child("${mFirebaseAuth?.currentUser!!.uid}").child(
+            friendId
+        )
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var friend: FriendData? = snapshot.getValue(FriendData::class.java)
+                    viewonename.text = friend!!.fName
+                    if (friend!!.fImgUri == "") {
+                        viewoneprofileimage.setImageResource(R.drawable.man)
+                    } else { // Uri가 있으면 그 사진 로드하기
+                        Glide.with(activitys)
+                            .load(friend!!.fImgUri)
+                            .into(viewoneprofileimage)
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
+
+
 
         viewOneEditBtn.setOnClickListener{   //게시글 수정 (PostActivity로 이동)
             val intent = Intent(context, EditPostActivity::class.java)
