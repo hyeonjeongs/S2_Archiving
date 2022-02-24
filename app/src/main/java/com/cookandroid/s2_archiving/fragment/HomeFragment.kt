@@ -32,6 +32,8 @@ class HomeFragment : Fragment() {
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var friendDataList: ArrayList<FriendData>
     lateinit var cardDataList : ArrayList<PostData>
+    lateinit var cardDataListReverse : ArrayList<PostData>
+
     lateinit var friendId:String
 
     //파이어베이스
@@ -77,17 +79,14 @@ class HomeFragment : Fragment() {
         mFirebaseAuth = FirebaseAuth.getInstance()
         friendDataList = ArrayList() //FriendData 객체를 담을 ArrayList
         cardDataList = ArrayList() //카드뷰에 실시간으로 올라오는 객체 담을 ArryaList
+        cardDataListReverse = ArrayList() //카드뷰에 실시간으로 올라오는 객체를 5개만 담고 거꾸로 저장하는 ArryaList
 
         database = FirebaseDatabase.getInstance() //파이어베이스 데이터베이스 연동
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Firebase")
         userNickname = fragmentview.findViewById(R.id.tvName)
         ivProfile = fragmentview.findViewById(R.id.ivProfile)
 
-        fragmentview?.cardrv?.layoutManager = LinearLayoutManager(this.requireContext(),LinearLayoutManager.HORIZONTAL, true)
-
-
-
-        //cardrv.layoutManager = LinearLayoutManager(this.requireContext(), LinearLayoutManager.HORIZONTAL, true) //가로 리사이클러뷰
+        fragmentview?.cardrv?.layoutManager = LinearLayoutManager(this.requireContext(),LinearLayoutManager.HORIZONTAL, true)//가로 리사이클러뷰
 
         return fragmentview
     }
@@ -116,7 +115,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) { // <-- 리사이클러뷰 넣어보기
         super.onViewCreated(view, savedInstanceState)
-
 
         //리사이클러뷰에 담을 데이터 가져오기(selectedItem 태그를 통해서 보여줄 게시글 구분)
         // 사용자의 닉네임, 사진 로드
@@ -176,36 +174,46 @@ class HomeFragment : Fragment() {
 
             })
 
+        adapter = FriendDataAdapter(friendDataList, activity, this)
+        rvProfile.adapter = adapter
+
         mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    cardDataList.clear()
+                    if (snapshot.value == null) {}  // 널이면 아무것도하지마
+                    else {
+                        cardDataList.clear()
+                        cardDataListReverse.clear()
 
-                    for (data: DataSnapshot in snapshot.children) {
-                        var postData: PostData? = data.getValue(PostData::class.java)
-                        cardDataList.add(postData!!) // 리스트에 넣기
+                        for (data: DataSnapshot in snapshot.children) {
+                            var postData: PostData? = data.getValue(PostData::class.java)
+                            cardDataList.add(postData!!) // 리스트에 넣기
+                         }
 
-                    }
-                    cardAdapter.notifyDataSetChanged() // 리스트 저장 및 새로 고침
-                    cardrv?.scrollToPosition(cardDataList!!.size - 1)
+                        var size = cardDataList!!.size
+
+                        if(size >5){ // 전체 게시글이 5개보다 많으면
+                            for (i in size-5 until size){
+                                cardDataListReverse.add(cardDataList[i])
+                            }
+                        }
+                        else{ // 5개 이하라면
+                            for (i in 0 until size){
+                                cardDataListReverse.add(cardDataList[i])
+                            }
+                        }
+
+                        cardAdapter.notifyDataSetChanged() // 리스트 저장 및 새로 고침
+                        cardrv?.scrollToPosition(cardDataListReverse!!.size - 1)
+                      }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                 }
             })
 
-
-
-
-        adapter = FriendDataAdapter(friendDataList, activity, this)
-        rvProfile.adapter = adapter
-
-
-        cardAdapter = CardAdapter(cardDataList, this.requireContext(), this)
-
+        cardAdapter = CardAdapter(cardDataListReverse, activity, this)
         cardrv.adapter = cardAdapter
-
-
 
     }
 
@@ -221,3 +229,5 @@ class HomeFragment : Fragment() {
         super.onDetach()
     }
 }
+
+
