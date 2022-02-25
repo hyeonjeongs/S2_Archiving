@@ -1,14 +1,13 @@
 package com.cookandroid.s2_archiving
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -25,7 +24,7 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) :
     private var mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Firebase")//실시간 데이터베이스
 
     private var storage : FirebaseStorage? = FirebaseStorage.getInstance()
-
+    private lateinit var activitys : Activity
     // flag
     private var flag:Int =0
 
@@ -35,8 +34,7 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) :
         val viewSpecial = itemView.findViewById<TextView>(R.id.view_special)
         val viewHeart = itemView.findViewById<ImageView>(R.id.view_heart)
         val viewStory = itemView.findViewById<TextView>(R.id.view_story)
-        val viewEtc = itemView.findViewById<ImageView>(R.id.ivEtc)
-        val viewDelete = itemView.findViewById<ImageView>(R.id.ivDelete)
+        val viewmenuBtn = itemView.findViewById<Button>(R.id.viewmenubtn)
     }
 
 
@@ -65,34 +63,49 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) :
             holder.viewHeart.setImageResource(R.drawable.heart_full_line)
         }
 
-        holder.viewEtc.setOnClickListener{   //게시글 수정 (PostActivity로 이동)
-            val intent = Intent(context,EditPostActivity::class.java)
-            intent.putExtra("friend_id",viewDataList[position].postFriendId)
-            intent.putExtra("post_id",viewDataList[position].postId)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            this.context.startActivity(intent)
-        }
 
         holder.viewHeart.setOnClickListener {
             heartEvent(position)
         }
 
-        holder.viewDelete.setOnClickListener {    //게시글 삭제
-            val postId = viewDataList[position].postId
-            val friendId = viewDataList[position].postFriendId
-            val imageFileName = "IMAGE_" + postId + "_postImage_by"+friendId+".png"
 
-            if(flag==1){ // 만약 이미지를 포함해서 저장했다면
-                storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)?.delete()?.addOnSuccessListener {
-                    Log.d("storage", "이미지 삭제완료")
+        //수정, 삭제 메뉴 클릭시 -> 팝업창 띄우기
+        holder.viewmenuBtn.setOnClickListener {
+            var views = holder.viewmenuBtn
+            //showPopup(views,position)
+            val popup = PopupMenu(context.applicationContext,views)
+            popup.menuInflater.inflate(R.menu.showmenu,popup.menu)
+
+            popup.setOnMenuItemClickListener { m ->
+                when(m.itemId){
+                    R.id.revise -> {
+                        val intent = Intent(context,EditPostActivity::class.java)
+                        intent.putExtra("friend_id",viewDataList[position].postFriendId)
+                        intent.putExtra("post_id",viewDataList[position].postId)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        this.context.startActivity(intent)
+                        true
+                    }
+                    R.id.delete -> {
+                        val postId = viewDataList[position].postId
+                        val friendId = viewDataList[position].postFriendId
+                        val imageFileName = "IMAGE_" + postId + "_postImage_by"+friendId+".png"
+
+                        if(flag==1){ // 만약 이미지를 포함해서 저장했다면
+                            storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)?.delete()?.addOnSuccessListener {
+                                Log.d("storage", "이미지 삭제완료")
+                            }
+                        }
+
+                        mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child(postId).removeValue().addOnSuccessListener {
+                            Toast.makeText(context,"게시글 삭제 완료",Toast.LENGTH_SHORT).show()
+                        }
+                        true
+                    }
+                    else -> false
                 }
             }
-
-            mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child(postId).removeValue().addOnSuccessListener {
-                Toast.makeText(context,"게시글 삭제 완료",Toast.LENGTH_SHORT).show()
-            }
-
-
+            popup.show()
         }
 
 
@@ -120,6 +133,8 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) :
         var ft:FragmentTransaction = fragmentManager.beginTransaction()
         ft.detach(fragment).attach(fragment).commit()
     }
+
+
 
 
 }

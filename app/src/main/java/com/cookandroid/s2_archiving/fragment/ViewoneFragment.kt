@@ -78,7 +78,7 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
 
         return view
     }
-    
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 

@@ -41,24 +41,13 @@
         </LinearLayout>
 
 
-        <ImageView
-            android:id="@+id/iv_fav_Etc"
+        <Button
+            android:id="@+id/viewfavmenubtn"
             android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignEnd="@id/iv_fav_Delete"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="20dp"
-            app:srcCompat="@drawable/edit_btn" />
-
-        <ImageView
-            android:id="@+id/iv_fav_Delete"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_height="9dp"
+            android:layout_marginTop="30dp"
             android:layout_alignEnd="@id/linearLayout2"
-            android:layout_marginTop="20dp"
-            app:srcCompat="@drawable/delete_btn" />
+            android:background="@drawable/menu_btn"/>
 
     </RelativeLayout>
 

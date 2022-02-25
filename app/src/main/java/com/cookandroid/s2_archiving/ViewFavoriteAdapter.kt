@@ -6,9 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -35,8 +33,7 @@ class ViewFavoriteAdapter (val viewDataList: ArrayList<PostData>, val context: C
         val viewFavSpecial = itemView.findViewById<TextView>(R.id.view_fav_special)
         val viewFavHeart = itemView.findViewById<ImageView>(R.id.view_fav_heart)
         val viewFavStory = itemView.findViewById<TextView>(R.id.view_fav_story)
-        val viewFavEtc = itemView.findViewById<ImageView>(R.id.iv_fav_Etc)
-        val viewFavDelete = itemView.findViewById<ImageView>(R.id.iv_fav_Delete)
+        val viewFavmenubtn = itemView.findViewById<Button>(R.id.viewfavmenubtn)
     }
 
 
@@ -93,34 +90,49 @@ class ViewFavoriteAdapter (val viewDataList: ArrayList<PostData>, val context: C
             holder.viewFavHeart.setImageResource(R.drawable.heart_full_line)
         }
 
-        holder.viewFavEtc.setOnClickListener {   //게시글 수정 (PostActivity로 이동)
-            val intent = Intent(context, EditPostActivity::class.java)
-            intent.putExtra("friend_id", viewDataList[position].postFriendId)
-            intent.putExtra("post_id", viewDataList[position].postId)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            this.context.startActivity(intent)
-        }
-
         holder.viewFavHeart.setOnClickListener {
             heartEvent(position)
         }
 
-        holder.viewFavDelete.setOnClickListener {    //게시글 삭제
-            val postId = viewDataList[position].postId
-            val friendId = viewDataList[position].postFriendId
-            val imageFileName = "IMAGE_" + postId + "_postImage_by" + friendId + ".png"
+        //수정 삭제 메뉴 클릭시 -> 팝업창 띄우기
+        holder.viewFavmenubtn.setOnClickListener {
+            var views = holder.viewFavmenubtn
+            //showPopup(views,position)
+            val popup = PopupMenu(context.applicationContext,views)
+            popup.menuInflater.inflate(R.menu.showmenu,popup.menu)
 
-            if(flag==1){ // 만약 이미지를 포함해서 저장했다면
-                storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)?.delete()?.addOnSuccessListener {
-                    Log.d("storage", "이미지 삭제완료")
+            popup.setOnMenuItemClickListener { m ->
+                when(m.itemId){
+                    R.id.revise -> {
+
+                        val intent = Intent(context, EditPostActivity::class.java)
+                        intent.putExtra("friend_id", viewDataList[position].postFriendId)
+                        intent.putExtra("post_id", viewDataList[position].postId)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        this.context.startActivity(intent)
+                        true
+                    }
+                    R.id.delete -> {
+                        val postId = viewDataList[position].postId
+                        val friendId = viewDataList[position].postFriendId
+                        val imageFileName = "IMAGE_" + postId + "_postImage_by" + friendId + ".png"
+
+                        if(flag==1){ // 만약 이미지를 포함해서 저장했다면
+                            storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)?.delete()?.addOnSuccessListener {
+                                Log.d("storage", "이미지 삭제완료")
+                            }
+                        }
+
+                        mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}")
+                            .child(postId).removeValue().addOnSuccessListener {
+                                Toast.makeText(context, "게시글 삭제 완료", Toast.LENGTH_SHORT).show()
+                            }
+                        true
+                    }
+                    else -> false
                 }
             }
-
-            mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}")
-                .child(postId).removeValue().addOnSuccessListener {
-                Toast.makeText(context, "게시글 삭제 완료", Toast.LENGTH_SHORT).show()
-            }
-
+            popup.show()
         }
 
     }
