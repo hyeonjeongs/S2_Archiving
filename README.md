@@ -17,6 +17,7 @@ PLAS (Present Letter Archiving Service)
  ![WireFrame2](https://user-images.githubusercontent.com/70315475/155646595-7be6599d-4669-4725-8afb-acc105377ef5.jpg)
 
   - 앱 흐름
+  ![앱 흐름도](https://user-images.githubusercontent.com/70315475/155649432-c0f88bb5-8f93-4c21-8e65-92d7e0211258.jpg)
 
 
 ## 개발 환경
@@ -35,8 +36,10 @@ PLAS (Present Letter Archiving Service)
   - 비밀번호 확인 작업
   - 이메일 중복 확인 작업
   - 두 번의 확인 정상작동 시 회원가입 진행
+  
+  https://user-images.githubusercontent.com/70315475/155646831-bcc31157-ea7b-4c41-9027-7bbed64eba9e.mp4
+  
  
-  ![회원가입](https://user-images.githubusercontent.com/70315475/155645816-7517e2a5-5a25-4735-a016-ab39bc1b2eae.gif)
 
 
 
