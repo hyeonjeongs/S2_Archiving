@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/viewlistxml"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:padding="20dp"
     android:orientation="vertical"
     android:layout_height="wrap_content">
@@ -18,43 +18,46 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="15dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="#"
-                        android:textColor="#000000"
-                        android:textSize="15dp"/>
-                    <TextView
-                        android:id="@+id/view_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="#210324"
-                        android:textColor="#000000"
-                        android:textSize="15dp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="#"
+                            android:textStyle="bold"
+                            android:textColor="@color/grape"
+                            android:textSize="15dp"/>
+                        <TextView
+                            android:id="@+id/view_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="#210324"
+                            android:textColor="@color/grape"
+                            android:textSize="15dp" />
                 </LinearLayout>
 
+
+
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
                         android:text="#"
-                        android:textColor="#000000"
+                        android:textColor="@color/grape"
                         android:textSize="15dp"/>
 
                     <TextView
@@ -62,9 +65,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="#생일"
-                        android:textColor="#000000"
+                        android:textColor="@color/grape"
                         android:textSize="15dp" />
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -81,8 +83,8 @@
 
     <ImageView
         android:id="@+id/view_img"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/edge"
         android:scaleType="fitXY"
         android:src="@drawable/food3" />
