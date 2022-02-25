@@ -78,34 +78,7 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
 
         return view
     }
-
-    override fun onCreateContextMenu(
-        menu: ContextMenu,
-        v: View,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-//        val inflater: MenuInflater = activitys.menuInflater
-//        inflater.inflate(R.menu.showmenu, menu)
-          activitys.menuInflater.inflate(R.menu.showmenu, menu)
-
-    }
-
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-
-        when(item.itemId){
-            R.id.revise -> {
-                //Toast.makeText(activitys.applicationContext,"수정",Toast.LENGTH_SHORT).show()
-                Log.d("dk", "slkdfjsldfsdf")
-            }
-            R.id.delete -> {
-//                Toast.makeText(activitys.applicationContext,"삭제",Toast.LENGTH_SHORT).show()
-                Log.d("dkfsld", "ldksfj")
-            }
-
-        }
-        return super.onContextItemSelected(item)
-    }
+    
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 

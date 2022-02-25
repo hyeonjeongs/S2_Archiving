@@ -101,7 +101,7 @@
                     <Button
                         android:id="@+id/onefragmenubtn"
                         android:layout_width="30dp"
-                        android:layout_height="15dp"
+                        android:layout_height="14dp"
                         android:onClick="showPopup"
                         android:background="@drawable/menu_btn"/>
                 </LinearLayout>
