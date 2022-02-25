@@ -66,6 +66,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:weightSum="2"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -89,6 +90,7 @@
                         android:textSize="18dp"
                         android:gravity="center"
                         android:text="name"/>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -97,11 +99,10 @@
                     android:orientation="horizontal"
                     android:gravity="end"
                     android:layout_weight="1">
-
                     <Button
                         android:id="@+id/onefragmenubtn"
                         android:layout_width="30dp"
-                        android:layout_height="14dp"
+                        android:layout_height="10dp"
                         android:onClick="showPopup"
                         android:background="@drawable/menu_btn"/>
                 </LinearLayout>

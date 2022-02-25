@@ -19,28 +19,38 @@
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_margin="15dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="#"
-                        android:textStyle="bold"
-                        android:textColor="@color/grape"
-                        android:textSize="15dp"/>
-                    <TextView
-                        android:id="@+id/view_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="#210324"
-                        android:textColor="@color/grape"
-                        android:textSize="15dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="#"
+                            android:textStyle="bold"
+                            android:textColor="@color/grape"
+                            android:textSize="15dp"/>
+                        <TextView
+                            android:id="@+id/view_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="#210324"
+                            android:textColor="@color/grape"
+                            android:textSize="15dp" />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -62,26 +72,13 @@
 
         </LinearLayout>
 
-
-        <ImageView
-            android:id="@+id/ivEtc"
+        <Button
+            android:id="@+id/viewmenubtn"
             android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignEnd="@id/ivDelete"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
-            app:srcCompat="@drawable/edit_btn" />
-
-        <ImageView
-            android:id="@+id/ivDelete"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_height="9dp"
+            android:layout_marginTop="30dp"
             android:layout_alignEnd="@id/linearLayout2"
-            android:layout_marginTop="15dp"
-            app:srcCompat="@drawable/delete_btn" />
-
+            android:background="@drawable/menu_btn"/>
     </RelativeLayout>
 
     <ImageView

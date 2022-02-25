@@ -139,6 +139,7 @@ class ViewpageFragment: Fragment(), onBackPressedListener {
             onBackPressed()
         }
 
+
     }
 
     override fun onBackPressed() {  //휴대폰의 뒤로가기 버튼 클릭 시
