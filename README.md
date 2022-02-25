@@ -43,6 +43,12 @@ PLAS (Present Letter Archiving Service)
     - 게시글을 최신순으로 정렬 후 카드뷰로 표시
 
     https://user-images.githubusercontent.com/70315475/155650029-2f51f049-709d-4a9a-8026-458310a3f18e.mp4
+    
+    - 친구 목록을 최신순으로 정렬 후 즐겨찾기(별)를 우선으로 재정렬
+    
+    https://user-images.githubusercontent.com/70315475/155650537-b0c1f06f-f194-4d2e-818b-b9ca0a2e6ebd.mp4
+
+
 
 
 
