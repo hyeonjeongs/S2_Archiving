@@ -31,14 +31,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="#"
-                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textColor="@color/grape"
                         android:textSize="15dp"/>
                     <TextView
                         android:id="@+id/view_date"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="#210324"
-                        android:textColor="#000000"
+                        android:textColor="@color/grape"
                         android:textSize="15dp" />
 
                     <TextView
@@ -46,7 +47,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:text="#"
-                        android:textColor="#000000"
+                        android:textColor="@color/grape"
                         android:textSize="15dp"/>
 
                     <TextView
@@ -54,7 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="#생일"
-                        android:textColor="#000000"
+                        android:textColor="@color/grape"
                         android:textSize="15dp" />
 
             </LinearLayout>
@@ -86,9 +87,9 @@
     <ImageView
         android:id="@+id/view_img"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/edge"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         android:src="@drawable/food3" />
 
     <LinearLayout

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-        <item android:id="@+id/revise"
-            android:enabled="true"
+        <item
+            android:id="@+id/revise"
             android:icon="@drawable/edit_btn"
-            android:title="게시글 수정"/>
-        <item android:id="@+id/delete"
+            android:title="게시글 수정"></item>
+        <item
+            android:id="@+id/delete"
             android:icon="@drawable/delete_btn"
-            android:enabled="true"
-            android:title="게시글 삭제"/>
+            android:title="게시글 삭제"></item>
 </menu>
