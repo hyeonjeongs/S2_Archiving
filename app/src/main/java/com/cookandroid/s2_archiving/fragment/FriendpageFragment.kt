@@ -171,6 +171,7 @@ class FriendpageFragment : Fragment(), onBackPressedListener {
                 override fun onCancelled(error: DatabaseError) {
                 }
             })
+
         adapter = PostAdapter(postDataList,this.requireContext(),this)
         rv_post.adapter = adapter
 
