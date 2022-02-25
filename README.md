@@ -19,5 +19,22 @@ PLAS (Present Letter Archiving Service)
 ## 개발 환경
 - Andriod Studio 4.1.1
 - Andriod 7.0 (nougat)
-- 사용언어
+- 사용 스택
   - Kotlin
+  - FireBase
+
+## 앱 소개
+- 시작 화면
+
+  ![image](https://user-images.githubusercontent.com/70315475/155643428-8faba328-cb43-4add-aaf4-73b2017d623e.png)
+
+- 회원가입
+  - 비밀번호 확인 작업
+  - 이메일 중복 확인 작업
+  - 두 번의 확인 정상작동 시 회원가입 진행
+ 
+  ![회원가입](https://user-images.githubusercontent.com/70315475/155645816-7517e2a5-5a25-4735-a016-ab39bc1b2eae.gif)
+
+
+
+
