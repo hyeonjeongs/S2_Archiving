@@ -4,22 +4,19 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.*
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.cookandroid.s2_archiving.*
 import com.cookandroid.s2_archiving.R
+import com.google.android.material.card.MaterialCardView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_view_one.*
+import kotlinx.android.synthetic.main.fragment_view_one.view.*
 
 
 class ViewoneFragment: Fragment(), onBackPressedListener {
@@ -36,10 +33,9 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
 
     // xml
     private lateinit var viewOneImage: ImageView
-    private lateinit var viewOneEditBtn: ImageView
-    private lateinit var viewOneDeleteBtn: ImageView
     private lateinit var viewoneprofileimage : ImageView
     lateinit var viewoneName : TextView
+    private lateinit var onefragmenubtn : Button
 
     // flag
     private var flag:Int =0
@@ -51,19 +47,62 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
         super.onAttach(context)
         activitys = context as Activity
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_view_one, container, false)
         friendId = requireArguments().getString("friend_id").toString()
         postId = requireArguments().getString("post_id").toString()
         id = requireArguments().getString("id").toString()
         viewOneImage=view.findViewById(R.id.view_one_img)
-        viewOneEditBtn=view.findViewById(R.id.ivEtc)
-        viewOneDeleteBtn=view.findViewById(R.id.ivDelete)
         viewoneName = view.findViewById(R.id.viewonename)
         viewoneprofileimage = view.findViewById(R.id.ViewOneProfileImage)
+        onefragmenubtn = view.findViewById(R.id.onefragmenubtn)
+
+        //registerForContextMenu(onefragmenubtn)
+
+        //메뉴클릭시
+        onefragmenubtn.setOnClickListener {
+            val views = onefragmenubtn
+            showPopup(views)
+        }
+
 
         return view
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+//        val inflater: MenuInflater = activitys.menuInflater
+//        inflater.inflate(R.menu.showmenu, menu)
+          activitys.menuInflater.inflate(R.menu.showmenu, menu)
+
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.revise -> {
+                //Toast.makeText(activitys.applicationContext,"수정",Toast.LENGTH_SHORT).show()
+                Log.d("dk", "slkdfjsldfsdf")
+            }
+            R.id.delete -> {
+//                Toast.makeText(activitys.applicationContext,"삭제",Toast.LENGTH_SHORT).show()
+                Log.d("dkfsld", "ldksfj")
+            }
+
+        }
+        return super.onContextItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -130,31 +169,7 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
 
 
 
-        viewOneEditBtn.setOnClickListener{   //게시글 수정 (PostActivity로 이동)
-            val intent = Intent(context, EditPostActivity::class.java)
-            intent.putExtra("friend_id", friendId)
-            intent.putExtra("post_id", postId)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            activitys.startActivity(intent)
-        }
 
-        viewOneDeleteBtn.setOnClickListener {    //게시글 삭제
-            val imageFileName = "IMAGE_" + postId + "_postImage_by"+friendId+".png"
-
-            if(flag==1){ // 만약 이미지를 포함해서 저장했다면
-                storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(imageFileName)?.delete()?.addOnSuccessListener {
-                    Log.d("storage", "이미지 삭제완료")
-                }
-            }
-
-            mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child(
-                postId
-            ).removeValue().addOnSuccessListener {
-                Toast.makeText(activitys, "게시글 삭제 완료", Toast.LENGTH_SHORT).show()
-            }
-            onBackPressed()
-
-        }
 
         btnViewOneBack.setOnClickListener{
             onBackPressed()
@@ -173,6 +188,45 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
         }
     }
 
+    //수정, 삭제 팝업 띄우기
+    fun showPopup(v : View){
+        val popup = PopupMenu(activitys.applicationContext,v)
+        popup.menuInflater.inflate(R.menu.showmenu,popup.menu)
+
+        popup.setOnMenuItemClickListener { m ->
+            when(m.itemId){
+                R.id.revise -> {
+                    val intent = Intent(context, EditPostActivity::class.java)
+                    intent.putExtra("friend_id", friendId)
+                    intent.putExtra("post_id", postId)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    activitys.startActivity(intent)
+                    true
+                }
+                R.id.delete -> {
+                    val imageFileName = "IMAGE_" + postId + "_postImage_by"+friendId+".png"
+
+                    if(flag==1){ // 만약 이미지를 포함해서 저장했다면
+                        storage?.reference?.child("${mFirebaseAuth?.currentUser!!.uid}")?.child(
+                            imageFileName
+                        )?.delete()?.addOnSuccessListener {
+                            Log.d("storage", "이미지 삭제완료")
+                        }
+                    }
+
+                    mDatabaseRef.child("UserPosts").child("${mFirebaseAuth!!.currentUser!!.uid}").child(
+                        postId
+                    ).removeValue().addOnSuccessListener {
+                        Toast.makeText(activitys, "게시글 삭제 완료", Toast.LENGTH_SHORT).show()
+                    }
+                    onBackPressed()
+                    true
+                }
+                else -> false
+            }
+        }
+        popup.show()
+    }
 
     private fun heartEvent(postData: PostData){
         var heart:Int?

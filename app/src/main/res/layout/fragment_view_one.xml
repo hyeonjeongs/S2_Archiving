@@ -34,7 +34,7 @@
             android:src="@drawable/remember"/>
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="35dp"
+            android:layout_height="40dp"
             android:src="@drawable/plasimage"
             android:layout_weight="0.5"/>
     </LinearLayout>
@@ -97,20 +97,13 @@
                     android:orientation="horizontal"
                     android:gravity="end"
                     android:layout_weight="1">
-                    <ImageView
-                        android:id="@+id/ivEtc"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignEnd="@id/ivDelete"
-                        android:layout_marginRight="10dp"
-                        app:srcCompat="@drawable/edit_btn" />
 
-                    <ImageView
-                        android:id="@+id/ivDelete"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignEnd="@id/linearLayout2"
-                        app:srcCompat="@drawable/delete_btn" />
+                    <Button
+                        android:id="@+id/onefragmenubtn"
+                        android:layout_width="30dp"
+                        android:layout_height="15dp"
+                        android:onClick="showPopup"
+                        android:background="@drawable/menu_btn"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -209,5 +202,6 @@
 
         </LinearLayout>
     </ScrollView>
+
 
 </LinearLayout>
