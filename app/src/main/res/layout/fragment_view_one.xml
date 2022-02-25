@@ -34,7 +34,7 @@
             android:src="@drawable/remember"/>
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="35dp"
+            android:layout_height="40dp"
             android:src="@drawable/plasimage"
             android:layout_weight="0.5"/>
     </LinearLayout>
@@ -112,6 +112,25 @@
                             android:layout_alignEnd="@id/linearLayout2"
                             app:srcCompat="@drawable/delete_btn" />
                     </LinearLayout>
+                    
+                        android:textSize="18dp"
+                        android:gravity="center"
+                        android:text="name"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="end"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/onefragmenubtn"
+                        android:layout_width="30dp"
+                        android:layout_height="15dp"
+                        android:onClick="showPopup"
+                        android:background="@drawable/menu_btn"/>
 
                 </LinearLayout>
 
@@ -209,5 +228,6 @@
 
         </LinearLayout>
     </ScrollView>
+
 
 </LinearLayout>

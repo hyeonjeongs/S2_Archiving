@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.navigation.Navigation
 import com.cookandroid.s2_archiving.fragment.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userFragment: UserFragment
     private lateinit var friendpageFragment : FriendpageFragment
     private lateinit var mainActivity: MainActivity
-    private lateinit var viewpageFragment : ViewpageFragment
+        private lateinit var viewpageFragment : ViewpageFragment
 
 
 
