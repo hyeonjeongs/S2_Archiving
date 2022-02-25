@@ -39,7 +39,12 @@ PLAS (Present Letter Archiving Service)
   
   https://user-images.githubusercontent.com/70315475/155646831-bcc31157-ea7b-4c41-9027-7bbed64eba9e.mp4
   
- 
+ - 메인페이지
+    - 게시글을 최신순으로 정렬 후 카드뷰로 표시
+
+    https://user-images.githubusercontent.com/70315475/155650029-2f51f049-709d-4a9a-8026-458310a3f18e.mp4
+
+
 
 
 
