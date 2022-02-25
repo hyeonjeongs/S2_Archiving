@@ -63,22 +63,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/homecardview"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="13dp"
-                app:cardElevation="10dp"
-                >
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/cardrv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="250dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="10dp"
+                    android:layout_margin="10dp"
+                    app:cardElevation="10dp"
+                    />
 
-            </androidx.cardview.widget.CardView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

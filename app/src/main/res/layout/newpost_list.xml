@@ -4,6 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
+    app:cardCornerRadius="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout
@@ -17,6 +20,7 @@
             android:id="@+id/cvImge"
             android:src="@drawable/logo"
             android:scaleType="fitXY" />
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
