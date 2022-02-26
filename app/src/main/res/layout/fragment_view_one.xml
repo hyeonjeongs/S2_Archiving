@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.cookandroid.s2_archiving.fragment.ViewoneFragment">
 
@@ -148,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/applesdgothic_thin"
                         android:text="#"
-                        android:textColor="#000000"
+                        android:textColor="@color/grape"
                         android:textSize="15dp" />
 
                     <TextView
@@ -157,7 +158,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/applesdgothic_thin"
                         android:text="#210324"
-                        android:textColor="#000000"
+                        android:textColor="@color/grape"
                         android:layout_marginRight="3dp"
                         android:textSize="15dp" />
                 </LinearLayout>
@@ -171,7 +172,7 @@
                         android:layout_height="wrap_content"
                         android:text="#"
                         android:fontFamily="@font/applesdgothic_thin"
-                        android:textColor="#000000"
+                        android:textColor="@color/grape"
                         android:textSize="15dp" />
 
                     <TextView
@@ -180,7 +181,7 @@
                         android:layout_height="wrap_content"
                         android:text="#생일"
                         android:fontFamily="@font/applesdgothic_thin"
-                        android:textColor="#000000"
+                        android:textColor="@color/grape"
                         android:textSize="15dp" />
                 </LinearLayout>
 
@@ -203,6 +204,20 @@
 
         </LinearLayout>
     </ScrollView>
+
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/drawerLayout"
+        >
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/showmenu"
+        android:layout_gravity="start"/>
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 
 </LinearLayout>
