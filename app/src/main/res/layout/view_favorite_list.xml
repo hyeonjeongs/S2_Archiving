@@ -98,7 +98,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="#"
-                            android:textColor="@color/grape"
+                            android:textColor="@color/dark"
                             android:textSize="15dp" />
 
                         <TextView
@@ -106,8 +106,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginRight="20dp"
-                            android:text="#210324"
-                            android:textColor="@color/grape"
+                            android:text="210324"
+                            android:textColor="@color/dark"
                             android:textSize="15dp" />
                     </LinearLayout>
 
@@ -121,15 +121,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="#"
-                            android:textColor="@color/grape"
+                            android:textColor="@color/dark"
                             android:textSize="15dp" />
 
                         <TextView
                             android:id="@+id/view_fav_special"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="#생일"
-                            android:textColor="@color/grape"
+                            android:text="생일"
+                            android:textColor="@color/dark"
                             android:textSize="15dp" />
 
                     </LinearLayout>
@@ -144,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:padding="10dp"
+            android:paddingTop="5dp"
             android:text="story"
             android:textAllCaps="true"
             android:textColor="#000000"
