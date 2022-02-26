@@ -33,14 +33,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="#"
-                            android:textColor="@color/grape"
+                            android:textColor="@color/dark"
                             android:textSize="15dp"/>
                         <TextView
                             android:id="@+id/view_date"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="#210324"
-                            android:textColor="@color/grape"
+                            android:text="210324"
+                            android:textColor="@color/dark"
                             android:textSize="15dp" />
                 </LinearLayout>
 
@@ -56,15 +56,15 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:text="#"
-                        android:textColor="@color/grape"
+                        android:textColor="@color/dark"
                         android:textSize="15dp"/>
 
                     <TextView
                         android:id="@+id/view_special"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="#생일"
-                        android:textColor="@color/grape"
+                        android:text="생일"
+                        android:textColor="@color/dark"
                         android:textSize="15dp" />
 
             </LinearLayout>
@@ -74,7 +74,7 @@
         <Button
             android:id="@+id/viewmenubtn"
             android:layout_width="30dp"
-            android:layout_height="9dp"
+            android:layout_height="7dp"
             android:layout_marginTop="30dp"
             android:layout_alignEnd="@id/linearLayout2"
             android:background="@drawable/menu_btn"/>

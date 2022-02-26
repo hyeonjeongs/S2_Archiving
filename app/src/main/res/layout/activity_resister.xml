@@ -80,7 +80,7 @@
 
                     <Button
                         android:id="@+id/btnConfirmID"
-                        android:layout_width="105dp"
+                        android:layout_width="107dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:background="@drawable/confirm_btn"
