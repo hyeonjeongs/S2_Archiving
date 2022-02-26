@@ -91,7 +91,7 @@ class ViewFavoriteAdapter (val viewDataList: ArrayList<PostData>, val context: C
         if (viewDataList[position].heart == 1) {
             holder.viewFavHeart.setImageResource(R.drawable.heart_empty)
         } else if (viewDataList[position].heart == 0) {
-            holder.viewFavHeart.setImageResource(R.drawable.heart_full_line)
+            holder.viewFavHeart.setImageResource(R.drawable.heart_full)
         }
 
         holder.viewFavHeart.setOnClickListener {

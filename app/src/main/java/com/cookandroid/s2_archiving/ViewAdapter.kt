@@ -62,7 +62,7 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) :
         if (viewDataList[position].heart == 1) {
             holder.viewHeart.setImageResource(R.drawable.heart_empty)
         } else if (viewDataList[position].heart == 0) {
-            holder.viewHeart.setImageResource(R.drawable.heart_full_line)
+            holder.viewHeart.setImageResource(R.drawable.heart_full)
         }
 
 
