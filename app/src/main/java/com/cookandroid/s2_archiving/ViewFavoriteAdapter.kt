@@ -2,11 +2,14 @@ package com.cookandroid.s2_archiving
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -15,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import java.lang.reflect.Method
 
 class ViewFavoriteAdapter (val viewDataList: ArrayList<PostData>, val context: Context) : RecyclerView.Adapter<ViewFavoriteAdapter.CustomViewHolder>() {
 
@@ -131,7 +135,34 @@ class ViewFavoriteAdapter (val viewDataList: ArrayList<PostData>, val context: C
                     }
                     else -> false
                 }
+
+
+
             }
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+                popup.setForceShowIcon(true)
+            } else{
+                try{
+                    val fields = popup.javaClass.declaredFields
+                    for (field in fields){
+                        if ("mPopup" == field.name){
+                            field.isAccessible = true
+                            val menuPopupHelper = field[popup]
+                            val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
+                            val setForceIcon: Method = classPopupHelper.getMethod(
+                                "setForceShowIcon",
+                                Boolean::class.javaPrimitiveType
+                            )
+                            setForceIcon.invoke(menuPopupHelper, true)
+                            break
+                        }
+                    }
+                } catch(e:Exception){
+                    e.printStackTrace()
+                }
+            }
+
             popup.show()
         }
 

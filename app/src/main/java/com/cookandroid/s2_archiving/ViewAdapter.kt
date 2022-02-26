@@ -3,6 +3,7 @@ package com.cookandroid.s2_archiving
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import java.lang.reflect.Method
 
 class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) : RecyclerView.Adapter<ViewAdapter.CustomViewHolder>() {
 
@@ -105,6 +107,30 @@ class ViewAdapter(val viewDataList: ArrayList<PostData>, val context: Context) :
                     else -> false
                 }
             }
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+                popup.setForceShowIcon(true)
+            } else{
+                try{
+                    val fields = popup.javaClass.declaredFields
+                    for (field in fields){
+                        if ("mPopup" == field.name){
+                            field.isAccessible = true
+                            val menuPopupHelper = field[popup]
+                            val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
+                            val setForceIcon: Method = classPopupHelper.getMethod(
+                                "setForceShowIcon",
+                                Boolean::class.javaPrimitiveType
+                            )
+                            setForceIcon.invoke(menuPopupHelper, true)
+                            break
+                        }
+                    }
+                } catch(e:Exception){
+                    e.printStackTrace()
+                }
+            }
+
             popup.show()
         }
 
