@@ -3,7 +3,7 @@ PLAS (Present Letter Archiving Service)
 ## 참여인원
 |맡은 업무|이름|
 |:------:|:---:|
-|Back-End, 기획|[박시원](https://github.com/tldnjs324)(팀장)|
+|Back-End, 기획|[박시원](https://github.com/tldnjs324)(L)|
 |Back-End|[김성은](https://github.com/EUNA-319)|
 |Back-End|[신동준](https://github.com/dongjun0128)|
 |Client|[박현정](https://github.com/hyeonjeongs)|
@@ -11,8 +11,9 @@ PLAS (Present Letter Archiving Service)
 
 ## 기획의도
 - 생일이나 기념일에 받은 많은 선물과 편지들을 기억하지 못하고 보관의 어려움을 해결하고자 서비스를 기획
-- [기획서](https://github.com/tldnjs324/S2_Archiving/blob/master/Project%20Proposal/%EA%B8%B0%ED%9A%8D%EC%84%9C_s2archiving_0.2.pdf)
+- [기획서](https://github.com/tldnjs324/S2_Archiving/files/8148791/_s2archiving_0.3.pdf)
   - WireFrame
+
  ![WireFrame](https://user-images.githubusercontent.com/70315475/155646426-ae64e42e-ff9e-4b63-bf16-42dd93fbdf42.jpg)
  ![WireFrame2](https://user-images.githubusercontent.com/70315475/155646595-7be6599d-4669-4725-8afb-acc105377ef5.jpg)
 
