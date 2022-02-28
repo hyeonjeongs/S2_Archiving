@@ -42,32 +42,49 @@ PLAS (Present Letter Archiving Service)
   - 내 정보 수정
   - 로그아웃
   - 회원 탈퇴
-https://user-images.githubusercontent.com/73284904/155997605-13d057f4-0fa5-4c38-92b2-5fb5a2605165.mp4
-  
+
+
+https://user-images.githubusercontent.com/73284904/156000115-6518d7f4-5b41-4eed-a0a8-8cadf06913b1.mp4
+
+
  - Home
     - 게시글을 최신순으로 정렬 후 카드뷰로 표시
     - 친구추가
     - 즐겨찾기
-https://user-images.githubusercontent.com/73284904/155999608-4e72ffe6-6c52-48c9-8782-57573322a063.mp4
+
+
+https://user-images.githubusercontent.com/73284904/156000191-92539cde-20e1-4a61-a09b-ff1ba7ff484d.mp4
+
 
  - Home_친구
     - 친구 이름 클릭 시 친구 화면으로 이동
     - 문자, 전화 연결
     - 친구 정보 편집
-https://user-images.githubusercontent.com/73284904/155999642-e27f3591-0a38-4282-bff2-cc708a15d187.mp4
+
+
+https://user-images.githubusercontent.com/73284904/156000205-e6fbb3f1-be5d-4442-9a0e-0523872d57c5.mp4
+
 
  - Home_게시글
     - 게시글 클릭 시 해당 게시글 상세 페이지로 이동
     - 게시글 수정 및 삭제
-https://user-images.githubusercontent.com/73284904/155999687-8d1ac22d-8f42-4a95-af46-c0522afa0a6f.mp4
+
+
+https://user-images.githubusercontent.com/73284904/156000220-45825316-7698-43eb-9c0c-babd8565dd44.mp4
+
 
  - Home_검색
     - 게시글 검색
-https://user-images.githubusercontent.com/73284904/155999705-4aef8bd2-a573-4fec-a418-4e70094897c0.mp4
+
+
+https://user-images.githubusercontent.com/73284904/156000251-4c677fba-60fb-41c1-8ecc-b562f8f09cf7.mp4
+
 
  - Like
     - 좋아요 누른 게시글만 표시
-https://user-images.githubusercontent.com/73284904/155999739-f6c29bee-90cd-4c06-8de0-1c44eaac5a4a.mp4
+
+
+https://user-images.githubusercontent.com/73284904/156000272-8a4b8deb-0928-441f-b685-4e0cdc871072.mp4
 
 
 
