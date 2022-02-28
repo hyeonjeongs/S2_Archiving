@@ -51,11 +51,19 @@ PLAS (Present Letter Archiving Service)
     - 즐겨찾기
 <img width="30%" src=""/>
 
+
+https://user-images.githubusercontent.com/73284904/156010648-990fa82c-1fb7-4fa9-8f9e-31c01bad1d30.mp4
+
+
  - Home_친구
     - 친구 이름 클릭 시 친구 화면으로 이동
     - 문자, 전화 연결
     - 친구 정보 편집
 <img width="30%" src=""/>
+
+
+https://user-images.githubusercontent.com/73284904/156010682-f8257d59-b7a2-4eb3-a847-4b85fc97e779.mp4
+
 
  - Home_게시글
     - 게시글 클릭 시 해당 게시글 상세 페이지로 이동
