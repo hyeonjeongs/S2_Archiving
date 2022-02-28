@@ -50,8 +50,6 @@ PLAS (Present Letter Archiving Service)
     - 친구추가
     - 즐겨찾기
 <img width="30%" src=""/>
-
-
 https://user-images.githubusercontent.com/73284904/156010648-990fa82c-1fb7-4fa9-8f9e-31c01bad1d30.mp4
 
 
@@ -60,8 +58,6 @@ https://user-images.githubusercontent.com/73284904/156010648-990fa82c-1fb7-4fa9-
     - 문자, 전화 연결
     - 친구 정보 편집
 <img width="30%" src=""/>
-
-
 https://user-images.githubusercontent.com/73284904/156010682-f8257d59-b7a2-4eb3-a847-4b85fc97e779.mp4
 
 
