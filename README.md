@@ -42,37 +42,52 @@ PLAS (Present Letter Archiving Service)
   - 내 정보 수정
   - 로그아웃
   - 회원 탈퇴
-<img width="30%" src="https://user-images.githubusercontent.com/73284904/156008490-fb322146-57b5-4c1c-92a9-68f8bd2910b2.gif"/>
-<img width="30%" src="https://user-images.githubusercontent.com/73284904/156008498-f66fac05-d5dc-4568-9c9a-a1b6866b0d47.gif"/>
+
+
+https://user-images.githubusercontent.com/73284904/156013621-8cceedd9-2f28-4d20-9b11-aef8198e7ef1.mp4
+
 
  - Home
     - 게시글을 최신순으로 정렬 후 카드뷰로 표시
     - 친구추가
     - 즐겨찾기
-<img width="30%" src=""/>
-https://user-images.githubusercontent.com/73284904/156010648-990fa82c-1fb7-4fa9-8f9e-31c01bad1d30.mp4
+
+
+https://user-images.githubusercontent.com/73284904/156013818-aed44547-a31e-4b7d-847f-3175c5522150.mp4
+
 
 
  - Home_친구
     - 친구 이름 클릭 시 친구 화면으로 이동
     - 문자, 전화 연결
     - 친구 정보 편집
-<img width="30%" src=""/>
-https://user-images.githubusercontent.com/73284904/156010682-f8257d59-b7a2-4eb3-a847-4b85fc97e779.mp4
+
+
+https://user-images.githubusercontent.com/73284904/156013857-faffdd2f-4c6a-4a0e-ae36-c8fd3c5991f2.mp4
 
 
  - Home_게시글
     - 게시글 클릭 시 해당 게시글 상세 페이지로 이동
     - 게시글 수정 및 삭제
-<img width="30%" src="https://user-images.githubusercontent.com/73284904/156002852-fd1e2cdb-11d2-42c1-817f-56625fbb9604.gif"/>
+
+
+https://user-images.githubusercontent.com/73284904/156013945-1a40c782-38ff-4186-bfec-60b4058d28dc.mp4
+
+
 
  - Home_검색
     - 게시글 검색
-<img width="30%" src="https://user-images.githubusercontent.com/73284904/156006599-a1235a9b-7275-485b-92c6-26e6d1daa401.gif"/>
+
+
+https://user-images.githubusercontent.com/73284904/156013961-8903a205-c135-41bf-aae6-0aeb80cdcda6.mp4
+
+
 
  - Like
     - 좋아요 누른 게시글만 표시
-<img width="30%" src="https://user-images.githubusercontent.com/73284904/156006677-c5e75b96-4932-438b-9636-39d7c610c1b5.gif"/>
+
+
+https://user-images.githubusercontent.com/73284904/156013977-cc354c6d-5a70-45a6-b217-05a8ba8fa09b.mp4
 
 
 
