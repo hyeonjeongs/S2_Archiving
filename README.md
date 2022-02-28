@@ -29,25 +29,46 @@ PLAS (Present Letter Archiving Service)
   - FireBase
 
 ## 앱 소개
-- 시작 화면
+- 주요 화면
+  * Home : 메인 페이지로 친구 목록과 최신 게시글이 보여진다.
+  * Like : 좋아요 페이지로 좋아요를 누른 게시글만 보여진다.
+  * User : 마이 페이지로 로그인, 회원가입 및 내 정보 수정과 관려된 페이지이다.
 
-  ![image](https://user-images.githubusercontent.com/70315475/155643428-8faba328-cb43-4add-aaf4-73b2017d623e.png)
+  ![image](https://user-images.githubusercontent.com/73284904/155993524-e3c08dd6-7a39-4ccc-b67b-9b6c040eec90.png)![image](https://user-images.githubusercontent.com/73284904/155993364-f4606de1-e552-4879-a4ec-66e23f6e7cb6.png)
 
-- 회원가입
-  - 비밀번호 확인 작업
-  - 이메일 중복 확인 작업
-  - 두 번의 확인 정상작동 시 회원가입 진행
+
+- User
+  - 로그인, 회원가입
+  - 내 정보 수정
+  - 로그아웃
+  - 회원 탈퇴
+https://user-images.githubusercontent.com/73284904/155997605-13d057f4-0fa5-4c38-92b2-5fb5a2605165.mp4
   
-  https://user-images.githubusercontent.com/70315475/155646831-bcc31157-ea7b-4c41-9027-7bbed64eba9e.mp4
-  
- - 메인페이지
+ - Home
     - 게시글을 최신순으로 정렬 후 카드뷰로 표시
+    - 친구추가
+    - 즐겨찾기
+https://user-images.githubusercontent.com/73284904/155999608-4e72ffe6-6c52-48c9-8782-57573322a063.mp4
 
-    https://user-images.githubusercontent.com/70315475/155650029-2f51f049-709d-4a9a-8026-458310a3f18e.mp4
-    
-    - 친구 목록을 최신순으로 정렬 후 즐겨찾기(별)를 우선으로 재정렬
-    
-    https://user-images.githubusercontent.com/70315475/155650537-b0c1f06f-f194-4d2e-818b-b9ca0a2e6ebd.mp4
+ - Home_친구
+    - 친구 이름 클릭 시 친구 화면으로 이동
+    - 문자, 전화 연결
+    - 친구 정보 편집
+https://user-images.githubusercontent.com/73284904/155999642-e27f3591-0a38-4282-bff2-cc708a15d187.mp4
+
+ - Home_게시글
+    - 게시글 클릭 시 해당 게시글 상세 페이지로 이동
+    - 게시글 수정 및 삭제
+https://user-images.githubusercontent.com/73284904/155999687-8d1ac22d-8f42-4a95-af46-c0522afa0a6f.mp4
+
+ - Home_검색
+    - 게시글 검색
+https://user-images.githubusercontent.com/73284904/155999705-4aef8bd2-a573-4fec-a418-4e70094897c0.mp4
+
+ - Like
+    - 좋아요 누른 게시글만 표시
+https://user-images.githubusercontent.com/73284904/155999739-f6c29bee-90cd-4c06-8de0-1c44eaac5a4a.mp4
+
 
 
 
