@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.cookandroid.s2_archiving.fragment.ViewoneFragment">
 
@@ -31,12 +32,8 @@
             android:layout_height="30dp"
             android:gravity="center"
             android:layout_weight="5"
-            android:src="@drawable/remember"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:src="@drawable/plasimage"
-            android:layout_weight="0.5"/>
+            android:src="@drawable/remember_img"/>
+
     </LinearLayout>
 
 
@@ -102,7 +99,7 @@
                     <Button
                         android:id="@+id/onefragmenubtn"
                         android:layout_width="30dp"
-                        android:layout_height="10dp"
+                        android:layout_height="6.5dp"
                         android:onClick="showPopup"
                         android:background="@drawable/menu_btn"/>
                 </LinearLayout>
@@ -148,7 +145,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/applesdgothic_thin"
                         android:text="#"
-                        android:textColor="#000000"
+                        android:textColor="@color/dark"
                         android:textSize="15dp" />
 
                     <TextView
@@ -156,8 +153,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/applesdgothic_thin"
-                        android:text="#210324"
-                        android:textColor="#000000"
+                        android:text="210324"
+                        android:textColor="@color/dark"
                         android:layout_marginRight="3dp"
                         android:textSize="15dp" />
                 </LinearLayout>
@@ -171,16 +168,16 @@
                         android:layout_height="wrap_content"
                         android:text="#"
                         android:fontFamily="@font/applesdgothic_thin"
-                        android:textColor="#000000"
+                        android:textColor="@color/dark"
                         android:textSize="15dp" />
 
                     <TextView
                         android:id="@+id/view_one_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="#생일"
+                        android:text="생일"
                         android:fontFamily="@font/applesdgothic_thin"
-                        android:textColor="#000000"
+                        android:textColor="@color/dark"
                         android:textSize="15dp" />
                 </LinearLayout>
 
@@ -192,7 +189,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:padding="10dp"
+                android:paddingTop="5dp"
                 android:text="story"
                 android:textAllCaps="true"
                 android:textColor="#000000"
@@ -203,6 +200,20 @@
 
         </LinearLayout>
     </ScrollView>
+
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/drawerLayout"
+        >
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/showmenu"
+        android:layout_gravity="start"/>
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 
 </LinearLayout>

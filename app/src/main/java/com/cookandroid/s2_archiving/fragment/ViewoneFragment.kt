@@ -3,6 +3,7 @@ package com.cookandroid.s2_archiving.fragment
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -17,6 +18,7 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_view_one.*
 import kotlinx.android.synthetic.main.fragment_view_one.view.*
+import java.lang.reflect.Method
 
 
 class ViewoneFragment: Fragment(), onBackPressedListener {
@@ -163,7 +165,8 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
 
     //수정, 삭제 팝업 띄우기
     fun showPopup(v : View){
-        val popup = PopupMenu(activitys.applicationContext,v)
+        val contextThemeWrapper = ContextThemeWrapper(requireContext(),R.style.ThemeOverlay_AppCompat)
+        val popup = PopupMenu(contextThemeWrapper,v)
         popup.menuInflater.inflate(R.menu.showmenu,popup.menu)
 
         popup.setOnMenuItemClickListener { m ->
@@ -197,7 +200,33 @@ class ViewoneFragment: Fragment(), onBackPressedListener {
                 }
                 else -> false
             }
+
         }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+            popup.setForceShowIcon(true)
+        } else{
+            try{
+                val fields = popup.javaClass.declaredFields
+                for (field in fields){
+                    if ("mPopup" == field.name){
+                        field.isAccessible = true
+                        val menuPopupHelper = field[popup]
+                        val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
+                        val setForceIcon: Method = classPopupHelper.getMethod(
+                            "setForceShowIcon",
+                            Boolean::class.javaPrimitiveType
+                        )
+                        setForceIcon.invoke(menuPopupHelper, true)
+                        break
+                    }
+                }
+            } catch(e:Exception){
+                e.printStackTrace()
+            }
+        }
+
+
         popup.show()
     }
 

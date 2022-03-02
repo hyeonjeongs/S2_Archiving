@@ -17,7 +17,7 @@
         <Button
             android:id="@+id/btnCategorySearchBack"
             android:layout_width="30dp"
-            android:layout_height="20dp"
+            android:layout_height="25dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/backspace_btn"
             android:clickable="true"

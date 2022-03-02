@@ -77,7 +77,7 @@ class PostAdapter(val postDataList : ArrayList<PostData>, val context: Context, 
         if (postDataList.get(position).heart == 1) {
             holder.heart.setImageResource(R.drawable.heart_empty)
         } else if (postDataList.get(position).heart == 0) {
-            holder.heart.setImageResource(R.drawable.heart_full_line)
+            holder.heart.setImageResource(R.drawable.heart_full)
         }
     }
 

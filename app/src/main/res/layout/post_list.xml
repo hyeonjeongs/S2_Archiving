@@ -42,7 +42,7 @@
                     android:text="#크리스마스"/>
                 <ImageView
                     android:id="@+id/post_heart"
-                    android:src="@drawable/ic_baseline_favorite_24"
+                    android:src="@drawable/heart_full"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"

@@ -19,8 +19,8 @@
 
         <Button
             android:id="@+id/btnViewFavoriteBack"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
             android:layout_margin="10dp"
             android:background="@drawable/backspace_btn"
             android:clickable="true"
@@ -35,17 +35,12 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/applesdgothic_regular"
-                android:text="My Favorite"
-                android:textSize="20dp" />
-
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_favorite_24" />
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_weight="5"
+                android:src="@drawable/favorite_img"/>
 
         </LinearLayout>
 

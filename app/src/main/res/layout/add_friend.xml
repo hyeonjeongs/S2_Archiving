@@ -16,7 +16,7 @@
         <Button
             android:id="@+id/btnfriendback"
             android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:clickable="true"
             android:background="@drawable/backspace_btn"
             android:textSize="18sp"

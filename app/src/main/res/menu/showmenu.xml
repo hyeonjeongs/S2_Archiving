@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
         <item
             android:id="@+id/revise"
+            android:title="게시글 수정"
             android:icon="@drawable/edit_btn"
-            android:title="게시글 수정"></item>
+            ></item>
+
         <item
             android:id="@+id/delete"
             android:icon="@drawable/delete_btn"
-            android:title="게시글 삭제"></item>
+            android:title="게시글 삭제"
+            ></item>
+
 </menu>
+
